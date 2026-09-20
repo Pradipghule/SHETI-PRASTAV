@@ -59,6 +59,12 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
   #preview{display:block!important}
   .official{border:0;padding:0;width:100%;overflow:visible}
   .form-extra-margin{padding:0!important;box-sizing:border-box!important;}
+  /* RKVY/MIDH चे प्रपत्र १ (हमीपत्र) — १३ मुद्दे + सही/साक्षीदार एकाच पानावर बसावेत म्हणून कॉम्पॅक्ट. */
+  .compact-2page h2{font-size:17px!important;margin:3px 0!important;}
+  .compact-2page h3{font-size:13px!important;margin:3px 0!important;}
+  .compact-2page p{font-size:10.5px!important;line-height:1.3!important;margin:5px 0!important;}
+  .compact-2page table{font-size:10px!important;margin:6px 0!important;}
+  .compact-2page th,.compact-2page td{padding:3px 4px!important;}
   .official table{font-size:11px}
   .official th,.official td{padding:4px}
   .official p{font-size:9.2pt;line-height:1.22}
@@ -802,6 +808,7 @@ function editYearFarmer(y,id){
  const d=getRecords().find(x=>x.id===id); if(!d)return;
  currentId=id;
  ids.forEach(i=>{const e=document.getElementById(i); if(e)e.value=d[i]||'';});
+ lockSchemeIfSaved(true);
  show('farmer');
 }
 function manualNewYear(){
@@ -868,6 +875,11 @@ async function renderBodyHtmlToPdfBlob(bodyHtml){
    .pdfclone.stamp-page-1 h2.p11-highlight,.pdfclone.stamp-page-3 h2.p11-highlight{display:block!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;font-weight:800!important;color:#111!important;}
    .pdfclone h2,.pdfclone h3,.pdfclone p{font-size:9.2pt!important;line-height:1.22!important;}
    .pdfclone.form-extra-margin{padding:0!important;box-sizing:border-box!important;}
+   .pdfclone.compact-2page h2{font-size:17px!important;margin:3px 0!important;}
+   .pdfclone.compact-2page h3{font-size:13px!important;margin:3px 0!important;}
+   .pdfclone.compact-2page p{font-size:10.5px!important;line-height:1.3!important;margin:5px 0!important;}
+   .pdfclone.compact-2page table{font-size:10px!important;margin:6px 0!important;}
+   .pdfclone.compact-2page th,.pdfclone.compact-2page td{padding:3px 4px!important;}
    .pdfclone h2{margin-top:0!important;}.pdfclone p{margin:8px 0!important;}
    .pdfclone.stamp-page-2 .p11-signature-area{margin-top:10px!important;}
    .pdfclone.stamp-page-2 .p11-sign-line,
@@ -964,11 +976,21 @@ async function backupAllYearsAsZip(){
 
 let currentId=null;
 
+// शेतकरी एकदा Save झाला की, त्याची "योजना" (Scheme) Employee ला पुन्हा बदलता येऊ नये — चुकून/मुद्दाम
+// बदलल्यास त्या शेतकऱ्याची आधीची प्रपत्रे/कागदपत्रे चुकीच्या योजनेखाली जाण्याचा धोका टाळण्यासाठी.
+// Admin ला मात्र गरज पडल्यास (खरी चूक दुरुस्त करण्यासाठी) योजना बदलता येते.
+function lockSchemeIfSaved(isSaved){
+ const el=document.getElementById('schemeType'); if(!el) return;
+ const shouldLock = isSaved && !(session && session.isAdmin);
+ el.disabled=shouldLock;
+ el.title=shouldLock?'एकदा Save झाल्यावर योजना बदलता येत नाही (फक्त Admin बदलू शकतो).':'';
+}
 function newFarmer(){
  currentId=null;
  currentYear=getFY(new Date());
  localStorage.setItem('currentFY',currentYear);
  ids.forEach(i=>{const e=document.getElementById(i); if(e)e.value='';});
+ lockSchemeIfSaved(false);
  updateProjectOptions();
  show('farmer');
 }
@@ -1041,6 +1063,7 @@ function saveFarmer(){
 function editFarmer(id){
  let d=getRecords().find(x=>x.id===id); if(!d)return;
  currentId=id; ids.forEach(i=>{const e=document.getElementById(i); if(e)e.value=['consentDate','p2FinalDate'].includes(i)?formatDateDMY(d[i]||''):d[i]||'';}); restoreMaharashtraSelectors(d); restoreComponentProjectHeight(d);
+ lockSchemeIfSaved(true);
  show('farmer');
 }
 function duplicateFarmer(id){
@@ -1049,6 +1072,7 @@ function duplicateFarmer(id){
  setRecords([...getRecords(),n]); currentId=n.id;
  ids.forEach(i=>{const e=document.getElementById(i); if(e) e.value=n[i]||'';});
  restoreMaharashtraSelectors(n); restoreComponentProjectHeight(n);
+ lockSchemeIfSaved(true);
  show('farmer');
 }
 function deleteFarmer(id){
@@ -1066,14 +1090,14 @@ function restoreFarmer(id){
  if(navigator.onLine) callApi('restore',{recordId:(a[idx]&&a[idx].syncId)||id, employeeId:session?session.employeeId:''});
 }
 function permanentDeleteFarmer(id){
- if(!adminUnlocked){ alert('फक्त Admin Permanent Delete करू शकतो. आधी Admin Panel मधून Unlock करा.'); return; }
+ if(!(session && session.isAdmin)){ alert('फक्त Admin Permanent Delete करू शकतो.'); return; }
  if(!confirm('हा record कायमचा (permanently) delete होईल. पुढे जायचं?'))return;
  let a=getRecords();
  const rec=a.find(x=>x.id===id);
  a=a.filter(x=>x.id!==id);
  setRecords(a);
  renderRecycle();
- if(rec && rec.syncId) callApi('permanentDelete',{recordId:rec.syncId, adminPassword:adminPasswordCache, employeeId:session?session.employeeId:''});
+ if(rec && rec.syncId) callApi('permanentDelete',{...adminAuthParams(), recordId:rec.syncId, farmerId:id});
 }
 function renderRecycle(){
  const box=document.getElementById('recycleList'); if(!box) return;
@@ -1084,12 +1108,13 @@ function renderRecycle(){
  <b>${esc(d.name)}</b>
  <div class="small">गाव: ${esc(d.village)} | मोबाईल: ${esc(d.mobile)} | Deleted By: ${esc(d.updatedBy||'')}</div>
  <button class="primary" onclick="restoreFarmer('${d.id}')">♻️ Restore</button>
- ${adminUnlocked?`<button onclick="permanentDeleteFarmer('${d.id}')">🗑️ Permanent Delete (Admin)</button>`:''}
+ ${(session && session.isAdmin)?`<button onclick="permanentDeleteFarmer('${d.id}')">🗑️ Permanent Delete (Admin)</button>`:''}
  </div>`).join('');
 }
 function openFarmer(id){
  let d=getRecords().find(x=>x.id===id); if(!d)return;
  currentId=id; ids.forEach(i=>{const e=document.getElementById(i); if(e)e.value=['consentDate','p2FinalDate'].includes(i)?formatDateDMY(d[i]||''):d[i]||'';}); restoreMaharashtraSelectors(d); restoreComponentProjectHeight(d);
+ lockSchemeIfSaved(true);
  renderSummary(); show('forms');
 }
 function renderHistory(){
@@ -1243,6 +1268,11 @@ function renderSchemeForms(){
 }
 function buildOriginalFormBody(title, d){
  const E=(v)=>`<span class="farmer-entered-value">${esc(v)}</span>`;
+ // "N" हा सामायिक हेल्पर — नानासाहेब व सामान्य (RKVY/MIDH) दोन्ही विभागांत वापरला जातो
+ // (उदा. प्रपत्र ११ मधील सेवा पुरवठादार माहिती). आधी हा फक्त नानासाहेब विभागातच व्याख्या केलेला
+ // होता — त्यामुळे RKVY/MIDH च्या प्रपत्र ११ मध्ये वापरताना त्रुटी येऊन कुठलेही प्रपत्र उघडणेच
+ // थांबत होते (एकाच फंक्शनमधील एक चूक, अख्खे प्रपत्र-उघडणे बंद पाडत होती).
+ const N=(v)=>`<span class="farmer-entered-value">${esc(v||'')}</span>`;
  const head=`<div class="notice"><b>शेतकरी माहिती आपोआप भरलेली:</b> ${E(d.name)} | ${E(d.village)} | ता. ${E(d.taluka)} | जि. ${E(d.district)} | गट नं. ${E(d.gat)}</div>`;
  let body=head;
 
@@ -1326,17 +1356,17 @@ function buildOriginalFormBody(title, d){
    <tr><td>2</td><td>48.3</td><td></td><td>2.9</td><td></td><td>3.25</td><td></td></tr>
    <tr><td>3</td><td>42.4</td><td></td><td>2.6</td><td></td><td>2.55</td><td></td></tr>
    <tr><td>4</td><td>33.7</td><td></td><td>2.6</td><td></td><td>1.99</td><td></td></tr></table>
+   </div>
+   <div class="official exact-form form-page"><h2>प्रपत्र - ४ ब <small>(पुढे)</small></h2>
    <h3 style="text-align:center">ब. शेडनेट गृहासाठी टेपनेट मोनोनेट</h3>
-   <table><tr><th>अ.क्र.</th><th>तांत्रिक निकष</th><th>होय / नाही</th></tr>
+   <table><tr><th style="width:6%">अ.क्र.</th><th style="width:82%">तांत्रिक निकष</th><th style="width:12%">होय / नाही</th></tr>
    <tr><td>क</td><td>शेडनेटगृहासाठी टेपनेट (ISI 6008: 2016) Part I आणि मोनोनेट (ISI 6008: 2016) Part II</td><td>शेरा प्रमाणित / अप्रमाणित</td></tr>
-   <tr><td></td><td colspan="1" style="padding:0"><table class="tepnet-subtable" style="margin:0"><tr><th colspan="3">टेपनेट युविव्ही संस्कारित</th><th colspan="3">मोनोनेट युविव्ही संस्कारित</th></tr>
+   <tr><td></td><td colspan="1" style="padding:0"><table class="tepnet-subtable" style="margin:0;width:100%"><tr><th colspan="3">टेपनेट युविव्ही संस्कारित</th><th colspan="3">मोनोनेट युविव्ही संस्कारित</th></tr>
    <tr><th>सावली गुणांक (टक्केवारी)</th><th>अपेक्षित वजन (ग्रॅम प्रति चौ. मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती चौ. मी.)</th><th>सावली गुणांक (टक्केवारी)</th><th>अपेक्षित वजन (ग्रॅम प्रती चौ. मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती चौ. मी.)</th></tr>
    <tr><td>35%</td><td>80</td><td></td><td>35%</td><td>95</td><td></td></tr>
    <tr><td>90%</td><td>100</td><td></td><td>50%</td><td>125</td><td></td></tr>
    <tr><td>75%</td><td>120</td><td></td><td>75%</td><td>310</td><td></td></tr></table></td><td></td></tr>
    </table>
-   </div>
-   <div class="official exact-form form-page"><h2>प्रपत्र - ४ ब <small>(पुढे)</small></h2>
    <h3 style="text-align:center">ड. शेडनेटगृहासाठी इन्सेक्टनेट (IS16513:2016)</h3>
    <table><tr><td></td><th colspan="2">इन्सेक्टनेट 40 मेश युविव्ही संस्कारित</th><th colspan="2">इन्सेक्टनेट 50 मेश युविव्ही संस्कारित</th><th colspan="2">शेडनेट (टेपनेट) युविव्ही संस्कारित (50 टक्के)</th></tr>
    <tr><td></td><th>अपेक्षित वजन (ग्रॅम प्रति चौ. मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती चौ. मी.)</th><th>अपेक्षित वजन (ग्रॅम प्रती चौ. मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती चौ. मी.)</th><th>अपेक्षित वजन (ग्रॅम प्रती चौ. मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती मी.)</th></tr>
@@ -1345,6 +1375,8 @@ function buildOriginalFormBody(title, d){
    <table><tr><th colspan="2">युविव्ही संस्कारित लॅमिनेटेड ओव्हन पॉलिइथिलिन फिल्म</th><th colspan="2">ॲल्युमिनियम प्रोफाइल</th></tr>
    <tr><th>अपेक्षित वजन (ग्रॅम प्रति मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती मी.)</th><th>अपेक्षित वजन (ग्रॅम प्रति मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती मी.)</th></tr>
    <tr><td>120</td><td></td><td>190</td><td></td></tr></table>
+   </div>
+   <div class="official exact-form"><h2>प्रपत्र - ४ ब <small>(पुढे)</small></h2>
    <table><tr><td style="width:6%">फ.</td><td>इतर साहित्य मार्गदर्शन सूचनेतील तांत्रिक निकषाप्रमाणे आहे काय?</td><td style="width:15%">होय / नाही</td></tr>
    <tr><td></td><td>शेडनेटगृहाची उभारणीची जागा व दिशा विचारात घेऊन मार्गदर्शक सूचनेतील आराखड्याप्रमाणे उभारणी नियोजन (आरेखन) आहे काय?</td><td>होय / नाही.</td></tr>
    <tr><td>ग.</td><td>शेडनेटगृहाच्या पायासाठी घेण्यात येणारे खड्ड्याची मापे योग्य आकारमानाचे आहेत काय? पाया पक्का होण्यासाठी योग्य व्यासाचा फाउंडेशन पाईप होल्ड फास्ट चार (8 मीमी. जाडीचा) योग्य प्रमाणाचे काँक्रीट मिश्रणाने भरणे या बाबीकडे लाभार्थी शेतकऱ्यांनी विशेष लक्ष देणे बाबत तसेच शेडनेटगृहाचे आयुष्यमान व पक्क्या उभारणी करिता पाया मजबूत असणे आवश्यक असल्याबाबत लाभार्थ्यास मार्गदर्शन करावे.</td><td>होय / नाही.</td></tr>
@@ -1353,9 +1385,7 @@ function buildOriginalFormBody(title, d){
    <div class="sign-block">समक्ष -<br><br><br>मंडळ कृषी अधिकारी<br><span class="line-gap"></span>श्री.------------------------------------------------------------------<br><span class="line-gap"></span>दिनांकित स्वाक्षरी --------------------------------------------------</div>
    <div class="sign-block">(स्वाक्षरी)<br>लाभार्थ्याचे नाव - श्री. ${N(d.name)}<br><br><br><br>(स्वाक्षरी)<br>पुरवठादार / पुरवठादाराचे प्रतिनिधी नाव - श्री.</div>
    <p><i>(टीप - सदर तपासणी अहवालाची एक प्रत लाभार्थ्यास द्यावी)</i></p>
-   </div>
-   <div class="official exact-form"><h2>प्रपत्र - ४ ब <small>(पुढे)</small></h2>
-   <p>शेडनेटच्या दर्जाची खात्री करण्यासाठी पुरवठादाराकडील खालील अभिलेखांची तपासणी करावी.</p>
+   <p style="margin-top:8px">शेडनेटच्या दर्जाची खात्री करण्यासाठी पुरवठादाराकडील खालील अभिलेखांची तपासणी करावी.</p>
    <ol class="control-list">
    <li>उत्पादक आयातदाराकडील / पॉलिफिल्मच्या दर्जा व गुणधर्माबाबतचे पत्र / प्रमाणपत्र (6 महिन्यांपेक्षा जुना नसावा.)</li>
    <li>उत्पादकाकडील प्रमाणित तांत्रिक माहितीचे विवरणपत्र ------------- (सदर माहिती उत्पादकाची प्रमाणित केलेली आवश्यक आहे, पुरवठादाराने नव्हे.)</li>
@@ -1451,7 +1481,7 @@ function buildOriginalFormBody(title, d){
 
  if(title.includes('प्रपत्र १') && !title.includes('प्रपत्र ११')){
   body+=`
-  <div class="official exact-form form-extra-margin prapatra1-page">
+  <div class="official exact-form form-extra-margin form-page compact-2page">
    <h2>प्रपत्र - १</h2>
    <h3>हमीपत्र</h3>
    <p>(हरितगृह / शेडनेटगृह उभारणी / लागवड साहित्य या प्रत्येक घटकासाठी स्वतंत्ररीत्या देण्यात यावे)</p>
@@ -1475,12 +1505,15 @@ function buildOriginalFormBody(title, d){
    <p>६. मी / आम्ही हरितगृह / शेडनेटगृह बाबतचे 3 ते ५ दिवसांचे प्रशिक्षण महाराष्ट्र राज्य फलोत्पादन आणि औषधी वनस्पती मंडळाने निश्चित केलेल्या ठिकाणी व कालावधीत पूर्ण करेन व त्यानंतरच मी अनुदानास पात्र राहील याची मला जाणीव आहे.</p>
    <p>७. अर्थसहाय्य मंजूर करणाऱ्या अधिकाऱ्यांच्या पूर्वपरवानगी शिवाय मी / आम्ही संपूर्ण प्रकल्पाची किंवा त्यांच्या काही भागाची जागा बदलणार नाहीत किंवा प्रकल्पाच्या लक्षणीय भागाची विल्हेवाट लावणार नाही.</p>
    <p>८. प्रकल्पाच्या कामकाजाची कोणत्याही वेळेस तपासणी करणे व त्यासाठी प्रकल्पाच्या आवारात प्रवेश करणेयासाठी मला / आम्हास अर्थसहाय्य मंजूर करणारेअधिकारी, अनुदान अदा करणारे अधिकारी, राज्यशासन व त्यांनी प्राधिकृत केलेली व्यक्ती यांना प्रतिबंध करणार नाही तसेच त्यांनी या प्रकल्पाशी संबंधित कागदपत्रे. नोंदवहया, पुस्तके व हिशोबाच्या कागदपत्रांची तपासणी करण्यासाठी व त्याच्या प्रती देण्यास प्रतिबंध करणार नाही.</p>
+  </div>
+  <div class="official exact-form form-extra-margin compact-2page">
+   <h2>प्रपत्र - १ <small>(पुढे)</small></h2>
    <p>९. यदाकदाचित माझ्या / आमच्याकडून खोटी, चुकीची किंवा अपूर्ण माहिती दिल्याचे आढळून आल्यास, हरितगृह / शेडनेटगृह व हरितगृह / शेडनेटगृहामधील लागवड साहित्य हा घटक राबविण्याबाबतच्या योजनेअंतर्गत कोणत्याही अटी व शर्तीचा भंग केल्यास तसेच दिलेल्या अनुदानाचा गैरवापर केल्याचे आढळून आल्यास मला / आम्हास माझे/ आमचे म्हणणे मांडण्याची संधी दिल्यानंतर आवश्यकता भासल्यास मला / आम्हाला दिलेल्या अर्थसाहाय्याची पूर्ण रक्कम अथवा त्याचा हिस्सा अर्थसहाय्य अदा केल्याच्या दिनांकापासून विभागीय कृषी सहसंचालक हे निर्धारित करतील त्या दराने व पद्धतीनेवार्षिक व्याजासह वसूल करू शकतील याची मला / आम्हाला जाणीव आहे त्याप्रमाणे मी / आम्ही ते अनुदान परत करू त्याबद्दल आमची काहीही तक्रार राहणार नाही</p>
    <p>१०. शासनाने वेळोवेळी निर्धारित केलेल्या अटी व शर्ती माझ्यावर / आमच्यावर बंधनकारक राहतील याची मला / आम्हास जाणीव आहे व त्याचेमी / आम्ही पालन करीन /करू. प्रकल्पाच्या ठिकाणी विहीत नमुन्यात नामफलक लावून त्यावर ठळक अक्षरात “एकात्मिक फलोत्पादन विकास अभियान अर्थसहाय्यित” असे नमूद करू याची मी / आम्ही हमी देतो.</p>
    <p>११. उपरोक्त योजनेअंतर्गत मिळणाऱ्या अर्थसाहाय्याचा प्रकार हा प्रोत्साहनात्मक असल्यामुळेदेय किंवा उपलब्ध होणाऱ्रे अनुदान मला / आम्हास मान्य असेल व त्यासाठीमी न्यायालयात कोणत्याही प्रकारचा दावा दाखल करणार नाही.</p>
    <p>१२. अनिवार्य घटकांमध्ये हरितगृह / शेडनेटगृह, सांगाडा, सिंचन सुविधा व फॉगिंग यंत्रणा, कंट्रोल हेड व वैकल्पिक साहित्य या घटकाची मार्गदर्शक सूचनेतील तांत्रिक निकषाप्रमाणे उभारणी केल्यानंतरच अनुदान मिळण्यास पात्र राहणार आहेयाची मला जाणीव आहे.</p>
 
-   <p style="margin-top:28px"><b>लाभार्थीची / लाभार्थ्यांच्या स्वाक्षरी / स्वाक्षऱ्या</b></p>
+   <p style="margin-top:10px"><b>लाभार्थीची / लाभार्थ्यांच्या स्वाक्षरी / स्वाक्षऱ्या</b></p>
    <p><b>नाव -</b> ${E(d.name)} ,</p>
    <p><b>पत्ता -</b> मु. पो ${E(d.village)}, ता. ${E(d.taluka)}, जि. ${E(d.district)}</p>
    <p><b>मोबाईल नंबर –</b> ${E(d.mobile)}</p>
@@ -1668,6 +1701,11 @@ function downloadPDF(){
     /* Never show the software form name at the top of PDF pages */
     #formTitle{display:none!important;}
     .pdfclone.form-extra-margin{padding:0!important;box-sizing:border-box!important;}
+    .pdfclone.compact-2page h2{font-size:17px!important;margin:3px 0!important;}
+    .pdfclone.compact-2page h3{font-size:13px!important;margin:3px 0!important;}
+    .pdfclone.compact-2page p{font-size:10.5px!important;line-height:1.3!important;margin:5px 0!important;}
+    .pdfclone.compact-2page table{font-size:10px!important;margin:6px 0!important;}
+    .pdfclone.compact-2page th,.pdfclone.compact-2page td{padding:3px 4px!important;}
     .pdfclone h2{margin-top:0!important;}.pdfclone p{margin:8px 0!important;}
     /* PDF download: Prapatra 11 Page 2 signature and firm-stamp areas
        must match the double-height space used in Print. */
@@ -1915,11 +1953,35 @@ async function retryPendingDocumentUploads(){
   for(const item of pending){ await uploadDocToDrive(item, rec.id, syncId); }
  }
 }
+// एकदा एखाद्या Category (Notary/7-12/फोटो इ.) मधील कागदपत्र प्रत्यक्ष Save/Sync झाले (Drive वर
+// पोचले) की, ती Category कायमची Lock होते — पुन्हा नवीन/डुप्लिकेट टाकता येणार नाही (Admin सोडून).
+// जोवर कागदपत्र अजून Pending आहे (फक्त याच डिव्हाइसवर, Sync व्हायचे बाकी) — तोवर तीच व्यक्ती
+// चूक सुधारून पुन्हा बदलू शकते (Lock होत नाही).
+async function updateDocFieldLocks(){
+ const docs = await getDocs();
+ const isAdmin = !!(session && session.isAdmin);
+ ALL_DOC_TYPES.forEach(([id,label])=>{
+  const input=document.getElementById(id); if(!input) return;
+  const already = docs.some(x=>(x.label===label || (x.label||'').startsWith(label+' (')) && x.synced);
+  const shouldLock = already && !isAdmin;
+  input.disabled=shouldLock;
+  input.title=shouldLock?'हे कागदपत्र आधीच Save/Sync झाले आहे — फक्त Admin बदलू शकतो.':'';
+  const wrap=document.getElementById('docFieldWrap_'+id);
+  if(wrap){
+   let note=wrap.querySelector('.doc-locked-note');
+   if(shouldLock){
+    if(!note){ note=document.createElement('div'); note.className='doc-locked-note small'; wrap.appendChild(note); }
+    note.textContent='🔒 Save झाले — फक्त Admin बदलू शकतो.';
+   } else if(note){ note.remove(); }
+  }
+ });
+}
 async function renderDocuments(){
  let d=findRecordAnyYear(currentId);
  document.getElementById('docFarmerInfo').innerHTML=d?
  `<b>शेतकरी:</b> ${esc(d.name)} &nbsp; | &nbsp; <b>आर्थिक वर्ष:</b> ${currentYear}`:
  '<b>शेतकरी निवडलेला नाही.</b>';
+ await updateDocFieldLocks();
  let a=await getDocs(), box=document.getElementById('docList');
  if(!a.length){box.innerHTML='<p>अजून कोणतेही कागदपत्र जोडलेले नाही.</p>';return;}
  box.innerHTML=a.map(x=>{
