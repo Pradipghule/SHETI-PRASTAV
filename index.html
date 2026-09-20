@@ -26,7 +26,7 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
 .formbtn:hover{border-color:#0b5d4b}
 
 .official{font-family:"Noto Sans Devanagari",Arial,sans-serif;line-height:1.62;border:1px solid #ddd;padding:24px;background:#fff;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal}
-.official h2,.official h3{text-align:center;margin:4px}.official table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;table-layout:fixed}.official th,.official td{border:1px solid #777;padding:6px;vertical-align:top;overflow-wrap:anywhere}.official p{margin:8px 0;text-align:justify}.exact-form{max-width:100%;}.form-page{page-break-after:always;break-after:page}.form-page:last-child{page-break-after:auto;break-after:auto}.control-list{margin:4px 0 8px 18px;line-height:1.5}.signature-space{margin-top:28px}
+.official h2,.official h3{text-align:center;margin:4px}.official table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;table-layout:fixed}.official th,.official td{border:1px solid #777;padding:6px;vertical-align:top;overflow-wrap:anywhere}.official p{margin:8px 0;text-align:justify}.exact-form{max-width:100%;}.form-page{page-break-after:always;break-after:page}.form-page:last-child{page-break-after:auto;break-after:auto}.control-list{margin:4px 0 8px 18px;line-height:1.5}.signature-space{margin-top:28px}
 
 .year-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin-top:15px}.year-current-panel,.year-old-panel{background:#f8fbf9;border:1px solid #d9e8dd;border-radius:14px;padding:14px}.panel-title{font-weight:800;color:#205b38;font-size:17px;margin-bottom:10px}.year-old-panel{background:#fbfcfb}.year-old-panel .yearcard{margin:0 0 12px}.year-current-panel .yearcard{margin:0}.year-old-panel .yearcard:last-child{margin-bottom:0}
 @media(max-width:760px){.year-layout{grid-template-columns:1fr}}
@@ -60,11 +60,11 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
   .official{border:0;padding:0;width:100%;overflow:visible}
   .form-extra-margin{padding:0!important;box-sizing:border-box!important;}
   /* RKVY/MIDH चे प्रपत्र १ (हमीपत्र) — १३ मुद्दे + सही/साक्षीदार एकाच पानावर बसावेत म्हणून कॉम्पॅक्ट. */
-  .compact-2page h2{font-size:17px!important;margin:3px 0!important;}
-  .compact-2page h3{font-size:13px!important;margin:3px 0!important;}
-  .compact-2page p{font-size:10.5px!important;line-height:1.3!important;margin:5px 0!important;}
-  .compact-2page table{font-size:10px!important;margin:6px 0!important;}
-  .compact-2page th,.compact-2page td{padding:3px 4px!important;}
+  .compact-single-page h2{font-size:15px!important;margin:2px 0!important;}
+  .compact-single-page h3{font-size:12px!important;margin:2px 0!important;}
+  .compact-single-page p{font-size:9px!important;line-height:1.24!important;margin:3.5px 0!important;}
+  .compact-single-page table{font-size:8.5px!important;margin:4px 0!important;}
+  .compact-single-page th,.compact-single-page td{padding:2px 3px!important;}
   .official table{font-size:11px}
   .official th,.official td{padding:4px}
   .official p{font-size:9.2pt;line-height:1.22}
@@ -102,15 +102,15 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
     break-after:page;
     overflow:visible !important;
   }
-  .stamp-page-1,.stamp-page-3{min-height:0;height:277mm;}
+  .stamp-page-1,.stamp-page-3{min-height:277mm;height:auto;}
   .stamp-page-2,.stamp-page-4{min-height:0;height:277mm;padding-top:0;box-sizing:border-box;}
   .stamp-page .stamp-top-space{
     height:150mm; /* reserved handwritten space */
     box-sizing:border-box;
   }
   .stamp-page h2,.stamp-page h3,.stamp-page p{
-    font-size:9.2pt !important;
-    line-height:1.22 !important;
+    font-size:10pt !important;
+    line-height:1.24 !important;
   }
   .stamp-page h2{margin-top:0 !important;}
   .stamp-page-2 p,.stamp-page-4 p{
@@ -222,12 +222,14 @@ function updateFarmName(){const n=localStorage.getItem("farmName")||"Sahyadri Gr
       <input id="loginPassword" type="password">
       <div id="loginError" class="auth-error"></div>
       <button class="primary" onclick="doLogin()">Login</button>
-      <div class="actions"><button type="button" onclick="showAuth('adminForgot')" style="background:none;border:0;color:#0b5d4b;text-decoration:underline;padding:0">Password विसरलात? (फक्त Admin साठी)</button></div>
+      <div class="actions"><button type="button" onclick="showAuth('adminForgot')" style="background:none;border:0;color:#0b5d4b;text-decoration:underline;padding:0">Password विसरलात?</button></div>
     </div>
 
     <div id="auth_adminForgot" class="auth-panel hidden">
       <div id="af_step1">
-        <p class="small">Admin (EMP1) च्या नोंदणीकृत Email वर OTP पाठवला जाईल.</p>
+        <label>Employee Number</label>
+        <select id="af_empNo"><option value="1">Admin</option><option value="2">Employee No. 2</option><option value="3">Employee No. 3</option><option value="4">Employee No. 4</option><option value="5">Employee No. 5</option></select>
+        <p class="small">Admin च्या नोंदणीकृत Email वर OTP पाठवला जाईल (Admin कडून तो मिळवा).</p>
         <div class="actions"><button class="primary" onclick="sendAdminForgotOtp()">OTP पाठवा</button> <button type="button" onclick="showAuth('login')">← परत Login कडे</button></div>
       </div>
       <div id="af_step2" class="hidden">
@@ -322,6 +324,7 @@ function updateFarmName(){const n=localStorage.getItem("farmName")||"Sahyadri Gr
 <button id="bForms" onclick="show('forms')">📑 प्रपत्रे</button>
 <button id="bAdminEdit" class="hidden" onclick="show('adminEditFolder')">📁 Admin Edit</button>
 <button id="bBackup" class="hidden" onclick="backup()">💾 Backup</button>
+<button id="bLocationPermission" class="hidden" onclick="requestLocationPermissionNow()">📍 Location Permission Allow करा</button>
 <span id="backupStatusText" class="small"></span>
 </nav>
 <main>
@@ -353,9 +356,17 @@ function updateFarmName(){const n=localStorage.getItem("farmName")||"Sahyadri Gr
 <div><label>एकूण क्षेत्रफळ (चौ. मी.)</label><input id="area" type="number" step="0.01" min="0" placeholder="लांबी × रुंदी वरून आपोआप / मॅन्युअली बदलता येईल"></div>
 <div><label>उंची</label><select id="heightSelect" disabled onchange="onHeightSelectChange()"><option value="">-- प्रथम प्रकल्प निवडा --</option></select><input id="heightOther" class="hidden" placeholder="उंची मॅन्युअली टाका (उदा. ३.५ मी)" oninput="syncHeightHidden()" style="margin-top:6px"><input type="hidden" id="height"></div>
 <div><label>पूर्वसंमती क्रमांक</label><input id="consent"></div>
-<div><label>पूर्वसंमती दिनांक</label><input id="consentDate" type="text" inputmode="numeric" placeholder="DD/MM/YYYY" maxlength="10"></div>
+<div><label>पूर्वसंमती दिनांक</label>
+ <input id="consentDate" type="text" inputmode="numeric" placeholder="DD/MM/YYYY" maxlength="10">
+ <input id="consentDate_picker" type="date" style="width:36px;padding:0;border:0;background:transparent" title="कॅलेंडरमधून निवडा" onchange="pickDateInto('consentDate', this.value)">
+ <button type="button" onclick="fillTodayInto('consentDate')" title="आजची तारीख भरा">📅 आज</button>
+</div>
 <div><label>मोबाईल नंबर</label><input id="mobile" maxlength="10" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10);"></div>
-<div><label>प्रपत्र 2 शेवटचा दिनांक</label><input id="p2FinalDate" type="text" placeholder="DD / MM / YYYY"></div>
+<div><label>प्रपत्र 2 शेवटचा दिनांक</label>
+ <input id="p2FinalDate" type="text" placeholder="DD / MM / YYYY">
+ <input id="p2FinalDate_picker" type="date" style="width:36px;padding:0;border:0;background:transparent" title="कॅलेंडरमधून निवडा" onchange="pickDateInto('p2FinalDate', this.value)">
+ <button type="button" onclick="fillTodayInto('p2FinalDate')" title="आजची तारीख भरा">📅 आज</button>
+</div>
 </div>
 <div class="actions"><button type="button" id="saveNextBtn" class="primary" onclick="return saveFarmer();">💾 Save & पुढे →</button></div>
 </section>
@@ -406,6 +417,8 @@ function updateFarmName(){const n=localStorage.getItem("farmName")||"Sahyadri Gr
 </div>
 <div class="actions"><button class="primary" onclick="saveDocuments()">💾 Documents Save</button></div>
 <div id="docList"></div>
+<h3>🗑️ हटवलेली कागदपत्रे (Recycle Bin)</h3>
+<div id="docRecycleList"></div>
 </section>
 
 <section id="forms" class="card hidden">
@@ -682,6 +695,21 @@ function setupDateInputs(){
     e.addEventListener('blur',()=>{ e.value=formatDateDMY(e.value); });
   });
 }
+// कॅलेंडरमधून तारीख निवडल्यावर (native <input type="date"> मधून, स्वरूप YYYY-MM-DD) —
+// तेच योग्य DD/MM/YYYY स्वरूपात मुख्य (दृश्य) रकान्यात भरते. मॅन्युअली टाईप करायचे असल्यास
+// आधीसारखेच शक्य आहे — हे फक्त एक जलद पर्याय आहे.
+function pickDateInto(fieldId, isoDate){
+ if(!isoDate) return;
+ const [y,m,d] = isoDate.split('-');
+ const el=document.getElementById(fieldId); if(el) el.value = `${d}/${m}/${y}`;
+}
+// "आज" बटण — आजची तारीख लगेच DD/MM/YYYY स्वरूपात भरते.
+function fillTodayInto(fieldId){
+ const el=document.getElementById(fieldId); if(!el) return;
+ const now=new Date();
+ const dd=String(now.getDate()).padStart(2,'0'), mm=String(now.getMonth()+1).padStart(2,'0'), yyyy=now.getFullYear();
+ el.value = `${dd}/${mm}/${yyyy}`;
+}
 function formatP2Date(v){
   // Prapatra 2 final date must remain a blank, user-fillable date field.
   // Display any saved ISO date as DD/MM/YYYY.
@@ -875,11 +903,11 @@ async function renderBodyHtmlToPdfBlob(bodyHtml){
    .pdfclone.stamp-page-1 h2.p11-highlight,.pdfclone.stamp-page-3 h2.p11-highlight{display:block!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;font-weight:800!important;color:#111!important;}
    .pdfclone h2,.pdfclone h3,.pdfclone p{font-size:9.2pt!important;line-height:1.22!important;}
    .pdfclone.form-extra-margin{padding:0!important;box-sizing:border-box!important;}
-   .pdfclone.compact-2page h2{font-size:17px!important;margin:3px 0!important;}
-   .pdfclone.compact-2page h3{font-size:13px!important;margin:3px 0!important;}
-   .pdfclone.compact-2page p{font-size:10.5px!important;line-height:1.3!important;margin:5px 0!important;}
-   .pdfclone.compact-2page table{font-size:10px!important;margin:6px 0!important;}
-   .pdfclone.compact-2page th,.pdfclone.compact-2page td{padding:3px 4px!important;}
+   .pdfclone.compact-single-page h2{font-size:15px!important;margin:2px 0!important;}
+   .pdfclone.compact-single-page h3{font-size:12px!important;margin:2px 0!important;}
+   .pdfclone.compact-single-page p{font-size:9px!important;line-height:1.24!important;margin:3.5px 0!important;}
+   .pdfclone.compact-single-page table{font-size:8.5px!important;margin:4px 0!important;}
+   .pdfclone.compact-single-page th,.pdfclone.compact-single-page td{padding:2px 3px!important;}
    .pdfclone h2{margin-top:0!important;}.pdfclone p{margin:8px 0!important;}
    .pdfclone.stamp-page-2 .p11-signature-area{margin-top:10px!important;}
    .pdfclone.stamp-page-2 .p11-sign-line,
@@ -888,7 +916,7 @@ async function renderBodyHtmlToPdfBlob(bodyHtml){
    .pdfclone.stamp-page-2 .p11-stamp-line span{display:inline-block!important;min-width:80mm!important;}
    .pdfclone table{font-size:11px!important;}
    .pdfclone th,.pdfclone td{padding:4px!important;}
-   .pdfclone .tepnet-subtable{font-size:8.5px!important;}
+   .pdfclone .tepnet-subtable{font-size:9.5px!important;}
    .pdfclone .tepnet-subtable th,.pdfclone .tepnet-subtable td{padding:2px!important;line-height:1.15!important;}
  `;
  stage.appendChild(style);
@@ -1481,7 +1509,7 @@ function buildOriginalFormBody(title, d){
 
  if(title.includes('प्रपत्र १') && !title.includes('प्रपत्र ११')){
   body+=`
-  <div class="official exact-form form-extra-margin form-page compact-2page">
+  <div class="official exact-form form-extra-margin compact-single-page">
    <h2>प्रपत्र - १</h2>
    <h3>हमीपत्र</h3>
    <p>(हरितगृह / शेडनेटगृह उभारणी / लागवड साहित्य या प्रत्येक घटकासाठी स्वतंत्ररीत्या देण्यात यावे)</p>
@@ -1505,23 +1533,21 @@ function buildOriginalFormBody(title, d){
    <p>६. मी / आम्ही हरितगृह / शेडनेटगृह बाबतचे 3 ते ५ दिवसांचे प्रशिक्षण महाराष्ट्र राज्य फलोत्पादन आणि औषधी वनस्पती मंडळाने निश्चित केलेल्या ठिकाणी व कालावधीत पूर्ण करेन व त्यानंतरच मी अनुदानास पात्र राहील याची मला जाणीव आहे.</p>
    <p>७. अर्थसहाय्य मंजूर करणाऱ्या अधिकाऱ्यांच्या पूर्वपरवानगी शिवाय मी / आम्ही संपूर्ण प्रकल्पाची किंवा त्यांच्या काही भागाची जागा बदलणार नाहीत किंवा प्रकल्पाच्या लक्षणीय भागाची विल्हेवाट लावणार नाही.</p>
    <p>८. प्रकल्पाच्या कामकाजाची कोणत्याही वेळेस तपासणी करणे व त्यासाठी प्रकल्पाच्या आवारात प्रवेश करणेयासाठी मला / आम्हास अर्थसहाय्य मंजूर करणारेअधिकारी, अनुदान अदा करणारे अधिकारी, राज्यशासन व त्यांनी प्राधिकृत केलेली व्यक्ती यांना प्रतिबंध करणार नाही तसेच त्यांनी या प्रकल्पाशी संबंधित कागदपत्रे. नोंदवहया, पुस्तके व हिशोबाच्या कागदपत्रांची तपासणी करण्यासाठी व त्याच्या प्रती देण्यास प्रतिबंध करणार नाही.</p>
-  </div>
-  <div class="official exact-form form-extra-margin compact-2page">
-   <h2>प्रपत्र - १ <small>(पुढे)</small></h2>
    <p>९. यदाकदाचित माझ्या / आमच्याकडून खोटी, चुकीची किंवा अपूर्ण माहिती दिल्याचे आढळून आल्यास, हरितगृह / शेडनेटगृह व हरितगृह / शेडनेटगृहामधील लागवड साहित्य हा घटक राबविण्याबाबतच्या योजनेअंतर्गत कोणत्याही अटी व शर्तीचा भंग केल्यास तसेच दिलेल्या अनुदानाचा गैरवापर केल्याचे आढळून आल्यास मला / आम्हास माझे/ आमचे म्हणणे मांडण्याची संधी दिल्यानंतर आवश्यकता भासल्यास मला / आम्हाला दिलेल्या अर्थसाहाय्याची पूर्ण रक्कम अथवा त्याचा हिस्सा अर्थसहाय्य अदा केल्याच्या दिनांकापासून विभागीय कृषी सहसंचालक हे निर्धारित करतील त्या दराने व पद्धतीनेवार्षिक व्याजासह वसूल करू शकतील याची मला / आम्हाला जाणीव आहे त्याप्रमाणे मी / आम्ही ते अनुदान परत करू त्याबद्दल आमची काहीही तक्रार राहणार नाही</p>
    <p>१०. शासनाने वेळोवेळी निर्धारित केलेल्या अटी व शर्ती माझ्यावर / आमच्यावर बंधनकारक राहतील याची मला / आम्हास जाणीव आहे व त्याचेमी / आम्ही पालन करीन /करू. प्रकल्पाच्या ठिकाणी विहीत नमुन्यात नामफलक लावून त्यावर ठळक अक्षरात “एकात्मिक फलोत्पादन विकास अभियान अर्थसहाय्यित” असे नमूद करू याची मी / आम्ही हमी देतो.</p>
    <p>११. उपरोक्त योजनेअंतर्गत मिळणाऱ्या अर्थसाहाय्याचा प्रकार हा प्रोत्साहनात्मक असल्यामुळेदेय किंवा उपलब्ध होणाऱ्रे अनुदान मला / आम्हास मान्य असेल व त्यासाठीमी न्यायालयात कोणत्याही प्रकारचा दावा दाखल करणार नाही.</p>
    <p>१२. अनिवार्य घटकांमध्ये हरितगृह / शेडनेटगृह, सांगाडा, सिंचन सुविधा व फॉगिंग यंत्रणा, कंट्रोल हेड व वैकल्पिक साहित्य या घटकाची मार्गदर्शक सूचनेतील तांत्रिक निकषाप्रमाणे उभारणी केल्यानंतरच अनुदान मिळण्यास पात्र राहणार आहेयाची मला जाणीव आहे.</p>
 
-   <p style="margin-top:10px"><b>लाभार्थीची / लाभार्थ्यांच्या स्वाक्षरी / स्वाक्षऱ्या</b></p>
+   <p style="margin-top:12px"><b>लाभार्थीची / लाभार्थ्यांच्या स्वाक्षरी / स्वाक्षऱ्या</b></p>
    <p><b>नाव -</b> ${E(d.name)} ,</p>
    <p><b>पत्ता -</b> मु. पो ${E(d.village)}, ता. ${E(d.taluka)}, जि. ${E(d.district)}</p>
    <p><b>मोबाईल नंबर –</b> ${E(d.mobile)}</p>
+   <p style="margin-top:8px">स्वाक्षरी :- <span style="display:inline-block;min-width:70mm;border-bottom:1px solid #000">&nbsp;</span></p>
    <p>वरील प्रमाणे सादर केलेली माहिती खरी आहे.</p>
-   <p><b>साक्षीदार क्र. १</b></p>
-   <p>पत्ता------------------------------------------------------------------------------------------------------ स्वाक्षरी ------------------------------------------</p>
-   <p><b>साक्षीदार क्र. 2</b></p>
-   <p>पत्ता------------------------------------------------------------------------------------------------------ स्वाक्षरी ------------------------------------------</p>
+   <p style="margin-top:14px"><b>साक्षीदार क्र. १</b></p>
+   <p style="margin-top:6px">पत्ता --------------------------------------------------------------- <span style="display:inline-block;min-width:35mm;border-bottom:1px solid #000">&nbsp;</span> स्वाक्षरी <span style="display:inline-block;min-width:35mm;border-bottom:1px solid #000">&nbsp;</span></p>
+   <p style="margin-top:14px"><b>साक्षीदार क्र. 2</b></p>
+   <p style="margin-top:6px">पत्ता --------------------------------------------------------------- <span style="display:inline-block;min-width:35mm;border-bottom:1px solid #000">&nbsp;</span> स्वाक्षरी <span style="display:inline-block;min-width:35mm;border-bottom:1px solid #000">&nbsp;</span></p>
   </div>`;
  }
  else if(title.includes('प्रपत्र २')){
@@ -1576,7 +1602,7 @@ function buildOriginalFormBody(title, d){
   const prov = resolveProvider(d.serviceProvider);
   body+=`
   <!-- PRAPATRA 11 - PAGE 1: stamp paper blank area + supplier heading/introduction (निवडलेल्या सेवा पुरवठादारानुसार आपोआप) -->
-  <div class="official exact-form stamp-page stamp-page-1">
+  <div class="official exact-form stamp-page stamp-page-1 prapatra1-page">
    <div class="stamp-top-space"></div>
    <h2 class="p11-highlight">प्रपत्र – ११</h2>
    <h3>हरितगृह / शेडनेटगृह, केबल अँड पोस्ट प्रकारचे शेडनेटगृह उभारणी मार्गदर्शक सूचनेतील<br>निकषांप्रमाणे केली असल्याबाबत सेवा पुरवठादाराने द्यावयाचे प्रमाणपत्र</h3>
@@ -1701,11 +1727,11 @@ function downloadPDF(){
     /* Never show the software form name at the top of PDF pages */
     #formTitle{display:none!important;}
     .pdfclone.form-extra-margin{padding:0!important;box-sizing:border-box!important;}
-    .pdfclone.compact-2page h2{font-size:17px!important;margin:3px 0!important;}
-    .pdfclone.compact-2page h3{font-size:13px!important;margin:3px 0!important;}
-    .pdfclone.compact-2page p{font-size:10.5px!important;line-height:1.3!important;margin:5px 0!important;}
-    .pdfclone.compact-2page table{font-size:10px!important;margin:6px 0!important;}
-    .pdfclone.compact-2page th,.pdfclone.compact-2page td{padding:3px 4px!important;}
+    .pdfclone.compact-single-page h2{font-size:15px!important;margin:2px 0!important;}
+    .pdfclone.compact-single-page h3{font-size:12px!important;margin:2px 0!important;}
+    .pdfclone.compact-single-page p{font-size:9px!important;line-height:1.24!important;margin:3.5px 0!important;}
+    .pdfclone.compact-single-page table{font-size:8.5px!important;margin:4px 0!important;}
+    .pdfclone.compact-single-page th,.pdfclone.compact-single-page td{padding:2px 3px!important;}
     .pdfclone h2{margin-top:0!important;}.pdfclone p{margin:8px 0!important;}
     /* PDF download: Prapatra 11 Page 2 signature and firm-stamp areas
        must match the double-height space used in Print. */
@@ -1719,7 +1745,7 @@ function downloadPDF(){
     .pdfclone.stamp-page-2 .p11-stamp-line span{display:inline-block!important;min-width:80mm!important;}
     .pdfclone table{font-size:11px!important;}
     .pdfclone th,.pdfclone td{padding:4px!important;}
-    .pdfclone .tepnet-subtable{font-size:8.5px!important;}
+    .pdfclone .tepnet-subtable{font-size:9.5px!important;}
     .pdfclone .tepnet-subtable th,.pdfclone .tepnet-subtable td{padding:2px!important;line-height:1.15!important;}
   `;
   stage.appendChild(style);
@@ -1962,7 +1988,7 @@ async function updateDocFieldLocks(){
  const isAdmin = !!(session && session.isAdmin);
  ALL_DOC_TYPES.forEach(([id,label])=>{
   const input=document.getElementById(id); if(!input) return;
-  const already = docs.some(x=>(x.label===label || (x.label||'').startsWith(label+' (')) && x.synced);
+  const already = docs.some(x=>(x.label===label || (x.label||'').startsWith(label+' (')) && x.synced && !x.deleted);
   const shouldLock = already && !isAdmin;
   input.disabled=shouldLock;
   input.title=shouldLock?'हे कागदपत्र आधीच Save/Sync झाले आहे — फक्त Admin बदलू शकतो.':'';
@@ -1982,7 +2008,8 @@ async function renderDocuments(){
  `<b>शेतकरी:</b> ${esc(d.name)} &nbsp; | &nbsp; <b>आर्थिक वर्ष:</b> ${currentYear}`:
  '<b>शेतकरी निवडलेला नाही.</b>';
  await updateDocFieldLocks();
- let a=await getDocs(), box=document.getElementById('docList');
+ let a=(await getDocs()).filter(x=>!x.deleted), box=document.getElementById('docList');
+ renderDocRecycleBin();
  if(!a.length){box.innerHTML='<p>अजून कोणतेही कागदपत्र जोडलेले नाही.</p>';return;}
  box.innerHTML=a.map(x=>{
   let statusHtml;
@@ -2037,10 +2064,58 @@ async function deleteDoc(id){
   alert('⚠️ Save झालेले कागदपत्र फक्त Admin Delete करू शकतो. जोडणाऱ्या Employee लाही (Save झाल्यानंतर) ते Delete करता येणार नाही.');
   return;
  }
- const x=(await getDocs()).find(z=>z.id===id);
- const msg = (x && x.synced) ? 'हे कागदपत्र फक्त या डिव्हाइसवरील यादीतून काढले जाईल — Drive वरील प्रत सुरक्षित राहील. पुढे जायचं?' : 'हे कागदपत्र delete करायचे का?';
- if(!confirm(msg))return;
- await setDocs((await getDocs()).filter(x=>x.id!==id)); renderDocuments();
+ if(!confirm('हे कागदपत्र Delete करायचे का? (हे आधी "हटवलेली कागदपत्रे (Recycle Bin)" मध्ये जाईल — तिथून परत Restore किंवा कायमचे Delete करता येईल.)'))return;
+ // थेट काढून टाकत नाही — Recycle Bin प्रमाणे आधी फक्त "हटवलेले" म्हणून चिन्हांकित करतो.
+ let docs=await getDocs();
+ const idx=docs.findIndex(x=>x.id===id);
+ if(idx<0) return;
+ docs[idx].deleted=true;
+ docs[idx].deletedBy=session?session.employeeId:'';
+ docs[idx].deletedDate=new Date().toISOString();
+ await setDocs(docs);
+ // Sync झालेले असल्यास, सर्व्हरवरील मेटाडेटाही "हटवलेले" असे अद्ययावत करतो — जेणेकरून
+ // दुसऱ्या डिव्हाइसवर हे कागदपत्र चुकून "जिवंत" राहणार नाही.
+ if(docs[idx].synced){
+  const syncId=getCurrentSyncId();
+  if(syncId) callApi('saveDocMeta', {employeeId:session.employeeId, recordId:syncId, docMeta:JSON.stringify(docs[idx])});
+ }
+ renderDocuments();
+}
+async function renderDocRecycleBin(){
+ const box=document.getElementById('docRecycleList'); if(!box) return;
+ const docs=(await getDocs()).filter(x=>x.deleted);
+ if(!docs.length){ box.innerHTML='<p class="small">रिकामी आहे.</p>'; return; }
+ box.innerHTML=docs.map(x=>`<div class="record">
+  <b>${esc(x.label)}</b> — ${esc(x.name||'')}
+  <div class="small">हटवले: ${esc(x.deletedBy||'')} | ${fmtIST(x.deletedDate||'')}</div>
+  <button class="primary" onclick="restoreDoc('${x.id}')">♻️ Restore</button>
+  ${(session && session.isAdmin)?`<button onclick="permanentDeleteDoc('${x.id}')">🗑️ Permanent Delete (Admin)</button>`:''}
+ </div>`).join('');
+}
+async function restoreDoc(id){
+ let docs=await getDocs();
+ const idx=docs.findIndex(x=>x.id===id);
+ if(idx<0) return;
+ docs[idx].deleted=false;
+ await setDocs(docs);
+ if(docs[idx].synced){
+  const syncId=getCurrentSyncId();
+  if(syncId) callApi('saveDocMeta', {employeeId:session.employeeId, recordId:syncId, docMeta:JSON.stringify(docs[idx])});
+ }
+ renderDocuments();
+}
+async function permanentDeleteDoc(id){
+ if(!(session && session.isAdmin)){ alert('फक्त Admin Permanent Delete करू शकतो.'); return; }
+ if(!confirm('हे कागदपत्र कायमचे (Drive सकट) Delete होईल. पुढे जायचं?'))return;
+ let docs=await getDocs();
+ const x=docs.find(z=>z.id===id);
+ docs=docs.filter(z=>z.id!==id);
+ await setDocs(docs);
+ renderDocuments();
+ if(x){
+  const syncId=getCurrentSyncId();
+  callApi('permanentDeleteDoc', {...adminAuthParams(), recordId:syncId, docId:x.id, fileId:x.driveFileId||''});
+ }
 }
 
 function backup(){
@@ -2201,20 +2276,22 @@ function showAuth(panel){
 function setBusy(b){ document.getElementById('authBusy').classList.toggle('hidden', !b); }
 async function sendAdminForgotOtp(){
  setBusy(true);
- const res=await callApi('requestAdminPasswordReset', {});
+ const employeeNo=document.getElementById('af_empNo').value;
+ const res=await callApi('requestAdminPasswordReset', {employeeNo});
  setBusy(false);
  if(!res.ok){ alert(res.error||'OTP पाठवता आले नाही.'); return; }
  document.getElementById('af_step1').classList.add('hidden');
  document.getElementById('af_step2').classList.remove('hidden');
- alert('OTP admin email वर पाठवला आहे.');
+ alert('OTP admin email वर पाठवला आहे — Admin कडून तो मिळवा.');
 }
 async function completeAdminForgot(){
  const otp=document.getElementById('af_otp').value.trim();
  const newPassword=document.getElementById('af_newPassword').value;
+ const employeeNo=document.getElementById('af_empNo').value;
  const err=document.getElementById('af_error'); err.textContent='';
  if(!otp || !newPassword){ err.textContent='OTP व नवीन Password भरा.'; return; }
  setBusy(true);
- const res=await callApi('completeAdminPasswordReset', {otp, newPassword});
+ const res=await callApi('completeAdminPasswordReset', {otp, newPassword, employeeNo});
  setBusy(false);
  if(!res.ok){ err.textContent=res.error||'Password बदलता आले नाही.'; return; }
  alert('✅ Password बदलले — आता नवीन Password ने Login करा.');
@@ -2371,6 +2448,7 @@ function afterLogin(){
  updatePendingCount();
  document.getElementById('bAdminEdit').classList.toggle('hidden', !session.isAdmin);
  document.getElementById('bBackup').classList.toggle('hidden', !session.isAdmin);
+ document.getElementById('bLocationPermission').classList.toggle('hidden', !!session.isAdmin);
  migrateAllLegacyDocsGlobally(); // जागा मोकळी करण्यासाठी (quota त्रुटी टाळण्यासाठी) — एकदाच, शांतपणे
  loadAndApplyDashboardConfig();
  loadHeroBackgrounds();
@@ -2383,6 +2461,27 @@ function afterLogin(){
    बंद असताना नाही (ती मर्यादा आधीच स्पष्ट केलेली आहे). दर ५ मिनिटांनी तपासतो, सर्व्हर स्वतः ठरवतो
    की १ किमी अंतराची अट पूर्ण झाली आहे का (तरच प्रत्यक्ष Update होते). */
 let locationTrackingTimer=null;
+// हे बटण थेट Employee च्या Click वर चालते (कुठलाही await मध्ये नाही) — त्यामुळे ब्राउझर हा
+// "User चा थेट Action" समजून खात्रीने Location Permission चा Popup दाखवतो (आपोआप, पानावर
+// आल्याआल्या विचारल्यास बरेच ब्राउझर्स — विशेषतः मोबाईल — तो Popup दाखवतच नाहीत).
+function requestLocationPermissionNow(){
+ if(!navigator.geolocation){ alert('या ब्राउझर/डिव्हाइसवर Location सुविधा उपलब्ध नाही.'); return; }
+ navigator.geolocation.getCurrentPosition(
+  async pos=>{
+   const res = await callApi('updateLocation', {
+    employeeId:session.employeeId, deviceId:getDeviceId(), deviceLabel:getDeviceLabel(),
+    lat:pos.coords.latitude, lng:pos.coords.longitude
+   });
+   alert('✅ Location Permission मिळाली — यापुढे आपोआप Update होत राहील.');
+   if(!locationTrackingTimer) startLocationTracking();
+  },
+  err=>{
+   if(err.code===1) alert('⚠️ Location Permission नाकारली गेली आहे. ब्राउझर सेटिंग्जमध्ये (पत्त्याच्या डावीकडील 🔒/ⓘ आयकॉनवर क्लिक करून) "Location" पुन्हा "Allow" करा.');
+   else alert('⚠️ Location मिळाली नाही — पुन्हा प्रयत्न करा.');
+  },
+  {timeout:15000}
+ );
+}
 function startLocationTracking(){
  if(locationTrackingTimer) return; // आधीच सुरू असल्यास पुन्हा सुरू करू नये
  const sendOnce=()=>{
@@ -2938,10 +3037,18 @@ async function syncNow(){
    }));
    const pushRes = await callApi('syncPush', {employeeId:session.employeeId, employeeName:session.name, records: JSON.stringify(payload)});
    if(pushRes.ok){
+    // Server ने कोणता RecordID "Permanently Deleted" म्हणून नाकारला ते बघतो — तो शेतकरी
+    // आता या डिव्हाइसच्या स्थानिक साठ्यातूनही कायमचा काढून टाकतो (पुन्हा जिवंत होऊ नये म्हणून).
+    const tombRecordIds = new Set((pushRes.results||[]).filter(r=>r.status==='permanently_deleted').map(r=>r.RecordID));
     pendingByYear.forEach(({year,rec})=>{
-     const arr=JSON.parse(localStorage.getItem(fyKey(year))||'[]');
-     const idx=arr.findIndex(x=>x.id===rec.id);
-     if(idx>=0){ arr[idx].syncStatus='synced'; }
+     const thisRecordId = rec.syncId || (session.employeeId+'_'+rec.id);
+     let arr=JSON.parse(localStorage.getItem(fyKey(year))||'[]');
+     if(tombRecordIds.has(thisRecordId)){
+      arr = arr.filter(x=>x.id!==rec.id);
+     } else {
+      const idx=arr.findIndex(x=>x.id===rec.id);
+      if(idx>=0){ arr[idx].syncStatus='synced'; }
+     }
      localStorage.setItem(fyKey(year), JSON.stringify(arr));
     });
    } else {
