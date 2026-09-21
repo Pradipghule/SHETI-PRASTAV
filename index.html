@@ -1104,6 +1104,9 @@ function duplicateFarmer(id){
  show('farmer');
 }
 function deleteFarmer(id){
+ // Employee किंवा Admin — दोघांचाही Delete आधी नेहमी Recycle Bin मध्येच जातो (सुरक्षेसाठी,
+ // चुकून झाल्यास Restore करता यावे). तिथून पुढे फक्त Admin — वेगळ्या "Permanent Delete"
+ // बटणाने — तो कायमचा (Server + Drive सकट, Tombstone सह) काढू शकतो.
  if(!confirm('हा record delete करायचा आहे का? (तो Recycle Bin मध्ये जाईल)'))return;
  let a=getRecords();
  const idx=a.findIndex(x=>x.id===id);
@@ -1117,15 +1120,33 @@ function restoreFarmer(id){
  renderRecycle(); renderHistory(); renderSummary(); updatePendingCount();
  if(navigator.onLine) callApi('restore',{recordId:(a[idx]&&a[idx].syncId)||id, employeeId:session?session.employeeId:''});
 }
-function permanentDeleteFarmer(id){
+async function permanentDeleteFarmer(id){
  if(!(session && session.isAdmin)){ alert('फक्त Admin Permanent Delete करू शकतो.'); return; }
  if(!confirm('हा record कायमचा (permanently) delete होईल. पुढे जायचं?'))return;
  let a=getRecords();
  const rec=a.find(x=>x.id===id);
+ if(!rec) return;
+ // हा शेतकरी अजून एकदाही Server वर Sync झालेलाच नसेल (म्हणजे syncId नाहीच) — तर तो फक्त याच
+ // डिव्हाइसवर, स्थानिकच अस्तित्वात आहे; Server वर काहीच नाही, त्यामुळे तिथे काही Delete
+ // करायची गरजच नाही — फक्त स्थानिक यादीतून काढून टाकतो.
+ if(!rec.syncId){
+  a=a.filter(x=>x.id!==id);
+  setRecords(a);
+  renderRecycle();
+  return;
+ }
+ if(!navigator.onLine){ alert('⚠️ Permanent Delete साठी Internet आवश्यक आहे (Server वरून खात्रीने काढण्यासाठी). Internet आल्यावर पुन्हा प्रयत्न करा.'); return; }
+ // आधी स्थानिक यादीतून काढत नाही — Server ने खरोखर यशस्वीरित्या Delete केल्याची खात्री झाल्यावरच काढतो
+ // (अन्यथा Server कडून काही कारणाने अयशस्वी झाले, तरी Admin ला काहीच कळायचे नाही, आणि तो शेतकरी
+ // Server वर तसाच राहून पुढच्या Sync ला "परत येतोय" असे वाटायचे).
+ const res = await callApi('permanentDelete', {...adminAuthParams(), recordId:rec.syncId, farmerId:id});
+ if(!res || !res.ok){
+  alert('❌ Permanent Delete अयशस्वी झाले: ' + (res && res.error ? res.error : 'Server शी संपर्क होऊ शकला नाही.') + '\n\nस्थानिक यादीत तो शेतकरी तसाच ठेवला आहे.');
+  return;
+ }
  a=a.filter(x=>x.id!==id);
  setRecords(a);
  renderRecycle();
- if(rec && rec.syncId) callApi('permanentDelete',{...adminAuthParams(), recordId:rec.syncId, farmerId:id});
 }
 function renderRecycle(){
  const box=document.getElementById('recycleList'); if(!box) return;
@@ -1684,6 +1705,21 @@ function openForm(title){
 
 function printProposal(){window.print()}
 
+// भरलेला प्रस्ताव (PDF) — त्याच शेतकऱ्याच्या Drive Folder मध्ये (वेगळ्या "PDF Proposals"
+// उप-Folder मध्ये) आपोआप Upload करतो — जेणेकरून डिव्हाइस हरवले/बदलले तरी तो सुरक्षित राहील.
+async function uploadProposalPdfToDrive(pdf, title){
+ try{
+  if(!session || !navigator.onLine || !currentId) return;
+  const dataUri = pdf.output('datauristring');
+  const base64Data = dataUri.split(',')[1] || '';
+  const d = findRecordAnyYear(currentId);
+  await callApi('uploadFile', {
+   employeeId: session.employeeId, farmerId: currentId, farmerName: d?d.name:'',
+   fileName: title.replace(/[\/:*?"<>|]/g,'_')+'.pdf', mimeType: 'application/pdf', base64Data,
+   folderType: 'FARMER_DOCUMENTS'
+  });
+ }catch(e){ /* Offline किंवा अयशस्वी — स्थानिक Download तरी झालेला आहे, पुढच्या वेळी पुन्हा प्रयत्न होईल */ }
+}
 function downloadPDF(){
   if(!window.html2canvas || !window.jspdf){
     alert('PDF engine load होत आहे. Internet चालू ठेवा आणि पुन्हा PDF Download दाबा.');
@@ -1779,6 +1815,10 @@ function downloadPDF(){
         stage.removeChild(clone);
       }
       pdf.save(title.replace(/[\/:*?"<>|]/g,'_')+'.pdf');
+      // हेच भरलेले प्रस्ताव (PDF) आत्तापर्यंत फक्त डिव्हाइसवर Download व्हायचे, Google Drive वर
+      // कधीच जायचे नाहीत — त्यामुळे "Drive मध्ये प्रस्तावच दिसत नाही" असे व्हायचे. आता Download
+      // सोबतच, तोच PDF त्याच शेतकऱ्याच्या Folder मध्ये (Drive वर) आपोआप Upload होतो.
+      uploadProposalPdfToDrive(pdf, title);
     }catch(err){
       console.error(err);
       alert('PDF तयार करताना अडचण आली. Print Preview प्रमाणेच पुन्हा प्रयत्न करा.');
@@ -1936,10 +1976,13 @@ async function uploadDocToDrive(item, farmerId, syncIdParam){
  if(!session || !navigator.onLine) return;
  farmerId = farmerId || currentId;
  const syncId = syncIdParam || getCurrentSyncId();
+ // Drive वर Folder चे नाव फक्त आकड्याऐवजी शेतकऱ्याच्या नावासकट दिसावे यासाठी.
+ const farmerRec = findRecordAnyYear(farmerId);
+ const farmerName = farmerRec ? farmerRec.name : '';
  try{
   const base64Data = item.data.split(',')[1] || '';
   const res = await callApi('uploadFile', {
-    employeeId: session.employeeId, farmerId,
+    employeeId: session.employeeId, farmerId, farmerName,
     fileName: item.name, mimeType: item.type, base64Data,
     folderType: 'FARMER_DOCUMENTS'
   });
@@ -1947,14 +1990,14 @@ async function uploadDocToDrive(item, farmerId, syncIdParam){
     let docs=await idbGetDocs(String(farmerId));
     const idx=docs.findIndex(x=>x.id===item.id);
     if(idx>-1){
-     docs[idx].synced=true; docs[idx].driveUrl=res.fileUrl; await idbSetDocs(String(farmerId), docs);
+     docs[idx].synced=true; docs[idx].driveUrl=res.fileUrl; docs[idx].driveFileId=res.fileId; await idbSetDocs(String(farmerId), docs);
      if(String(farmerId)===String(currentId)) renderDocuments();
      updatePendingCount();
     }
     // कागदपत्राचा तपशील शेतकऱ्याच्या Records row मध्येही साठवा — जेणेकरून हे डिव्हाइस
     // हरवले/डिलीट झाले तरी पुढच्या sync वेळी कोणत्याही डिव्हाइसवर कागदपत्रांची यादी परत मिळेल.
     if(syncId){
-      const docMeta={id:item.id, label:item.label, name:item.name, type:item.type, driveUrl:res.fileUrl, uploadedDate:new Date().toISOString()};
+      const docMeta={id:item.id, label:item.label, name:item.name, type:item.type, driveUrl:res.fileUrl, driveFileId:res.fileId, uploadedDate:new Date().toISOString()};
       callApi('saveDocMeta', {employeeId:session.employeeId, recordId:syncId, docMeta:JSON.stringify(docMeta)});
     }
   }
@@ -2109,13 +2152,26 @@ async function permanentDeleteDoc(id){
  if(!confirm('हे कागदपत्र कायमचे (Drive सकट) Delete होईल. पुढे जायचं?'))return;
  let docs=await getDocs();
  const x=docs.find(z=>z.id===id);
+ if(!x) return;
+ // अजून Sync/Save झालेलेच नसेल (फक्त स्थानिक) — Server वर काहीच नाही, थेट स्थानिक काढतो.
+ if(!x.synced){
+  docs=docs.filter(z=>z.id!==id);
+  await setDocs(docs);
+  renderDocuments();
+  return;
+ }
+ if(!navigator.onLine){ alert('⚠️ Permanent Delete साठी Internet आवश्यक आहे. Internet आल्यावर पुन्हा प्रयत्न करा.'); return; }
+ const syncId=getCurrentSyncId();
+ // आधी स्थानिक यादीतून काढत नाही — Server ने (Drive सकट) खरोखर यशस्वीरित्या Delete केल्याची
+ // खात्री झाल्यावरच काढतो (अन्यथा अयशस्वी झाले तरी कळायचे नाही, आणि ते परत यायचे).
+ const res = await callApi('permanentDeleteDoc', {...adminAuthParams(), recordId:syncId, docId:x.id, fileId:x.driveFileId||''});
+ if(!res || !res.ok){
+  alert('❌ Permanent Delete अयशस्वी झाले: ' + (res && res.error ? res.error : 'Server शी संपर्क होऊ शकला नाही.'));
+  return;
+ }
  docs=docs.filter(z=>z.id!==id);
  await setDocs(docs);
  renderDocuments();
- if(x){
-  const syncId=getCurrentSyncId();
-  callApi('permanentDeleteDoc', {...adminAuthParams(), recordId:syncId, docId:x.id, fileId:x.driveFileId||''});
- }
 }
 
 function backup(){
@@ -2299,7 +2355,7 @@ async function completeAdminForgot(){
 }
 
 // या डिव्हाइसची कायमस्वरूपी ओळख (एकदा तयार झाली की तीच localStorage मध्ये राहते) —
-// "जास्तीत जास्त २ सक्रिय डिव्हाइस" ही मर्यादा सर्व्हरला ओळखता यावी म्हणून आवश्यक.
+// "जास्तीत जास्त ५ सक्रिय डिव्हाइस" ही मर्यादा सर्व्हरला ओळखता यावी म्हणून आवश्यक.
 function getDeviceId(){
  let id = localStorage.getItem('deviceId');
  if(!id){ id = 'DEV_'+Date.now()+'_'+Math.random().toString(36).slice(2); localStorage.setItem('deviceId', id); }
@@ -2433,7 +2489,7 @@ function doLogout(){
  session=null; adminUnlocked=false; adminPasswordCache='';
  document.getElementById('authGate').classList.remove('hidden');
  document.getElementById('syncBar').classList.add('hidden');
- // सर्व्हरला कळवा की या डिव्हाइसचे session संपले — म्हणजे "जास्तीत जास्त २ डिव्हाइस" मर्यादेत
+ // सर्व्हरला कळवा की या डिव्हाइसचे session संपले — म्हणजे "जास्तीत जास्त ५ डिव्हाइस" मर्यादेत
  // ही जागा दुसऱ्या डिव्हाइससाठी मोकळी होईल. Internet नसेल तर हे शांतपणे अयशस्वी होईल (हरकत नाही).
  if(prevSession && navigator.onLine){
   callApi('logoutSession', {employeeId:prevSession.employeeId, deviceId:getDeviceId()}).catch(()=>{});
@@ -2454,6 +2510,12 @@ function afterLogin(){
  loadHeroBackgrounds();
  if(navigator.onLine) syncNow();
  if(!session.isAdmin) startLocationTracking();
+ // Offline असताना Login केले असेल, तर sessionToken रिकामे राहते — त्यामुळे नंतर Internet
+ // आल्यावरही Admin-Only कृती (Deactivate, Reset Password इ.) सर्व्हरकडून नाकारल्या जातात.
+ // आता Internet असूनही sessionToken रिकामेच असल्यास, एकदाच स्पष्ट सूचना देतो.
+ if(session.isAdmin && !session.sessionToken && navigator.onLine){
+  setTimeout(()=>{ alert('⚠️ तुम्ही आधी Internet शिवाय (Offline) Login केले होते. आता Internet आहे — Admin च्या सर्व सुविधा (Deactivate, Reset Password इ.) व्यवस्थित काम करण्यासाठी, कृपया एकदा Logout करून पुन्हा Login करा.'); }, 1500);
+ }
 }
 
 /* ---------- Employee Live Location (फक्त EMP2-5 साठी; Admin ला फक्त पाहण्याचा अधिकार) ----------
@@ -3187,10 +3249,26 @@ function showAdminTab(tab){
 function renderAdminEmployees(rows, isOffatCache, cachedAt){
  const box=document.getElementById('admintab_emp');
  const notice = isOffatCache ? `<div class="notice">📴 Internet नाही — शेवटची Cache केलेली माहिती दाखवत आहे (Last updated: ${fmtIST(cachedAt)}). यात नवीन बदल दिसणार नाहीत.</div>` : '';
- box.innerHTML = notice + '<table><tr><th>ID</th><th>No.</th><th>Name</th><th>Mobile</th><th>Status</th><th>Actions</th></tr>' +
+ const hasDuplicates = new Set(rows.map(r=>r.EmployeeID)).size < rows.length;
+ const cleanupBtn = hasDuplicates ? `<div class="notice">⚠️ एकाच Employee साठी एकापेक्षा जास्त ओळी दिसत आहेत. <button onclick="mergeDuplicateEmployeesNow()">🧹 Duplicate ओळी साफ करा</button></div>` : '';
+ const folderBtn = `<div class="notice">📁 Drive वरील जुनी शेतकरी-Folder्स (फक्त आकड्याच्या नावाची) — शेतकऱ्याच्या नावासकट करण्यासाठी (एकदाच चालवा): <button onclick="renameFarmerFoldersNow()">📝 जुनी Folder्स नाव द्या</button></div>`;
+ box.innerHTML = notice + cleanupBtn + folderBtn + '<table><tr><th>ID</th><th>No.</th><th>Name</th><th>Mobile</th><th>Status</th><th>Actions</th></tr>' +
   rows.map(r=>`<tr><td>${esc(r.EmployeeID)}</td><td>${esc(r.EmployeeNo)}</td><td>${esc(r.EmployeeName)}</td><td>${esc(r.Mobile)}</td><td>${esc(r.Status)}</td>
    <td><button onclick="adminToggleEmp('${r.EmployeeID}','${r.Status==='Active'?'Inactive':'Active'}')">${r.Status==='Active'?'Deactivate':'Activate'}</button>
    <button onclick="adminResetPw('${r.EmployeeID}')">Reset Password</button></td></tr>`).join('') + '</table>';
+}
+async function renameFarmerFoldersNow(){
+ if(!confirm('Drive वरील जुनी शेतकरी-Folder्स (फक्त आकड्याच्या नावाची) आता शेतकऱ्याच्या नावासकट होतील. पुढे जायचं?'))return;
+ const res=await callApi('renameExistingFarmerFolders', adminAuthParams());
+ if(!res.ok){ alert(res.error||'अडचण आली.'); return; }
+ alert(`✅ ${res.renamed} Folder्सना नाव दिले.`);
+}
+async function mergeDuplicateEmployeesNow(){
+ if(!confirm('डुप्लिकेट ओळी साफ केल्या जातील (Active असलेली, किंवा नसल्यास शेवटची ओळ ठेवली जाईल). पुढे जायचं?'))return;
+ const res=await callApi('mergeDuplicateEmployees', adminAuthParams());
+ if(!res.ok){ alert(res.error||'अडचण आली.'); return; }
+ alert(`✅ ${res.removed} जास्तीच्या ओळी काढल्या.`);
+ refreshAdminEmployeesList();
 }
 async function adminToggleEmp(employeeId, status){
  const res=await callApi('toggleEmployee',{...adminAuthParams(), employeeId, status});
