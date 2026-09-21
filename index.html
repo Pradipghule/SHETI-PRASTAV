@@ -26,7 +26,7 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
 .formbtn:hover{border-color:#0b5d4b}
 
 .official{font-family:"Noto Sans Devanagari",Arial,sans-serif;line-height:1.62;border:1px solid #ddd;padding:24px;background:#fff;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal}
-.official h2,.official h3{text-align:center;margin:4px}.official table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;table-layout:fixed}.official th,.official td{border:1px solid #777;padding:6px;vertical-align:top;overflow-wrap:anywhere}.official p{margin:8px 0;text-align:justify}.exact-form{max-width:100%;}.form-page{page-break-after:always;break-after:page}.form-page:last-child{page-break-after:auto;break-after:auto}.control-list{margin:4px 0 8px 18px;line-height:1.5}.signature-space{margin-top:28px}
+.official h2,.official h3{text-align:center;margin:4px}.official table{width:100%;border-collapse:collapse;margin:12px 0;font-size:16px;table-layout:fixed}.official th,.official td{border:1px solid #777;padding:6px;vertical-align:top;overflow-wrap:anywhere}.official p{margin:8px 0;text-align:justify}.exact-form{max-width:100%;}.form-page{page-break-after:always;break-after:page}.form-page:last-child{page-break-after:auto;break-after:auto}.control-list{margin:4px 0 8px 18px;line-height:1.5}.signature-space{margin-top:28px}
 
 .year-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin-top:15px}.year-current-panel,.year-old-panel{background:#f8fbf9;border:1px solid #d9e8dd;border-radius:14px;padding:14px}.panel-title{font-weight:800;color:#205b38;font-size:17px;margin-bottom:10px}.year-old-panel{background:#fbfcfb}.year-old-panel .yearcard{margin:0 0 12px}.year-current-panel .yearcard{margin:0}.year-old-panel .yearcard:last-child{margin-bottom:0}
 @media(max-width:760px){.year-layout{grid-template-columns:1fr}}
@@ -40,14 +40,14 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
 .nakasha-table .nakasha-box{border:2px solid #333;width:160px;height:160px;}
 @media print{ .prapatra1-page{ page:prapatra1; } }
 /* Nanasaheb Prapatra 1, page 1 is printed on stamp paper: reserve ~70% blank space at the top before the printed text begins. */
-@media print{ .p1-top-space{ height:163mm; box-sizing:border-box; } }
+@media print{ .p1-top-space{ height:187mm; box-sizing:border-box; } }
 /* Keep Prapatra 1 page-1 text reasonably readable but compact enough that it fully fits in the remaining ~40% of the page below the stamp-paper blank space. */
 @media print{
-  .p1-page1 h2{font-size:20px!important;margin:5px 0!important;}
-  .p1-page1 h3{font-size:16px!important;margin:4px 0!important;}
-  .p1-page1 p{font-size:15px!important;line-height:1.4!important;margin:5px 0!important;}
+  .p1-page1 h2{font-size:22px!important;margin:5px 0!important;}
+  .p1-page1 h3{font-size:18px!important;margin:4px 0!important;}
+  .p1-page1 p{font-size:17px!important;line-height:1.4!important;margin:5px 0!important;}
   .p1-page1 .control-list{margin:5px 0 8px 18px!important;line-height:1.4!important;}
-  .p1-page1 .control-list li{font-size:15px!important;}
+  .p1-page1 .control-list li{font-size:17px!important;}
 }
 @media print{
   @page{size:A4 portrait;margin:20mm}
@@ -60,10 +60,10 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
   .official{border:0;padding:0;width:100%;overflow:visible}
   .form-extra-margin{padding:0!important;box-sizing:border-box!important;}
   /* RKVY/MIDH चे प्रपत्र १ (हमीपत्र) — १३ मुद्दे + सही/साक्षीदार एकाच पानावर बसावेत म्हणून कॉम्पॅक्ट. */
-  .compact-single-page h2{font-size:15px!important;margin:2px 0!important;}
-  .compact-single-page h3{font-size:12px!important;margin:2px 0!important;}
-  .compact-single-page p{font-size:9px!important;line-height:1.24!important;margin:3.5px 0!important;}
-  .compact-single-page table{font-size:8.5px!important;margin:4px 0!important;}
+  .compact-single-page h2{font-size:17px!important;margin:2px 0!important;}
+  .compact-single-page h3{font-size:14px!important;margin:2px 0!important;}
+  .compact-single-page p{font-size:11.8px!important;line-height:1.1!important;margin:2px 0!important;}
+  .compact-single-page table{font-size:10.5px!important;margin:3px 0!important;}
   .compact-single-page th,.compact-single-page td{padding:2px 3px!important;}
   .official table{font-size:11px}
   .official th,.official td{padding:4px}
@@ -109,8 +109,8 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
     box-sizing:border-box;
   }
   .stamp-page h2,.stamp-page h3,.stamp-page p{
-    font-size:10pt !important;
-    line-height:1.24 !important;
+    font-size:12.1pt !important;
+    line-height:1.1 !important;
   }
   .stamp-page h2{margin-top:0 !important;}
   .stamp-page-2 p,.stamp-page-4 p{
@@ -890,7 +890,7 @@ async function renderBodyHtmlToPdfBlob(bodyHtml){
    .pdfclone.prapatra1-page{height:277mm!important;min-height:277mm!important;}
    .pdfclone{width:170mm!important;min-height:257mm!important;height:257mm!important;box-sizing:border-box!important;background:#fff!important;overflow:hidden!important;border:0!important;padding:0!important;font-family:"Noto Sans Devanagari",Arial,sans-serif!important;}
    .pdfclone .stamp-top-space{height:150mm!important;box-sizing:border-box!important;}
-   .pdfclone .p1-top-space{height:163mm!important;box-sizing:border-box!important;}
+   .pdfclone .p1-top-space{height:187mm!important;box-sizing:border-box!important;}
    .pdfclone.p1-page1 h2{font-size:20px!important;margin:5px 0!important;}
    .pdfclone.p1-page1 h3{font-size:16px!important;margin:4px 0!important;}
    .pdfclone.p1-page1 p{font-size:15px!important;line-height:1.4!important;margin:5px 0!important;}
@@ -905,7 +905,7 @@ async function renderBodyHtmlToPdfBlob(bodyHtml){
    .pdfclone.form-extra-margin{padding:0!important;box-sizing:border-box!important;}
    .pdfclone.compact-single-page h2{font-size:15px!important;margin:2px 0!important;}
    .pdfclone.compact-single-page h3{font-size:12px!important;margin:2px 0!important;}
-   .pdfclone.compact-single-page p{font-size:9px!important;line-height:1.24!important;margin:3.5px 0!important;}
+   .pdfclone.compact-single-page p{font-size:9.8px!important;line-height:1.14!important;margin:2.5px 0!important;}
    .pdfclone.compact-single-page table{font-size:8.5px!important;margin:4px 0!important;}
    .pdfclone.compact-single-page th,.pdfclone.compact-single-page td{padding:2px 3px!important;}
    .pdfclone h2{margin-top:0!important;}.pdfclone p{margin:8px 0!important;}
@@ -916,7 +916,7 @@ async function renderBodyHtmlToPdfBlob(bodyHtml){
    .pdfclone.stamp-page-2 .p11-stamp-line span{display:inline-block!important;min-width:80mm!important;}
    .pdfclone table{font-size:11px!important;}
    .pdfclone th,.pdfclone td{padding:4px!important;}
-   .pdfclone .tepnet-subtable{font-size:9.5px!important;}
+   .pdfclone .tepnet-subtable{font-size:11.5px!important;}
    .pdfclone .tepnet-subtable th,.pdfclone .tepnet-subtable td{padding:2px!important;line-height:1.15!important;}
  `;
  stage.appendChild(style);
@@ -1563,12 +1563,12 @@ function buildOriginalFormBody(title, d){
    <p><b>नाव -</b> ${E(d.name)} ,</p>
    <p><b>पत्ता -</b> मु. पो ${E(d.village)}, ता. ${E(d.taluka)}, जि. ${E(d.district)}</p>
    <p><b>मोबाईल नंबर –</b> ${E(d.mobile)}</p>
-   <p style="margin-top:8px">स्वाक्षरी :- <span style="display:inline-block;min-width:70mm;border-bottom:1px solid #000">&nbsp;</span></p>
+   <p style="margin-top:18px">स्वाक्षरी :- <span style="display:inline-block;min-width:70mm;border-bottom:1px solid #000">&nbsp;</span></p>
    <p>वरील प्रमाणे सादर केलेली माहिती खरी आहे.</p>
    <p style="margin-top:14px"><b>साक्षीदार क्र. १</b></p>
-   <p style="margin-top:6px">पत्ता --------------------------------------------------------------- <span style="display:inline-block;min-width:35mm;border-bottom:1px solid #000">&nbsp;</span> स्वाक्षरी <span style="display:inline-block;min-width:35mm;border-bottom:1px solid #000">&nbsp;</span></p>
+   <p style="margin-top:16px">पत्ता --------------------------------------------------------------- <span style="display:inline-block;min-width:35mm;border-bottom:1px solid #000">&nbsp;</span> स्वाक्षरी <span style="display:inline-block;min-width:35mm;border-bottom:1px solid #000">&nbsp;</span></p>
    <p style="margin-top:14px"><b>साक्षीदार क्र. 2</b></p>
-   <p style="margin-top:6px">पत्ता --------------------------------------------------------------- <span style="display:inline-block;min-width:35mm;border-bottom:1px solid #000">&nbsp;</span> स्वाक्षरी <span style="display:inline-block;min-width:35mm;border-bottom:1px solid #000">&nbsp;</span></p>
+   <p style="margin-top:16px">पत्ता --------------------------------------------------------------- <span style="display:inline-block;min-width:35mm;border-bottom:1px solid #000">&nbsp;</span> स्वाक्षरी <span style="display:inline-block;min-width:35mm;border-bottom:1px solid #000">&nbsp;</span></p>
   </div>`;
  }
  else if(title.includes('प्रपत्र २')){
@@ -1615,7 +1615,7 @@ function buildOriginalFormBody(title, d){
    <p style="margin-top:28px"><b>शेतकऱ्याचे नाव व पत्ता-</b> ${E(d.name)}</p>
    <p>मु. पो. ${E(d.village)}, ता. ${E(d.taluka)}, जि. ${E(d.district)}</p>
    <p><b>पूर्वसंमती क्रमांक व दिनांक -</b> ${E(d.consent)} , <b>दिनांक -</b> ${E(formatDateDMY(d.consentDate))}</p>
-   <p><b>स्वाक्षरी -</b> ______________________________</p>
+   <p style="margin-top:18px"><b>स्वाक्षरी -</b> ______________________________</p>
    <p><b>दिनांक -</b> ______________________________</p>
   </div>`;
  }
@@ -1739,7 +1739,7 @@ function downloadPDF(){
     .pdfclone.prapatra1-page{height:277mm!important;min-height:277mm!important;}
     .pdfclone{width:170mm!important;min-height:257mm!important;height:257mm!important;box-sizing:border-box!important;background:#fff!important;overflow:hidden!important;border:0!important;padding:0!important;font-family:"Noto Sans Devanagari",Arial,sans-serif!important;}
     .pdfclone .stamp-top-space{height:150mm!important;box-sizing:border-box!important;}
-    .pdfclone .p1-top-space{height:163mm!important;box-sizing:border-box!important;}
+    .pdfclone .p1-top-space{height:187mm!important;box-sizing:border-box!important;}
     .pdfclone.p1-page1 h2{font-size:20px!important;margin:5px 0!important;}
     .pdfclone.p1-page1 h3{font-size:16px!important;margin:4px 0!important;}
     .pdfclone.p1-page1 p{font-size:15px!important;line-height:1.4!important;margin:5px 0!important;}
@@ -1765,7 +1765,7 @@ function downloadPDF(){
     .pdfclone.form-extra-margin{padding:0!important;box-sizing:border-box!important;}
     .pdfclone.compact-single-page h2{font-size:15px!important;margin:2px 0!important;}
     .pdfclone.compact-single-page h3{font-size:12px!important;margin:2px 0!important;}
-    .pdfclone.compact-single-page p{font-size:9px!important;line-height:1.24!important;margin:3.5px 0!important;}
+    .pdfclone.compact-single-page p{font-size:9.8px!important;line-height:1.14!important;margin:2.5px 0!important;}
     .pdfclone.compact-single-page table{font-size:8.5px!important;margin:4px 0!important;}
     .pdfclone.compact-single-page th,.pdfclone.compact-single-page td{padding:2px 3px!important;}
     .pdfclone h2{margin-top:0!important;}.pdfclone p{margin:8px 0!important;}
@@ -1781,7 +1781,7 @@ function downloadPDF(){
     .pdfclone.stamp-page-2 .p11-stamp-line span{display:inline-block!important;min-width:80mm!important;}
     .pdfclone table{font-size:11px!important;}
     .pdfclone th,.pdfclone td{padding:4px!important;}
-    .pdfclone .tepnet-subtable{font-size:9.5px!important;}
+    .pdfclone .tepnet-subtable{font-size:11.5px!important;}
     .pdfclone .tepnet-subtable th,.pdfclone .tepnet-subtable td{padding:2px!important;line-height:1.15!important;}
   `;
   stage.appendChild(style);
@@ -2016,7 +2016,9 @@ async function retryPendingDocumentUploads(){
  });
  for(const rec of allFarmers){
   let docs=[]; try{ docs=await idbGetDocs(String(rec.id)); }catch(e){ continue; }
-  const pending=docs.filter(x=>x.data && !x.synced);
+  // "deleted" (Document Recycle Bin मध्ये) असलेली कागदपत्रे इथे वगळतो — अन्यथा ती कधीही
+  // Sync न झालेली असल्यास, प्रत्येक Sync वेळी पुन्हा-पुन्हा Upload होण्याचा प्रयत्न व्हायचा.
+  const pending=docs.filter(x=>x.data && !x.synced && !x.deleted);
   if(!pending.length) continue;
   const syncId = rec.syncId || (session.employeeId+'_'+rec.id);
   for(const item of pending){ await uploadDocToDrive(item, rec.id, syncId); }
@@ -2287,11 +2289,13 @@ function adminAuthParams(){
 }
 let pendingOtpInfo = null; // {employeeNo, employeeName, mobile}
 
-async function callApi(action, params, _attempt){
+async function callApi(action, params, _attempt, forceAttempt){
  _attempt = _attempt || 0;
  // navigator.onLine खरोखरच "इंटरनेट नाही" हे सांगते; इतर सर्व अपयश (CORS, सर्व्हर वेळेत उत्तर न देणे,
  // तात्पुरता नेटवर्क अडथळा) वेगळी आणि खरी कारणे आहेत — ती "Offline" म्हणून खोटी सांगू नयेत.
- if(!navigator.onLine){
+ // अपवाद: forceAttempt=true असल्यास (उदा. Login) — navigator.onLine वर विसंबून न राहता,
+ // खरोखर सर्व्हरशी संपर्क करून बघतो (हा संकेत मोबाईलवर कधीकधी क्षणभर चुकीचा असतो).
+ if(!navigator.onLine && !forceAttempt){
   return {ok:false, error:'इंटरनेट उपलब्ध नाही (डिव्हाइस Offline आहे).', offline:true};
  }
  const controller = new AbortController();
@@ -2310,10 +2314,12 @@ async function callApi(action, params, _attempt){
   // मोबाईल नेटवर्कवरील क्षणिक अडथळे सहन करण्यासाठी — वाढत्या विलंबाने जास्तीत जास्त ३ वेळा आपोआप प्रयत्न करतो.
   if(_attempt < 2){
    await new Promise(r=>setTimeout(r, 1000 * Math.pow(2, _attempt))); // 1s, 2s
-   return callApi(action, params, _attempt+1);
+   return callApi(action, params, _attempt+1, forceAttempt);
   }
   const reason = (err && err.name==='AbortError') ? 'सर्व्हरने वेळेत उत्तर दिले नाही (Timeout — नेटवर्क सिग्नल कमकुवत असू शकतो).' : 'Request अयशस्वी (३ प्रयत्नांनंतरही) — Apps Script Deployment URL जुना/बदललेला असू शकतो, किंवा नेटवर्क सिग्नल खूपच कमकुवत आहे.';
-  return {ok:false, error:reason, offline:false};
+  // forceAttempt (उदा. Login) असूनही ३ प्रयत्नांनंतर खरोखर अयशस्वी झाले — म्हणजे आता खरोखर
+  // Offline आहे असे मानायला हरकत नाही (Offline Login सारखा पर्याय वापरता यावा म्हणून).
+  return {ok:false, error:reason, offline:!!forceAttempt};
  }
 }
 
@@ -2394,9 +2400,27 @@ async function doLogin(){
  const password=document.getElementById('loginPassword').value;
  const err=document.getElementById('loginError'); err.textContent='';
  if(!idOrName || !password){ err.textContent='Employee ID/Name व Password भरा.'; return; }
- // Internet नसल्यास — या डिव्हाइसवर आधी किमान एकदा याच Employee ID+Password ने यशस्वी Online
- // Login झालेले असल्यास, तेवढ्याच आधारे थेट Login करू देतो (सर्व्हरशी संपर्क न करता).
- if(!navigator.onLine){
+ // महत्त्वाचे: navigator.onLine हा ब्राउझरचा संकेत विश्वासार्ह नसतो — विशेषतः मोबाईलवर
+ // WiFi वरून Mobile Data वर (किंवा उलट) बदलताना, प्रत्यक्षात Internet असतानाही तो
+ // क्षणभरासाठी चुकीने "false" दाखवू शकतो. आधी फक्त यावरच विसंबून थेट Offline Login केले
+ // जायचे — त्यामुळे Session Token शिवायचे (मर्यादित) Login व्हायचे, आणि नंतर अचानक
+ // "फक्त Admin करू शकतो" यायचे. आता — navigator.onLine खरोखर बंद (false) दिसले, तरी
+ // आधी सर्व्हरशी थेट संपर्क करून खात्री करतो; तोच खरोखर अयशस्वी झाला तरच Offline Login
+ // वापरतो (अन्यथा नेहमी पूर्ण, Session Token सकटच Login होते).
+ setBusy(true);
+ const res = await callApi('login',{idOrName, password, deviceId:getDeviceId(), deviceLabel:getDeviceLabel()}, 0, true);
+ setBusy(false);
+ if(res.ok){
+  session = {employeeId:res.employee.id, name:res.employee.name, employeeNo:res.employee.employeeNo, mobile:res.employee.mobile||'', isAdmin:!!res.employee.isAdmin, sessionToken:res.sessionToken, loggedInAt:new Date().toISOString()};
+  localStorage.setItem('session', JSON.stringify(session));
+  cacheOfflineLogin(session, password);
+  afterLogin();
+  return;
+ }
+ // सर्व्हरशी खरोखर संपर्कच होऊ शकला नाही (उदा. खरोखर Internet नाही) — तेव्हाच Offline पर्याय वापरतो.
+ // पण चुकीचा Password/Employee ID सारखी सर्व्हरने स्पष्ट दिलेली त्रुटी असल्यास, तीच दाखवतो
+ // (Offline पर्यायाकडे वळत नाही, कारण सर्व्हरशी संपर्क झालाच होता).
+ if(res.offline){
   const cached=tryOfflineLogin(idOrName, password);
   if(cached){
    session={employeeId:cached.employeeId, name:cached.name, employeeNo:cached.employeeNo, isAdmin:cached.isAdmin, sessionToken:null, loggedInAt:new Date().toISOString(), offlineLogin:true};
@@ -2407,14 +2431,7 @@ async function doLogin(){
   }
   return;
  }
- setBusy(true);
- const res = await callApi('login',{idOrName, password, deviceId:getDeviceId(), deviceLabel:getDeviceLabel()});
- setBusy(false);
- if(!res.ok){ err.textContent = res.error || 'Login अयशस्वी.'; return; }
- session = {employeeId:res.employee.id, name:res.employee.name, employeeNo:res.employee.employeeNo, mobile:res.employee.mobile||'', isAdmin:!!res.employee.isAdmin, sessionToken:res.sessionToken, loggedInAt:new Date().toISOString()};
- localStorage.setItem('session', JSON.stringify(session));
- cacheOfflineLogin(session, password);
- afterLogin();
+ err.textContent = res.error || 'Login अयशस्वी.';
 }
 
 async function doCreateStep1(){
@@ -2589,10 +2606,10 @@ function renderEmpLocationRows(rows, isOfflineCache, cachedAt){
   const mapsUrl = `https://www.google.com/maps?q=${r.Latitude},${r.Longitude}`;
   const waText = encodeURIComponent(`${r.EmployeeID} (${r.DeviceLabel}) ची Location: ${mapsUrl}`);
   return `<div class="card" style="margin-bottom:10px">
+   <span class="small">🕒 शेवटचे Update: ${fmtIST(r.LocationUpdated)}</span><br>
    <b>${esc(r.EmployeeID)}</b> — ${esc(r.DeviceLabel||'Device')} 
    ${r.online?'<span style="color:#176b3a">🟢 Online</span>':'<span style="color:#a33">🔴 Offline</span>'}
    — Tracking: ${r.TrackingStatus==='Stopped'?'⏸️ बंद':'▶️ सुरू'}<br>
-   <span class="small">शेवटचे Update: ${fmtIST(r.LocationUpdated)}</span><br>
    <button onclick="window.open('${mapsUrl}','_blank')">🗺️ Google Maps वर पहा</button>
    <button onclick="window.open('https://wa.me/?text=${waText}','_blank')">📲 WhatsApp वर Share करा</button>
    <button onclick="toggleEmpTracking('${r.EmployeeID}','${r.DeviceID}',${r.TrackingStatus==='Stopped'})">${r.TrackingStatus==='Stopped'?'▶️ पुन्हा सुरू करा':'⏸️ Tracking बंद करा'}</button>
@@ -3142,7 +3159,17 @@ async function syncNow(){
    const byYear = {};
    for(const r of pullRes.records){
     const rec = r.DataJSON && typeof r.DataJSON==='object' ? r.DataJSON : null;
-    if(!rec || !rec.financialYear) continue;
+    if(!rec) continue;
+    // महत्त्वाचे: आधी "financialYear हा DataJSON मध्ये नसेल, तर तो शेतकरी पूर्णपणे वगळला
+    // जायचा (न दाखवताच)" — त्यामुळे काही जुन्या/विशिष्ट नोंदींसाठी हा फील्ड कुठल्यातरी
+    // कारणाने रिकामा असल्यास, तो शेतकरी काही Employees च्या Sync मधून कायमचा गायब व्हायचा
+    // (ज्याच्याकडे आधीच स्थानिक प्रत होती, त्यालाच फक्त दिसायचा — बाकीच्यांना कधीच नाही).
+    // आता असे असल्यास, त्याच्या Created/Updated तारखेवरून योग्य आर्थिक वर्ष ठरवतो —
+    // कुठलाही शेतकरी यापुढे असा गायब होणार नाही.
+    if(!rec.financialYear){
+     const fallbackDate = r.CreatedDate || r.UpdatedDate || new Date().toISOString();
+     rec.financialYear = getFY(new Date(fallbackDate));
+    }
     rec.syncStatus='synced';
     if(!byYear[rec.financialYear]) byYear[rec.financialYear] = JSON.parse(localStorage.getItem(fyKey(rec.financialYear))||'[]');
     const arr = byYear[rec.financialYear];
@@ -3162,6 +3189,20 @@ async function syncNow(){
     }
    }
    Object.keys(byYear).forEach(y=>localStorage.setItem(fyKey(y), JSON.stringify(byYear[y])));
+  }
+  // दुसऱ्या कोणा डिव्हाइसवरून Permanent Delete झालेले शेतकरी — या डिव्हाइसच्या स्थानिक साठ्यात
+  // (उदा. Recycle Bin मध्ये) अजूनही असतील, तर तेही आता कायमचे काढून टाकतो (आधी हे होत
+  // नव्हते, त्यामुळे तो शेतकरी इथे "परत आलेला/अजूनही असलेला" दिसत राहायचा).
+  if(Array.isArray(pullRes.deletedRecordIds) && pullRes.deletedRecordIds.length){
+   const tombSet = new Set(pullRes.deletedRecordIds);
+   availableYears().forEach(y=>{
+    let arr=[]; try{ arr=JSON.parse(localStorage.getItem(fyKey(y))||'[]'); }catch(e){}
+    const filtered = arr.filter(rec=>{
+     const rid = rec.syncId || (session.employeeId+'_'+rec.id);
+     return !tombSet.has(rid);
+    });
+    if(filtered.length !== arr.length) localStorage.setItem(fyKey(y), JSON.stringify(filtered));
+   });
   }
   // सर्व्हरचीच वेळ पुढच्या "since" साठी वापरतो (डिव्हाइसचे घड्याळ चुकीचे असले तरी अडचण येऊ नये).
   const newSyncMarker = pullRes.serverTime || new Date().toISOString();
@@ -3184,6 +3225,17 @@ function openAdminPanel(){
  // Admin आधीच Login झालेला असल्याने (session.isAdmin) इथे वेगळा Password पुन्हा मागत नाही —
  // sessionToken च्याच आधारे सर्व्हरकडून माहिती मिळेल (Internet असल्यास), किंवा शेवटची
  // साठवलेली (cached) माहिती दाखवली जाईल (Internet नसल्यास).
+ // पण: Admin ने आधी कधी Offline Login केले असेल, तर sessionToken रिकामेच असते — अशा
+ // स्थितीत आत जाऊ देण्याऐवजी, आधीच स्पष्ट सांगून Password-आधारित पर्याय देतो — अन्यथा आत
+ // गेल्यावर प्रत्येक कृतीवर (Deactivate, Reset Password इ.) "फक्त Admin करू शकतो" अशी
+ // त्रुटी येत राहायची (कारण सर्व्हरला sessionToken शिवाय ओळखताच येत नाही).
+ if(session && session.isAdmin && !session.sessionToken){
+  document.getElementById('admin_gate').classList.remove('hidden');
+  document.getElementById('admin_content').classList.add('hidden');
+  const err=document.getElementById('adminGateError');
+  if(err) err.textContent='⚠️ तुम्ही आधी Offline Login केले होते, त्यामुळे थेट आत जाता येणार नाही. खाली Admin Password टाका (किंवा Logout करून Internet सह पुन्हा Login करा).';
+  return;
+ }
  if(session && session.isAdmin){
   adminUnlocked=true;
   document.getElementById('admin_gate').classList.add('hidden');
@@ -3298,8 +3350,45 @@ async function loadAdminSheet(action, boxId, cols){
  const res=await callApi(action,adminAuthParams());
  if(!res.ok){ box.innerHTML='<p>'+(res.error||'अडचण आली.')+'</p>'; return; }
  const note = (res.totalRows && res.totalRows>res.rows.length) ? `<div class="notice">वेगासाठी — फक्त शेवटच्या ${res.rows.length} पैकी (एकूण ${res.totalRows}) नोंदी दाखवत आहे.</div>` : '';
- box.innerHTML=note+'<table><tr>'+cols.map(c=>`<th>${c}</th>`).join('')+'</tr>'+
+ box.innerHTML=note+`<div class="actions"><button onclick="downloadAdminReportPDF('${boxId}')">📄 PDF Download (Last ${res.rows.length})</button></div>`+'<table id="'+boxId+'_table"><tr>'+cols.map(c=>`<th>${c}</th>`).join('')+'</tr>'+
   res.rows.slice().reverse().map(r=>'<tr>'+cols.map(c=>`<td>${esc(DATE_COLS.has(c)?fmtIST(r[c]):String(r[c]||''))}</td>`).join('')+'</tr>').join('')+'</table>';
+}
+// Admin Report (Audit Log/Login History/Sync History/Employees) — सध्या स्क्रीनवर दिसणारा
+// टेबल जसाच्या तसा एक PDF फाईल म्हणून Download करतो.
+async function downloadAdminReportPDF(boxId){
+ const table = document.getElementById(boxId+'_table');
+ if(!table){ alert('अजून काही Report Load झालेला नाही.'); return; }
+ const { jsPDF } = window.jspdf;
+ const pdf = new jsPDF({orientation:'landscape', unit:'mm', format:'a4'});
+ const clone = table.cloneNode(true);
+ clone.style.fontSize='9px';
+ clone.style.borderCollapse='collapse';
+ clone.querySelectorAll('th,td').forEach(el=>{ el.style.border='1px solid #777'; el.style.padding='3px'; });
+ const wrap=document.createElement('div');
+ wrap.style.position='fixed'; wrap.style.left='-9999px'; wrap.style.top='0'; wrap.style.width='1200px'; wrap.style.background='#fff';
+ wrap.appendChild(clone);
+ document.body.appendChild(wrap);
+ try{
+  const canvas = await html2canvas(clone, {scale:2});
+  wrap.remove();
+  const imgData = canvas.toDataURL('image/jpeg', 0.92);
+  const pageW=297, margin=8;
+  const imgW=pageW-2*margin;
+  const imgH=(canvas.height/canvas.width)*imgW;
+  let heightLeft=imgH, position=0;
+  pdf.addImage(imgData,'JPEG',margin,margin,imgW,imgH);
+  heightLeft -= (210-2*margin);
+  while(heightLeft > 0){
+   position -= (210-2*margin);
+   pdf.addPage();
+   pdf.addImage(imgData,'JPEG',margin,position+margin,imgW,imgH);
+   heightLeft -= (210-2*margin);
+  }
+  pdf.save(boxId+'_report_'+new Date().toISOString().slice(0,10)+'.pdf');
+ }catch(e){
+  wrap.remove();
+  alert('PDF तयार करताना अडचण आली.');
+ }
 }
 </script>
 
