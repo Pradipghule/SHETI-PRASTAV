@@ -3168,7 +3168,7 @@ async function syncNow(){
      localStorage.setItem(fyKey(year), JSON.stringify(arr));
     });
    } else {
-    if(statusEl) statusEl.textContent='⚠️ Sync Failed — पुन्हा प्रयत्न होईल.';
+    if(statusEl) statusEl.textContent='⚠️ Sync Failed: '+(pushRes && pushRes.error ? pushRes.error : 'सर्व्हरकडून काहीच उत्तर मिळाले नाही.');
     updatePendingCount();
     return;
    }
