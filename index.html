@@ -26,7 +26,7 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
 .formbtn:hover{border-color:#0b5d4b}
 
 .official{font-family:"Noto Sans Devanagari",Arial,sans-serif;line-height:1.62;border:1px solid #ddd;padding:24px;background:#fff;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal}
-.official h2,.official h3{text-align:center;margin:4px}.official table{width:100%;border-collapse:collapse;margin:12px 0;font-size:16px;table-layout:fixed}.official th,.official td{border:1px solid #777;padding:6px;vertical-align:top;overflow-wrap:anywhere}.official p{margin:8px 0;text-align:justify}.exact-form{max-width:100%;}.form-page{page-break-after:always;break-after:page}.form-page:last-child{page-break-after:auto;break-after:auto}.control-list{margin:4px 0 8px 18px;line-height:1.5}.signature-space{margin-top:28px}
+.official h2,.official h3{text-align:center;margin:4px}.official table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;table-layout:fixed}.official th,.official td{border:1px solid #777;padding:6px;vertical-align:top;overflow-wrap:anywhere}.official p{margin:8px 0;text-align:justify}.exact-form{max-width:100%;}.form-page{page-break-after:always;break-after:page}.form-page:last-child{page-break-after:auto;break-after:auto}.control-list{margin:4px 0 8px 18px;line-height:1.5}.signature-space{margin-top:28px}
 
 .year-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin-top:15px}.year-current-panel,.year-old-panel{background:#f8fbf9;border:1px solid #d9e8dd;border-radius:14px;padding:14px}.panel-title{font-weight:800;color:#205b38;font-size:17px;margin-bottom:10px}.year-old-panel{background:#fbfcfb}.year-old-panel .yearcard{margin:0 0 12px}.year-current-panel .yearcard{margin:0}.year-old-panel .yearcard:last-child{margin-bottom:0}
 @media(max-width:760px){.year-layout{grid-template-columns:1fr}}
@@ -41,13 +41,18 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
 @media print{ .prapatra1-page{ page:prapatra1; } }
 /* Nanasaheb Prapatra 1, page 1 is printed on stamp paper: reserve ~70% blank space at the top before the printed text begins. */
 @media print{ .p1-top-space{ height:187mm; box-sizing:border-box; } }
+/* नानासाहेब प्रपत्र १ (पान १) — प्रपत्र ११ प्रमाणेच, मजकूर पानाच्या खालच्या भागात
+   (Flexbox च्या margin-top:auto ने — मजकूर कमी-जास्त असो, अचूक तळाशीच बसतो), आणि
+   तळाशी फक्त निश्चित 15mm मोकळी जागा. */
+.p1-page1{min-height:277mm;height:auto;display:flex;flex-direction:column;}
+.p1-page1 .p1-content-wrap{margin-top:auto;padding-bottom:15mm;}
 /* Keep Prapatra 1 page-1 text reasonably readable but compact enough that it fully fits in the remaining ~40% of the page below the stamp-paper blank space. */
 @media print{
   .p1-page1 h2{font-size:22px!important;margin:5px 0!important;}
   .p1-page1 h3{font-size:18px!important;margin:4px 0!important;}
-  .p1-page1 p{font-size:17px!important;line-height:1.4!important;margin:5px 0!important;}
-  .p1-page1 .control-list{margin:5px 0 8px 18px!important;line-height:1.4!important;}
-  .p1-page1 .control-list li{font-size:17px!important;}
+  .p1-page1 p{font-size:14px!important;line-height:1.3!important;margin:5px 0!important;}
+  .p1-page1 .control-list{margin:5px 0 8px 18px!important;line-height:1.3!important;}
+  .p1-page1 .control-list li{font-size:14px!important;}
 }
 @media print{
   @page{size:A4 portrait;margin:20mm}
@@ -62,13 +67,11 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
   /* RKVY/MIDH चे प्रपत्र १ (हमीपत्र) — १३ मुद्दे + सही/साक्षीदार एकाच पानावर बसावेत म्हणून कॉम्पॅक्ट. */
   .compact-single-page h2{font-size:17px!important;margin:2px 0!important;}
   .compact-single-page h3{font-size:14px!important;margin:2px 0!important;}
-  .compact-single-page p{font-size:11.8px!important;line-height:1.1!important;margin:2px 0!important;}
-  .compact-single-page table{font-size:10.5px!important;margin:3px 0!important;}
+  .compact-single-page p{font-size:14px!important;line-height:1.05!important;margin:2px 0!important;}
+  .compact-single-page table{font-size:14px!important;margin:3px 0!important;}
   .compact-single-page th,.compact-single-page td{padding:2px 3px!important;}
-  .official table{font-size:11px}
-  .official th,.official td{padding:4px}
-  .official p{font-size:9.2pt;line-height:1.22}
-  .official h2{font-size:9.2pt}.official h3{font-size:9.2pt}
+  .official p{font-size:14px;line-height:1.3}
+  .official h2{font-size:18px}.official h3{font-size:16px}
   .form-page{page-break-after:always;break-after:page}
   /* Prapatra 1: remove the artificial gap between mudda 9 and 10 — let them flow
      directly into each other in Print, without an early forced page break.
@@ -102,15 +105,24 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
     break-after:page;
     overflow:visible !important;
   }
-  .stamp-page-1,.stamp-page-3{min-height:277mm;height:auto;}
-  .stamp-page-2,.stamp-page-4{min-height:0;height:277mm;padding-top:0;box-sizing:border-box;}
+  .stamp-page-1{min-height:277mm;height:auto;display:flex;flex-direction:column;}
+  .stamp-page-3{min-height:277mm;height:auto;}
+  /* पान २ (व ४) ची उंची आधी निश्चित (Fixed 277mm) होती — फॉन्ट मोठा झाल्यावर, किंवा सही/शिक्का
+     साठीची राखीव जागा (18mm प्रत्येकी) मोजल्यावर, मजकूर या निश्चित उंचीपेक्षा जास्त झाला तर तो
+     पानाबाहेर सांडून एक अतिरिक्त (रिकामे) पान तयार व्हायचे. आता पान १ प्रमाणेच ही उंचीही
+     "किमान २७७mm, गरज भासल्यास वाढणारी" केली — त्यामुळे मजकूर कधीही सांडणार नाही.
+  .stamp-page-2,.stamp-page-4{min-height:277mm;height:auto;padding-top:0;box-sizing:border-box;}
   .stamp-page .stamp-top-space{
     height:150mm; /* reserved handwritten space */
     box-sizing:border-box;
   }
-  .stamp-page h2,.stamp-page h3,.stamp-page p{
-    font-size:12.1pt !important;
+  .stamp-page h2,.stamp-page h3{
+    font-size:16pt !important;
     line-height:1.1 !important;
+  }
+  .stamp-page p{
+    font-size:14px !important;
+    line-height:1.2 !important;
   }
   .stamp-page h2{margin-top:0 !important;}
   .stamp-page-2 p,.stamp-page-4 p{
@@ -122,10 +134,16 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
   .stamp-page-2 .p11-signature-area{margin-top:10px;}
   .stamp-page-2 .p11-sign-line, .stamp-page-2 .p11-stamp-line{min-height:18mm;display:flex;align-items:flex-start;gap:4px;margin:8px 0 4px !important;}
   .stamp-page-2 .p11-sign-line span, .stamp-page-2 .p11-stamp-line span{display:inline-block;min-width:80mm;}
-  /* Prapatra 11 pages 1 and 3: move printed content 20% lower */
-  .stamp-page-1 > *:not(.stamp-top-space),
+  /* पान १ (Stamp Paper Page 1): मजकूर पानाच्या खालच्या भागात न्यायचा आहे — वर राखीव
+     जागा (शिक्क्यासाठी) तशीच ठेवून, मजकूर स्वतः तळाशी सरकतो (Flexbox च्या margin-top:auto
+     ने — मजकूर कितीही कमी/जास्त असो, अचूक तळाशीच बसतो), आणि तळाशी फक्त निश्चित 15mm
+     मोकळी जागा राहते (आधीची पद्धत — ठराविक mm ने ढकलणे — शेतकऱ्याच्या नावाच्या
+     लांबीनुसार मजकूर कमी-जास्त उंचीचा असल्याने अचूक तळाशी बसत नव्हती).
+  */
+  .stamp-page-1 .p11-content-wrap{margin-top:auto;padding-bottom:15mm;}
+  /* पान ३ साठी आधीचीच पद्धत (ठराविक mm ने ढकलणे) कायम ठेवली आहे. */
   .stamp-page-3 > *:not(.stamp-top-space){
-    transform:translateY(30mm);
+    transform:translateY(12mm);
   }
   /* Prapatra 11 Page 1 and Page 3: highlight the complete printed text, not the heading */
   .stamp-page-1 > *:not(.stamp-top-space),
@@ -433,7 +451,6 @@ function updateFarmName(){const n=localStorage.getItem("farmName")||"Sahyadri Gr
 <div class="grid">
  <button onclick="show('editDashboard')">✏️ Dashboard Edit</button>
  <button onclick="show('empLocation')">📍 Employee Live Location</button>
- <button onclick="confirmDeleteAllFarmerData()" style="background:#a33;color:#fff">🗑️ सर्व शेतकरी माहिती Delete करा (Reset)</button>
 </div>
 </section>
 
@@ -535,6 +552,9 @@ function updateFarmName(){const n=localStorage.getItem("farmName")||"Sahyadri Gr
  <div><label>Employee निवडा</label><select id="lh_empSelect" onchange="loadLocationHistory()"><option value="">-- निवडा --</option><option value="EMP2">EMP2</option><option value="EMP3">EMP3</option><option value="EMP4">EMP4</option><option value="EMP5">EMP5</option></select></div>
 </div>
 <div id="locationHistoryBox"></div>
+<div class="notice" style="margin-top:24px;border-top:2px solid #a33;padding-top:16px">
+ <button onclick="confirmDeleteAllFarmerData()" style="background:#a33;color:#fff">🗑️ सर्व शेतकरी माहिती Delete करा (Reset)</button>
+</div>
 </section>
 
 <section id="preview" class="card hidden">
@@ -887,26 +907,29 @@ async function renderBodyHtmlToPdfBlob(bodyHtml){
  document.body.appendChild(stage);
  const style=document.createElement('style');
  style.textContent=`
-   .pdfclone.prapatra1-page{height:277mm!important;min-height:277mm!important;}
+   .pdfclone.prapatra1-page{height:auto!important;min-height:277mm!important;}
    .pdfclone{width:170mm!important;min-height:257mm!important;height:257mm!important;box-sizing:border-box!important;background:#fff!important;overflow:hidden!important;border:0!important;padding:0!important;font-family:"Noto Sans Devanagari",Arial,sans-serif!important;}
    .pdfclone .stamp-top-space{height:150mm!important;box-sizing:border-box!important;}
    .pdfclone .p1-top-space{height:187mm!important;box-sizing:border-box!important;}
-   .pdfclone.p1-page1 h2{font-size:20px!important;margin:5px 0!important;}
-   .pdfclone.p1-page1 h3{font-size:16px!important;margin:4px 0!important;}
-   .pdfclone.p1-page1 p{font-size:15px!important;line-height:1.4!important;margin:5px 0!important;}
-   .pdfclone.p1-page1 .control-list{margin:5px 0 8px 18px!important;line-height:1.4!important;}
-   .pdfclone.p1-page1 .control-list li{font-size:15px!important;}
-   .pdfclone.stamp-page-1 > *:not(.stamp-top-space),
-   .pdfclone.stamp-page-3 > *:not(.stamp-top-space){transform:translateY(36mm)!important;}
+   .pdfclone.p1-page1 h2{font-size:22px!important;margin:5px 0!important;}
+   .pdfclone.p1-page1 h3{font-size:18px!important;margin:4px 0!important;}
+   .pdfclone.p1-page1 p{font-size:14px!important;line-height:1.3!important;margin:5px 0!important;}
+   .pdfclone.p1-page1 .control-list{margin:5px 0 8px 18px!important;line-height:1.3!important;}
+   .pdfclone.p1-page1 .control-list li{font-size:14px!important;}
+   .pdfclone.p1-page1{min-height:277mm!important;height:auto!important;display:flex!important;flex-direction:column!important;}
+   .pdfclone.p1-page1 .p1-content-wrap{margin-top:auto!important;padding-bottom:15mm!important;}
+   .pdfclone.stamp-page-1{display:flex!important;flex-direction:column!important;}
+   .pdfclone.stamp-page-1 .p11-content-wrap{margin-top:auto!important;padding-bottom:15mm!important;}
+   .pdfclone.stamp-page-3 > *:not(.stamp-top-space){transform:translateY(12mm)!important;}
    .pdfclone.stamp-page-1, .pdfclone.stamp-page-3,
    .pdfclone.stamp-page-1 *, .pdfclone.stamp-page-3 *{font-weight:700!important;color:#111!important;}
    .pdfclone.stamp-page-1 h2.p11-highlight,.pdfclone.stamp-page-3 h2.p11-highlight{display:block!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;font-weight:800!important;color:#111!important;}
-   .pdfclone h2,.pdfclone h3,.pdfclone p{font-size:9.2pt!important;line-height:1.22!important;}
+   .pdfclone h2,.pdfclone h3,.pdfclone p{font-size:14px!important;line-height:1.3!important;}
    .pdfclone.form-extra-margin{padding:0!important;box-sizing:border-box!important;}
-   .pdfclone.compact-single-page h2{font-size:15px!important;margin:2px 0!important;}
-   .pdfclone.compact-single-page h3{font-size:12px!important;margin:2px 0!important;}
-   .pdfclone.compact-single-page p{font-size:9.8px!important;line-height:1.14!important;margin:2.5px 0!important;}
-   .pdfclone.compact-single-page table{font-size:8.5px!important;margin:4px 0!important;}
+   .pdfclone.compact-single-page h2{font-size:17px!important;margin:2px 0!important;}
+   .pdfclone.compact-single-page h3{font-size:14px!important;margin:2px 0!important;}
+   .pdfclone.compact-single-page p{font-size:14px!important;line-height:1.05!important;margin:2px 0!important;}
+   .pdfclone.compact-single-page table{font-size:14px!important;margin:3px 0!important;}
    .pdfclone.compact-single-page th,.pdfclone.compact-single-page td{padding:2px 3px!important;}
    .pdfclone h2{margin-top:0!important;}.pdfclone p{margin:8px 0!important;}
    .pdfclone.stamp-page-2 .p11-signature-area{margin-top:10px!important;}
@@ -914,9 +937,9 @@ async function renderBodyHtmlToPdfBlob(bodyHtml){
    .pdfclone.stamp-page-2 .p11-stamp-line{min-height:18mm!important;display:flex!important;align-items:flex-start!important;gap:4px!important;margin:8px 0 4px!important;}
    .pdfclone.stamp-page-2 .p11-sign-line span,
    .pdfclone.stamp-page-2 .p11-stamp-line span{display:inline-block!important;min-width:80mm!important;}
-   .pdfclone table{font-size:11px!important;}
+   .pdfclone table{font-size:14px!important;}
    .pdfclone th,.pdfclone td{padding:4px!important;}
-   .pdfclone .tepnet-subtable{font-size:11.5px!important;}
+   .pdfclone .tepnet-subtable{font-size:14px!important;}
    .pdfclone .tepnet-subtable th,.pdfclone .tepnet-subtable td{padding:2px!important;line-height:1.15!important;}
  `;
  stage.appendChild(style);
@@ -1147,6 +1170,11 @@ async function permanentDeleteFarmer(id){
  a=a.filter(x=>x.id!==id);
  setRecords(a);
  renderRecycle();
+ if(res.driveFolderFound){
+  alert('✅ कायमचे Delete झाले — Drive वरील '+res.driveFilesRemoved+' फाईल्ससकट Folder सुद्धा काढले.');
+ } else {
+  alert('✅ Record कायमचे Delete झाले. (या शेतकऱ्याचे Drive वर कुठलेही कागदपत्र/Folder सापडले नाही — बहुधा कधीच अपलोड झाले नव्हते.)');
+ }
 }
 function renderRecycle(){
  const box=document.getElementById('recycleList'); if(!box) return;
@@ -1329,12 +1357,13 @@ function buildOriginalFormBody(title, d){
  if((window.selectedScheme||document.getElementById('schemeType')?.value||'')==='नानासाहेब देशमुख कृषी संजीवनी'){
   const N=(v)=>`<span class="farmer-entered-value">${esc(v||'')}</span>`;
   if(title.includes('प्रपत्र १')){
-   body+=`<div class="official exact-form form-page p1-page1"><div class="p1-top-space"></div><h2>प्रपत्र - 1</h2><h3>हमीपत्र</h3>
+   body+=`<div class="official exact-form form-page p1-page1"><div class="p1-top-space"></div><div class="p1-content-wrap"><h2>प्रपत्र - 1</h2><h3>हमीपत्र</h3>
    <p style="text-align:center"><i>(हरितगृह / शेडनेटगृह उभारणी / लागवड साहित्य या प्रत्येक घटकासाठी स्वतंत्ररीत्या देण्यात यावे)</i></p>
    <p>मी / आम्ही श्री. <b>${N(d.name)}</b>, मु. पो. <b>${N(d.village)}</b>, ता. <b>${N(d.taluka)}</b>, जि. <b>${N(d.district)}</b> हमीपत्र लिहून देतो की,</p>
    <ol class="control-list">
    <li>शेडनेटगृहाच्या / हरितगृहाच्या उभारणीसाठी / लागवड साहित्यासाठी यापूर्वी मी / आम्ही राष्ट्रीय फलोत्पादन अभियान (NHM/ आत्मा/ आर. के. व्ही. वाय. / जलसुधार प्रकल्प / कोरडवाहू शेती विकास प्रकल्प / इतर संस्था-यंत्रणा यांचेकडून आत्तापर्यंत खालीलप्रमाणे लाभ घेतलेला आहे.</li>
    </ol>
+   </div>
    </div>
    <div class="official exact-form form-page p1-page2"><table><tr><th rowspan="2">अ.क्र.</th><th rowspan="2">लाभ घेतलेल्या घटकाचे नाव</th><th colspan="4">यापूर्वी घेतलेल्या लाभाचा तपशील</th></tr>
    <tr><th>क्षेत्र (चौ. मी.)</th><th>वर्ष</th><th>योजना</th><th>रक्कम रु.</th></tr>
@@ -1625,9 +1654,11 @@ function buildOriginalFormBody(title, d){
   <!-- PRAPATRA 11 - PAGE 1: stamp paper blank area + supplier heading/introduction (निवडलेल्या सेवा पुरवठादारानुसार आपोआप) -->
   <div class="official exact-form stamp-page stamp-page-1 prapatra1-page">
    <div class="stamp-top-space"></div>
+   <div class="p11-content-wrap">
    <h2 class="p11-highlight">प्रपत्र – ११</h2>
    <h3>हरितगृह / शेडनेटगृह, केबल अँड पोस्ट प्रकारचे शेडनेटगृह उभारणी मार्गदर्शक सूचनेतील<br>निकषांप्रमाणे केली असल्याबाबत सेवा पुरवठादाराने द्यावयाचे प्रमाणपत्र</h3>
    <p>मी श्री. ${N(prov.name)}, ${N(prov.address)}, भ्रमणध्वनी क्र. ${N(prov.phone)} महाराष्ट्र राज्य फुलोत्पादन आणि औषधी वनस्पती मंडळ पुणे यांचे कार्यालयाकडे हरितगृह / शेडनेटगृह उभारणीच्या कामासाठी नोंदणीकृत सेवा पुरवठादार असून माझा नोंदणी क्र. ${N(prov.regnNo) || '__________________'} नोंदणीची वैधता दि. ______ / ______ / 20______ पर्यंत आहे.</p>
+   </div>
   </div>
 
   <!-- PRAPATRA 11 - PAGE 2: exactly the continuation supplied in the DOCX -->
@@ -1736,18 +1767,21 @@ function downloadPDF(){
   document.body.appendChild(stage);
   const style=document.createElement('style');
   style.textContent=`
-    .pdfclone.prapatra1-page{height:277mm!important;min-height:277mm!important;}
+    .pdfclone.prapatra1-page{height:auto!important;min-height:277mm!important;}
     .pdfclone{width:170mm!important;min-height:257mm!important;height:257mm!important;box-sizing:border-box!important;background:#fff!important;overflow:hidden!important;border:0!important;padding:0!important;font-family:"Noto Sans Devanagari",Arial,sans-serif!important;}
     .pdfclone .stamp-top-space{height:150mm!important;box-sizing:border-box!important;}
     .pdfclone .p1-top-space{height:187mm!important;box-sizing:border-box!important;}
-    .pdfclone.p1-page1 h2{font-size:20px!important;margin:5px 0!important;}
-    .pdfclone.p1-page1 h3{font-size:16px!important;margin:4px 0!important;}
-    .pdfclone.p1-page1 p{font-size:15px!important;line-height:1.4!important;margin:5px 0!important;}
-    .pdfclone.p1-page1 .control-list{margin:5px 0 8px 18px!important;line-height:1.4!important;}
-    .pdfclone.p1-page1 .control-list li{font-size:15px!important;}
+    .pdfclone.p1-page1 h2{font-size:22px!important;margin:5px 0!important;}
+    .pdfclone.p1-page1 h3{font-size:18px!important;margin:4px 0!important;}
+    .pdfclone.p1-page1 p{font-size:14px!important;line-height:1.3!important;margin:5px 0!important;}
+    .pdfclone.p1-page1 .control-list{margin:5px 0 8px 18px!important;line-height:1.3!important;}
+    .pdfclone.p1-page1 .control-list li{font-size:14px!important;}
+    .pdfclone.p1-page1{min-height:277mm!important;height:auto!important;display:flex!important;flex-direction:column!important;}
+    .pdfclone.p1-page1 .p1-content-wrap{margin-top:auto!important;padding-bottom:15mm!important;}
     /* PDF download: pages 1 and 3 content 20% higher than the previous PDF position */
-    .pdfclone.stamp-page-1 > *:not(.stamp-top-space),
-    .pdfclone.stamp-page-3 > *:not(.stamp-top-space){transform:translateY(36mm)!important;}
+    .pdfclone.stamp-page-1{display:flex!important;flex-direction:column!important;}
+    .pdfclone.stamp-page-1 .p11-content-wrap{margin-top:auto!important;padding-bottom:15mm!important;}
+    .pdfclone.stamp-page-3 > *:not(.stamp-top-space){transform:translateY(12mm)!important;}
     /* PDF download: Page 1 and 3 complete text must be dark/bold, not yellow-highlighted */
     .pdfclone.stamp-page-1 > *:not(.stamp-top-space),
     .pdfclone.stamp-page-3 > *:not(.stamp-top-space),
@@ -1759,14 +1793,14 @@ function downloadPDF(){
     .pdfclone.stamp-page-1, .pdfclone.stamp-page-3,
     .pdfclone.stamp-page-1 *, .pdfclone.stamp-page-3 *{font-weight:700!important;color:#111!important;}
     .pdfclone.stamp-page-1 h2.p11-highlight,.pdfclone.stamp-page-3 h2.p11-highlight{display:block!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;font-weight:800!important;color:#111!important;}
-    .pdfclone h2,.pdfclone h3,.pdfclone p{font-size:9.2pt!important;line-height:1.22!important;}
+    .pdfclone h2,.pdfclone h3,.pdfclone p{font-size:14px!important;line-height:1.3!important;}
     /* Never show the software form name at the top of PDF pages */
     #formTitle{display:none!important;}
     .pdfclone.form-extra-margin{padding:0!important;box-sizing:border-box!important;}
-    .pdfclone.compact-single-page h2{font-size:15px!important;margin:2px 0!important;}
-    .pdfclone.compact-single-page h3{font-size:12px!important;margin:2px 0!important;}
-    .pdfclone.compact-single-page p{font-size:9.8px!important;line-height:1.14!important;margin:2.5px 0!important;}
-    .pdfclone.compact-single-page table{font-size:8.5px!important;margin:4px 0!important;}
+    .pdfclone.compact-single-page h2{font-size:17px!important;margin:2px 0!important;}
+    .pdfclone.compact-single-page h3{font-size:14px!important;margin:2px 0!important;}
+    .pdfclone.compact-single-page p{font-size:14px!important;line-height:1.05!important;margin:2px 0!important;}
+    .pdfclone.compact-single-page table{font-size:14px!important;margin:3px 0!important;}
     .pdfclone.compact-single-page th,.pdfclone.compact-single-page td{padding:2px 3px!important;}
     .pdfclone h2{margin-top:0!important;}.pdfclone p{margin:8px 0!important;}
     /* PDF download: Prapatra 11 Page 2 signature and firm-stamp areas
@@ -1779,9 +1813,9 @@ function downloadPDF(){
     }
     .pdfclone.stamp-page-2 .p11-sign-line span,
     .pdfclone.stamp-page-2 .p11-stamp-line span{display:inline-block!important;min-width:80mm!important;}
-    .pdfclone table{font-size:11px!important;}
+    .pdfclone table{font-size:14px!important;}
     .pdfclone th,.pdfclone td{padding:4px!important;}
-    .pdfclone .tepnet-subtable{font-size:11.5px!important;}
+    .pdfclone .tepnet-subtable{font-size:14px!important;}
     .pdfclone .tepnet-subtable th,.pdfclone .tepnet-subtable td{padding:2px!important;line-height:1.15!important;}
   `;
   stage.appendChild(style);
@@ -2606,7 +2640,8 @@ function renderEmpLocationRows(rows, isOfflineCache, cachedAt){
   const mapsUrl = `https://www.google.com/maps?q=${r.Latitude},${r.Longitude}`;
   const waText = encodeURIComponent(`${r.EmployeeID} (${r.DeviceLabel}) ची Location: ${mapsUrl}`);
   return `<div class="card" style="margin-bottom:10px">
-   <span class="small">🕒 शेवटचे Update: ${fmtIST(r.LocationUpdated)}</span><br>
+   <span class="small">🕒 शेवटचा Ping (Online स्थिती): ${fmtIST(r.LastPing)}</span><br>
+   <span class="small">📍 Location शेवटचे बदलले: ${fmtIST(r.LocationUpdated)}</span><br>
    <b>${esc(r.EmployeeID)}</b> — ${esc(r.DeviceLabel||'Device')} 
    ${r.online?'<span style="color:#176b3a">🟢 Online</span>':'<span style="color:#a33">🔴 Offline</span>'}
    — Tracking: ${r.TrackingStatus==='Stopped'?'⏸️ बंद':'▶️ सुरू'}<br>
@@ -3199,7 +3234,9 @@ async function syncNow(){
     let arr=[]; try{ arr=JSON.parse(localStorage.getItem(fyKey(y))||'[]'); }catch(e){}
     const filtered = arr.filter(rec=>{
      const rid = rec.syncId || (session.employeeId+'_'+rec.id);
-     return !tombSet.has(rid);
+     // RecordID (syncId) नुसार तपासतो — शिवाय शेतकऱ्याच्या कायम-स्थिर farmerId (rec.id)
+     // नुसारही स्वतंत्रपणे तपासतो (जुन्या डेटामुळे syncId जुळत नसले तरी हे पकडेल).
+     return !tombSet.has(rid) && !tombSet.has('FARMERID::'+String(rec.id));
     });
     if(filtered.length !== arr.length) localStorage.setItem(fyKey(y), JSON.stringify(filtered));
    });
