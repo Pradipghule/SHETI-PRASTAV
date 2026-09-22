@@ -544,6 +544,9 @@ function updateFarmName(){const n=localStorage.getItem("farmName")||"Sahyadri Gr
 
  <div class="actions"><button class="primary" onclick="saveDashboardConfigFromUI()">💾 Save (सर्व डिव्हाइसवर लागू होईल)</button></div>
  <div id="editDashSaveMsg"></div>
+ <div class="notice" style="margin-top:24px;border-top:2px solid #a33;padding-top:16px">
+  <button onclick="confirmDeleteAllFarmerData()" style="background:#a33;color:#fff">🗑️ सर्व शेतकरी माहिती Delete करा (Reset)</button>
+ </div>
 </div>
 </section>
 
@@ -556,9 +559,6 @@ function updateFarmName(){const n=localStorage.getItem("farmName")||"Sahyadri Gr
  <div><label>Employee निवडा</label><select id="lh_empSelect" onchange="loadLocationHistory()"><option value="">-- निवडा --</option><option value="EMP2">EMP2</option><option value="EMP3">EMP3</option><option value="EMP4">EMP4</option><option value="EMP5">EMP5</option></select></div>
 </div>
 <div id="locationHistoryBox"></div>
-<div class="notice" style="margin-top:24px;border-top:2px solid #a33;padding-top:16px">
- <button onclick="confirmDeleteAllFarmerData()" style="background:#a33;color:#fff">🗑️ सर्व शेतकरी माहिती Delete करा (Reset)</button>
-</div>
 </section>
 
 <section id="preview" class="card hidden">
@@ -1166,7 +1166,7 @@ async function permanentDeleteFarmer(id){
  // आधी स्थानिक यादीतून काढत नाही — Server ने खरोखर यशस्वीरित्या Delete केल्याची खात्री झाल्यावरच काढतो
  // (अन्यथा Server कडून काही कारणाने अयशस्वी झाले, तरी Admin ला काहीच कळायचे नाही, आणि तो शेतकरी
  // Server वर तसाच राहून पुढच्या Sync ला "परत येतोय" असे वाटायचे).
- const res = await callApi('permanentDelete', {...adminAuthParams(), recordId:rec.syncId, farmerId:id});
+ const res = await callApi('permanentDelete', {...adminAuthParams(), recordId:rec.syncId, farmerId:id}, 0, false, 60000);
  if(!res || !res.ok){
   alert('❌ Permanent Delete अयशस्वी झाले: ' + (res && res.error ? res.error : 'Server शी संपर्क होऊ शकला नाही.') + '\n\nस्थानिक यादीत तो शेतकरी तसाच ठेवला आहे.');
   return;
@@ -1417,7 +1417,7 @@ function buildOriginalFormBody(title, d){
    <p><i>(कृषी सहाय्यक यांनी मार्गदर्शक सूचनेतील हरितगृह किंवा शेडनेटगृहासाठी जागेची निवड याबाबतचे सविस्तर सूचनांचा अवलंब करून उपरोक्त स्थळ तपासणी अहवाल द्यावा.)</i></p>
    </div>`;
   } else if(title.includes('प्रपत्र ४ ब')){
-   body+=`<div class="official exact-form form-page"><h2>प्रपत्र - ४ ब</h2><h3>शेडनेटगृह प्रथम मोका तपासणी अहवाल</h3>
+   body+=`<div class="official exact-form"><h2>प्रपत्र - ४ ब</h2><h3>शेडनेटगृह प्रथम मोका तपासणी अहवाल</h3>
    <table>
    <tr><td colspan="2" style="text-align:center"><b>मंडळ कृषी अधिकारी</b></td></tr>
    <tr><td style="width:28%">तपासणी दिनांक</td><td>______ / ______ / 20______</td></tr>
@@ -1438,8 +1438,6 @@ function buildOriginalFormBody(title, d){
    <tr><td>2</td><td>48.3</td><td></td><td>2.9</td><td></td><td>3.25</td><td></td></tr>
    <tr><td>3</td><td>42.4</td><td></td><td>2.6</td><td></td><td>2.55</td><td></td></tr>
    <tr><td>4</td><td>33.7</td><td></td><td>2.6</td><td></td><td>1.99</td><td></td></tr></table>
-   </div>
-   <div class="official exact-form form-page"><h2>प्रपत्र - ४ ब <small>(पुढे)</small></h2>
    <h3 style="text-align:center">ब. शेडनेट गृहासाठी टेपनेट मोनोनेट</h3>
    <table><tr><th style="width:6%">अ.क्र.</th><th style="width:82%">तांत्रिक निकष</th><th style="width:12%">होय / नाही</th></tr>
    <tr><td>क</td><td>शेडनेटगृहासाठी टेपनेट (ISI 6008: 2016) Part I आणि मोनोनेट (ISI 6008: 2016) Part II</td><td>शेरा प्रमाणित / अप्रमाणित</td></tr>
@@ -1457,8 +1455,7 @@ function buildOriginalFormBody(title, d){
    <table><tr><th colspan="2">युविव्ही संस्कारित लॅमिनेटेड ओव्हन पॉलिइथिलिन फिल्म</th><th colspan="2">ॲल्युमिनियम प्रोफाइल</th></tr>
    <tr><th>अपेक्षित वजन (ग्रॅम प्रति मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती मी.)</th><th>अपेक्षित वजन (ग्रॅम प्रति मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती मी.)</th></tr>
    <tr><td>120</td><td></td><td>190</td><td></td></tr></table>
-   </div>
-   <div class="official exact-form"><h2>प्रपत्र - ४ ब <small>(पुढे)</small></h2>
+   <div class="p4b-page3-start"></div>
    <table><tr><td style="width:6%">फ.</td><td>इतर साहित्य मार्गदर्शन सूचनेतील तांत्रिक निकषाप्रमाणे आहे काय?</td><td style="width:15%">होय / नाही</td></tr>
    <tr><td></td><td>शेडनेटगृहाची उभारणीची जागा व दिशा विचारात घेऊन मार्गदर्शक सूचनेतील आराखड्याप्रमाणे उभारणी नियोजन (आरेखन) आहे काय?</td><td>होय / नाही.</td></tr>
    <tr><td>ग.</td><td>शेडनेटगृहाच्या पायासाठी घेण्यात येणारे खड्ड्याची मापे योग्य आकारमानाचे आहेत काय? पाया पक्का होण्यासाठी योग्य व्यासाचा फाउंडेशन पाईप होल्ड फास्ट चार (8 मीमी. जाडीचा) योग्य प्रमाणाचे काँक्रीट मिश्रणाने भरणे या बाबीकडे लाभार्थी शेतकऱ्यांनी विशेष लक्ष देणे बाबत तसेच शेडनेटगृहाचे आयुष्यमान व पक्क्या उभारणी करिता पाया मजबूत असणे आवश्यक असल्याबाबत लाभार्थ्यास मार्गदर्शन करावे.</td><td>होय / नाही.</td></tr>
@@ -1920,7 +1917,7 @@ async function confirmDeleteAllFarmerData(){
  const typed = prompt('⚠️ हे कायमचे आहे — सर्व शेतकऱ्यांची माहिती व कागदपत्रे (सर्व वर्षे, सर्व डिव्हाइस) कायमची Delete होतील, Recycle Bin मध्येही सापडणार नाहीत.\n\nखात्री असल्यास खालील रकान्यात exactly हा शब्द टाईप करा: DELETE ALL');
  if(typed !== 'DELETE ALL'){ alert('रद्द केले — काहीही बदलले नाही.'); return; }
  if(!navigator.onLine){ alert('⚠️ यासाठी Internet आवश्यक आहे (सर्व डिव्हाइसवर लागू करण्यासाठी).'); return; }
- const res = await callApi('deleteAllFarmerData', adminAuthParams());
+ const res = await callApi('deleteAllFarmerData', adminAuthParams(), 0, false, 180000);
  if(!res.ok){ alert(res.error||'अडचण आली.'); return; }
  // हेच डिव्हाइस (Admin चे) लगेच साफ करतो; बाकी डिव्हाइसना पुढच्या Sync/Login वेळी आपोआप कळेल.
  Object.keys(localStorage).forEach(k=>{ if(k.startsWith('farmers_')) localStorage.removeItem(k); });
@@ -2204,7 +2201,7 @@ async function permanentDeleteDoc(id){
  const syncId=getCurrentSyncId();
  // आधी स्थानिक यादीतून काढत नाही — Server ने (Drive सकट) खरोखर यशस्वीरित्या Delete केल्याची
  // खात्री झाल्यावरच काढतो (अन्यथा अयशस्वी झाले तरी कळायचे नाही, आणि ते परत यायचे).
- const res = await callApi('permanentDeleteDoc', {...adminAuthParams(), recordId:syncId, docId:x.id, fileId:x.driveFileId||''});
+ const res = await callApi('permanentDeleteDoc', {...adminAuthParams(), recordId:syncId, docId:x.id, fileId:x.driveFileId||''}, 0, false, 60000);
  if(!res || !res.ok){
   alert('❌ Permanent Delete अयशस्वी झाले: ' + (res && res.error ? res.error : 'Server शी संपर्क होऊ शकला नाही.'));
   return;
@@ -2327,8 +2324,9 @@ function adminAuthParams(){
 }
 let pendingOtpInfo = null; // {employeeNo, employeeName, mobile}
 
-async function callApi(action, params, _attempt, forceAttempt){
+async function callApi(action, params, _attempt, forceAttempt, timeoutMs){
  _attempt = _attempt || 0;
+ timeoutMs = timeoutMs || 20000;
  // navigator.onLine खरोखरच "इंटरनेट नाही" हे सांगते; इतर सर्व अपयश (CORS, सर्व्हर वेळेत उत्तर न देणे,
  // तात्पुरता नेटवर्क अडथळा) वेगळी आणि खरी कारणे आहेत — ती "Offline" म्हणून खोटी सांगू नयेत.
  // अपवाद: forceAttempt=true असल्यास (उदा. Login) — navigator.onLine वर विसंबून न राहता,
@@ -2337,7 +2335,7 @@ async function callApi(action, params, _attempt, forceAttempt){
   return {ok:false, error:'इंटरनेट उपलब्ध नाही (डिव्हाइस Offline आहे).', offline:true};
  }
  const controller = new AbortController();
- const timeoutId = setTimeout(()=>controller.abort(), 20000); // २० सेकंदांनंतर थांबवा, कायमचे लटकू नये
+ const timeoutId = setTimeout(()=>controller.abort(), timeoutMs); // डिफॉल्ट २० सेकंद — जड कामांसाठी (Reset All, Permanent Delete) जास्त वेळ दिला जातो
  try{
   const res = await fetch(API_URL, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(Object.assign({action}, params||{})), signal: controller.signal});
   clearTimeout(timeoutId);
@@ -2352,7 +2350,7 @@ async function callApi(action, params, _attempt, forceAttempt){
   // मोबाईल नेटवर्कवरील क्षणिक अडथळे सहन करण्यासाठी — वाढत्या विलंबाने जास्तीत जास्त ३ वेळा आपोआप प्रयत्न करतो.
   if(_attempt < 2){
    await new Promise(r=>setTimeout(r, 1000 * Math.pow(2, _attempt))); // 1s, 2s
-   return callApi(action, params, _attempt+1, forceAttempt);
+   return callApi(action, params, _attempt+1, forceAttempt, timeoutMs);
   }
   const reason = (err && err.name==='AbortError') ? 'सर्व्हरने वेळेत उत्तर दिले नाही (Timeout — नेटवर्क सिग्नल कमकुवत असू शकतो).' : 'Request अयशस्वी (३ प्रयत्नांनंतरही) — Apps Script Deployment URL जुना/बदललेला असू शकतो, किंवा नेटवर्क सिग्नल खूपच कमकुवत आहे.';
   // forceAttempt (उदा. Login) असूनही ३ प्रयत्नांनंतर खरोखर अयशस्वी झाले — म्हणजे आता खरोखर
