@@ -1358,7 +1358,14 @@ function buildOriginalFormBody(title, d){
  let body=head;
 
  // स्वतंत्र नानासाहेब देशमुख प्रपत्रे — दिलेल्या PDF प्रमाणे, शेतकरी माहिती आपोआप भरली जाते.
- if((window.selectedScheme||document.getElementById('schemeType')?.value||'')==='नानासाहेब देशमुख कृषी संजीवनी'){
+ // महत्त्वाचे: आधी इथे कुठले प्रपत्र दाखवायचे हे "त्या क्षणी स्क्रीनवरील Dropdown मध्ये काय
+ // दिसतेय" किंवा एक Global (window.selectedScheme) यावर ठरायचे — शेतकऱ्याच्या स्वतःच्या
+ // साठवलेल्या Scheme (d.schemeType) वर नाही! त्यामुळे — History/जुने प्रस्ताव बघताना, किंवा
+ // एका शेतकऱ्याचे प्रपत्र बघितल्यानंतर दुसऱ्याचे बघताना (Dropdown/Global जुनेच राहिल्यास) —
+ // चुकीच्या शेतकऱ्याच्या Scheme नुसार चुकीचे प्रपत्र दिसायचे, किंवा दोन्हींपैकी कशाशीच जुळणी
+ // न झाल्याने प्रपत्र रिकामेही दिसायचे. आता — याच शेतकऱ्याच्या स्वतःच्या d.schemeType वरच
+ // (योग्य नसल्यास तेव्हाच Dropdown/Global कडे वळून) विश्वासार्हपणे ठरवतो.
+ if((d.schemeType||window.selectedScheme||document.getElementById('schemeType')?.value||'')==='नानासाहेब देशमुख कृषी संजीवनी'){
   const N=(v)=>`<span class="farmer-entered-value">${esc(v||'')}</span>`;
   if(title.includes('प्रपत्र १')){
    body+=`<div class="official exact-form form-page p1-page1"><div class="p1-top-space"></div><div class="p1-content-wrap"><h2>प्रपत्र - 1</h2><h3>हमीपत्र</h3>
@@ -1414,6 +1421,7 @@ function buildOriginalFormBody(title, d){
    <p>अस्तित्वात असलेले हरितगृह / शेडनेटगृह गट नं. / सर्वे नं. ______ असून त्याचे क्षेत्रफळ ______________________ चौ. मी. आहे.</p>
    <p>सदर हरितगृहासाठी / शेडनेटगृहासाठी यापूर्वी एम.आय.डी.एच. / आर. के. व्ही. वाय. व इतर योजनेतून अर्थसहाय्य देण्यात आलेले आहे / नाही.</p>
    <div class="sign-block">(स्वाक्षरी)<br><span class="line-gap"></span>कृषी सहाय्यक<br><span class="line-gap"></span>नाव<br><span class="line-gap"></span>सज्जा<br><span class="line-gap"></span>तालुका - ${N(d.taluka)}<br><span class="line-gap"></span>जिल्हा – ${N(d.district)}</div>
+   <div class="sign-block">(स्वाक्षरी / अंगठा)<br><span class="line-gap"></span>शेतकऱ्याचे नाव - श्री. ${N(d.name)}<br><span class="line-gap"></span>पत्ता - मु. पो. ${N(d.village)}, ता. ${N(d.taluka)}, जि. ${N(d.district)}</div>
    <p><i>(कृषी सहाय्यक यांनी मार्गदर्शक सूचनेतील हरितगृह किंवा शेडनेटगृहासाठी जागेची निवड याबाबतचे सविस्तर सूचनांचा अवलंब करून उपरोक्त स्थळ तपासणी अहवाल द्यावा.)</i></p>
    </div>`;
   } else if(title.includes('प्रपत्र ४ ब')){
@@ -1438,6 +1446,8 @@ function buildOriginalFormBody(title, d){
    <tr><td>2</td><td>48.3</td><td></td><td>2.9</td><td></td><td>3.25</td><td></td></tr>
    <tr><td>3</td><td>42.4</td><td></td><td>2.6</td><td></td><td>2.55</td><td></td></tr>
    <tr><td>4</td><td>33.7</td><td></td><td>2.6</td><td></td><td>1.99</td><td></td></tr></table>
+   </div>
+   <div class="official exact-form"><h2>प्रपत्र - ४ ब <small>(पुढे)</small></h2>
    <h3 style="text-align:center">ब. शेडनेट गृहासाठी टेपनेट मोनोनेट</h3>
    <table><tr><th style="width:6%">अ.क्र.</th><th style="width:82%">तांत्रिक निकष</th><th style="width:12%">होय / नाही</th></tr>
    <tr><td>क</td><td>शेडनेटगृहासाठी टेपनेट (ISI 6008: 2016) Part I आणि मोनोनेट (ISI 6008: 2016) Part II</td><td>शेरा प्रमाणित / अप्रमाणित</td></tr>
@@ -1455,7 +1465,8 @@ function buildOriginalFormBody(title, d){
    <table><tr><th colspan="2">युविव्ही संस्कारित लॅमिनेटेड ओव्हन पॉलिइथिलिन फिल्म</th><th colspan="2">ॲल्युमिनियम प्रोफाइल</th></tr>
    <tr><th>अपेक्षित वजन (ग्रॅम प्रति मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती मी.)</th><th>अपेक्षित वजन (ग्रॅम प्रति मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती मी.)</th></tr>
    <tr><td>120</td><td></td><td>190</td><td></td></tr></table>
-   <div class="p4b-page3-start"></div>
+   </div>
+   <div class="official exact-form"><h2>प्रपत्र - ४ ब <small>(पुढे)</small></h2>
    <table><tr><td style="width:6%">फ.</td><td>इतर साहित्य मार्गदर्शन सूचनेतील तांत्रिक निकषाप्रमाणे आहे काय?</td><td style="width:15%">होय / नाही</td></tr>
    <tr><td></td><td>शेडनेटगृहाची उभारणीची जागा व दिशा विचारात घेऊन मार्गदर्शक सूचनेतील आराखड्याप्रमाणे उभारणी नियोजन (आरेखन) आहे काय?</td><td>होय / नाही.</td></tr>
    <tr><td>ग.</td><td>शेडनेटगृहाच्या पायासाठी घेण्यात येणारे खड्ड्याची मापे योग्य आकारमानाचे आहेत काय? पाया पक्का होण्यासाठी योग्य व्यासाचा फाउंडेशन पाईप होल्ड फास्ट चार (8 मीमी. जाडीचा) योग्य प्रमाणाचे काँक्रीट मिश्रणाने भरणे या बाबीकडे लाभार्थी शेतकऱ्यांनी विशेष लक्ष देणे बाबत तसेच शेडनेटगृहाचे आयुष्यमान व पक्क्या उभारणी करिता पाया मजबूत असणे आवश्यक असल्याबाबत लाभार्थ्यास मार्गदर्शन करावे.</td><td>होय / नाही.</td></tr>
@@ -1521,6 +1532,8 @@ function buildOriginalFormBody(title, d){
    <p>६.2 क्षेत्रफळ ---------------------------------------- चौ. मी. (अ)</p>
    <p>७. अनुदान परिगणना</p>
    <p>अ. मापदंडानुसार — क्षेत्रफळ ---------------------------------------- चौ. मी. आकारमानासाठी उच्चतम शिफारस केलेला प्रति चौ. मी. दर = ------------ (अ)</p>
+   </div>
+   <div class="official exact-form"><h2>प्रपत्र – ८ ब <small>(पुढे)</small></h2>
    <p>ब. देयकानुसार</p>
    <table><tr><th>Sr. No.</th><th>Particulars</th><th>Cost Norm (per Sq. mtr)</th><th>Bill no and Date</th><th>Invoicee Name</th><th>Amount as per Bill</th><th>Amount as per Cost Norms (Cost Norm X area Sq. mtr)</th><th>Recommended Amount (whichever less)</th></tr>
    <tr><td>1.</td><td>Control Head for Irrigation / Fogger / Pad Circulation Systems</td><td>As per Table No 22</td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -3242,6 +3255,26 @@ async function syncNow(){
     });
     if(filtered.length !== arr.length) localStorage.setItem(fyKey(y), JSON.stringify(filtered));
    });
+   // महत्त्वाचे: वरील साफसफाई फक्त शेतकऱ्यांच्या (Farmer) यादीसाठी होती — कागदपत्रांची यादी
+   // (IndexedDB — प्रत्येक शेतकऱ्यामागे वेगळी, farmerId नुसार साठवलेली) वेगळीच आहे, आणि ती आधी
+   // इथे तपासलीच जायची नाही. त्यामुळे — दुसऱ्या (उदा. Admin च्या) डिव्हाइसवरून एखादे कागदपत्र
+   // Permanent Delete झाले, तरी या (Employee च्या) डिव्हाइसवर ते स्थानिक यादीत "दिसतच" राहायचे
+   // (प्रत्यक्ष Drive वरील फाईल आधीच गेलेली असल्याने ते फक्त "Open" होत नसे). आता — सर्व
+   // शेतकऱ्यांच्या (सर्व आर्थिक वर्षांतील) कागदपत्रांच्या याद्या एकेक करून तपासून, ज्यांचे
+   // Tombstone (RecordID::DOC::docId स्वरूपात) जुळते ती स्थानिक यादीतूनही कायमची काढतो.
+   try{
+    const allFarmersForDocClean=[];
+    availableYears().forEach(y=>{
+     let arr=[]; try{ arr=JSON.parse(localStorage.getItem(fyKey(y))||'[]'); }catch(e){}
+     arr.forEach(rec=>allFarmersForDocClean.push(rec));
+    });
+    for(const rec of allFarmersForDocClean){
+     const recSyncId = rec.syncId || (session.employeeId+'_'+rec.id);
+     let docs=[]; try{ docs = await idbGetDocs(String(rec.id)); }catch(e){ continue; }
+     const filteredDocs = docs.filter(d => !tombSet.has(String(recSyncId)+'::DOC::'+String(d.id)));
+     if(filteredDocs.length !== docs.length){ try{ await idbSetDocs(String(rec.id), filteredDocs); }catch(e){} }
+    }
+   }catch(e){}
   }
   // सर्व्हरचीच वेळ पुढच्या "since" साठी वापरतो (डिव्हाइसचे घड्याळ चुकीचे असले तरी अडचण येऊ नये).
   const newSyncMarker = pullRes.serverTime || new Date().toISOString();
