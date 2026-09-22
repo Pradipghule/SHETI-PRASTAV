@@ -45,7 +45,11 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
    (Flexbox च्या margin-top:auto ने — मजकूर कमी-जास्त असो, अचूक तळाशीच बसतो), आणि
    तळाशी फक्त निश्चित 15mm मोकळी जागा. */
 .p1-page1{min-height:277mm;height:auto;display:flex;flex-direction:column;}
-.p1-page1 .p1-content-wrap{margin-top:auto;padding-bottom:15mm;}
+/* महत्त्वाचे: मजकूर तळाशी अगदी काठाशी (277mm च्या तंतोतंत सीमेवर) नेल्यास, प्रत्यक्ष Print/PDF
+   मध्ये (Font रेंडरिंगमधील किरकोळ फरकांमुळे) तो थोडासा पुढच्या पानावर सांडू शकतो — जरी पडताळणी
+   वेळी तो "बरोबर बसतो" असे मोजमाप दाखवत असले तरी. त्यामुळे तळाशी 15mm ऐवजी थोडी जास्त (22mm)
+   सुरक्षित जागा ठेवतो — दिसायला फरक जवळपास नाहीच, पण सांडण्याची शक्यता राहत नाही. */
+.p1-page1 .p1-content-wrap{margin-top:auto;padding-bottom:18mm;}
 /* Keep Prapatra 1 page-1 text reasonably readable but compact enough that it fully fits in the remaining ~40% of the page below the stamp-paper blank space. */
 @media print{
   .p1-page1 h2{font-size:22px!important;margin:5px 0!important;}
@@ -110,10 +114,10 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
   /* पान २ (व ४) ची उंची आधी निश्चित (Fixed 277mm) होती — फॉन्ट मोठा झाल्यावर, किंवा सही/शिक्का
      साठीची राखीव जागा (18mm प्रत्येकी) मोजल्यावर, मजकूर या निश्चित उंचीपेक्षा जास्त झाला तर तो
      पानाबाहेर सांडून एक अतिरिक्त (रिकामे) पान तयार व्हायचे. आता पान १ प्रमाणेच ही उंचीही
-     "किमान २७७mm, गरज भासल्यास वाढणारी" केली — त्यामुळे मजकूर कधीही सांडणार नाही.
+     "किमान २७७mm, गरज भासल्यास वाढणारी" केली — त्यामुळे मजकूर कधीही सांडणार नाही. */
   .stamp-page-2,.stamp-page-4{min-height:277mm;height:auto;padding-top:0;box-sizing:border-box;}
   .stamp-page .stamp-top-space{
-    height:150mm; /* reserved handwritten space */
+    height:150mm;
     box-sizing:border-box;
   }
   .stamp-page h2,.stamp-page h3{
@@ -140,7 +144,7 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
      मोकळी जागा राहते (आधीची पद्धत — ठराविक mm ने ढकलणे — शेतकऱ्याच्या नावाच्या
      लांबीनुसार मजकूर कमी-जास्त उंचीचा असल्याने अचूक तळाशी बसत नव्हती).
   */
-  .stamp-page-1 .p11-content-wrap{margin-top:auto;padding-bottom:15mm;}
+  .stamp-page-1 .p11-content-wrap{margin-top:auto;padding-bottom:18mm;}
   /* पान ३ साठी आधीचीच पद्धत (ठराविक mm ने ढकलणे) कायम ठेवली आहे. */
   .stamp-page-3 > *:not(.stamp-top-space){
     transform:translateY(12mm);
@@ -917,9 +921,9 @@ async function renderBodyHtmlToPdfBlob(bodyHtml){
    .pdfclone.p1-page1 .control-list{margin:5px 0 8px 18px!important;line-height:1.3!important;}
    .pdfclone.p1-page1 .control-list li{font-size:14px!important;}
    .pdfclone.p1-page1{min-height:277mm!important;height:auto!important;display:flex!important;flex-direction:column!important;}
-   .pdfclone.p1-page1 .p1-content-wrap{margin-top:auto!important;padding-bottom:15mm!important;}
+   .pdfclone.p1-page1 .p1-content-wrap{margin-top:auto!important;padding-bottom:18mm!important;}
    .pdfclone.stamp-page-1{display:flex!important;flex-direction:column!important;}
-   .pdfclone.stamp-page-1 .p11-content-wrap{margin-top:auto!important;padding-bottom:15mm!important;}
+   .pdfclone.stamp-page-1 .p11-content-wrap{margin-top:auto!important;padding-bottom:18mm!important;}
    .pdfclone.stamp-page-3 > *:not(.stamp-top-space){transform:translateY(12mm)!important;}
    .pdfclone.stamp-page-1, .pdfclone.stamp-page-3,
    .pdfclone.stamp-page-1 *, .pdfclone.stamp-page-3 *{font-weight:700!important;color:#111!important;}
@@ -1777,10 +1781,10 @@ function downloadPDF(){
     .pdfclone.p1-page1 .control-list{margin:5px 0 8px 18px!important;line-height:1.3!important;}
     .pdfclone.p1-page1 .control-list li{font-size:14px!important;}
     .pdfclone.p1-page1{min-height:277mm!important;height:auto!important;display:flex!important;flex-direction:column!important;}
-    .pdfclone.p1-page1 .p1-content-wrap{margin-top:auto!important;padding-bottom:15mm!important;}
+    .pdfclone.p1-page1 .p1-content-wrap{margin-top:auto!important;padding-bottom:18mm!important;}
     /* PDF download: pages 1 and 3 content 20% higher than the previous PDF position */
     .pdfclone.stamp-page-1{display:flex!important;flex-direction:column!important;}
-    .pdfclone.stamp-page-1 .p11-content-wrap{margin-top:auto!important;padding-bottom:15mm!important;}
+    .pdfclone.stamp-page-1 .p11-content-wrap{margin-top:auto!important;padding-bottom:18mm!important;}
     .pdfclone.stamp-page-3 > *:not(.stamp-top-space){transform:translateY(12mm)!important;}
     /* PDF download: Page 1 and 3 complete text must be dark/bold, not yellow-highlighted */
     .pdfclone.stamp-page-1 > *:not(.stamp-top-space),
