@@ -84,6 +84,13 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
   .p1-page2{page-break-after:auto!important;break-after:auto!important;}
   /* Prapatra 8ब: same fix for the gap between mudda 8 and 9, Print-only. */
   .p8b-page1{page-break-after:auto!important;break-after:auto!important;}
+  /* प्रपत्र ८ब चे पान १+२ एकत्र केल्यावर 257mm पेक्षा 7-8mm जास्त होत होते (त्यामुळे
+     Download/Save मध्ये गरज नसताना ३ पाने तयार व्हायची, Print मध्ये मात्र योग्य २च दिसायची).
+     इथे फक्त परिच्छेद व टेबलमधील थोडी (जेमतेम, वाचनीयतेवर परिणाम न होणारी) मोकळी जागा
+     कमी करून, नेमकी तेवढीच जागा वाचवली — जेणेकरून Download मध्येही योग्य २ पानेच येतील. */
+  .p8b-compact p{margin:5px 0!important;}
+  .p8b-compact table{margin:6px 0!important;}
+  .p8b-compact th,.p8b-compact td{padding:4px!important;}
 }
 
 .record{border:1px solid #d7e0df;border-radius:9px;padding:14px;margin:10px 0;background:#fff}
@@ -936,6 +943,7 @@ async function renderBodyHtmlToPdfBlob(bodyHtml){
    .pdfclone.compact-single-page table{font-size:14px!important;margin:3px 0!important;}
    .pdfclone.compact-single-page th,.pdfclone.compact-single-page td{padding:2px 3px!important;}
    .pdfclone h2{margin-top:0!important;}.pdfclone p{margin:8px 0!important;}
+   .pdfclone.p8b-compact p{margin:5px 0!important;}.pdfclone.p8b-compact table{margin:6px 0!important;}.pdfclone.p8b-compact th,.pdfclone.p8b-compact td{padding:4px!important;}
    .pdfclone.stamp-page-2 .p11-signature-area{margin-top:10px!important;}
    .pdfclone.stamp-page-2 .p11-sign-line,
    .pdfclone.stamp-page-2 .p11-stamp-line{min-height:18mm!important;display:flex!important;align-items:flex-start!important;gap:4px!important;margin:8px 0 4px!important;}
@@ -1521,7 +1529,7 @@ function buildOriginalFormBody(title, d){
    <tr><td>9</td><td>If any of the above specifications are not followed / Old one, then no subsidy will be sanctioned for drip irrigation system</td><td></td></tr></table>
    </div>`;
   } else if(title.includes('प्रपत्र ८ ब')){
-   body+=`<div class="official exact-form form-page p8b-page1"><h2>प्रपत्र – ८ ब</h2><h3>मापण पुस्तिका नोंद शेडनेटगृह</h3>
+   body+=`<div class="official exact-form form-page p8b-page1 p8b-compact"><h2>प्रपत्र – ८ ब</h2><h3>मापण पुस्तिका नोंद शेडनेटगृह</h3>
    <p>१. लाभार्थ्याचे नाव - श्री. ${N(d.name)}, मु. पो. ${N(d.village)}, ता. ${N(d.taluka)}, जि. ${N(d.district)}<br>सर्वे नंबर- वर्गवारी - ${N(d.gat)} (${N(d.category)})</p>
    <p>2. बाब - शेडनेटगृह प्रकार FTSNH-4 Mtr. (मार्गदर्शक सूचनेप्रमाणे आकारमान नमूद करावे) ( ______ x ______ मीटर.)</p>
    <p>3. उभारणीपूर्व प्रथम तपासणीचा दिनांक &nbsp; ______ / ______ / 20______</p>
@@ -1532,8 +1540,6 @@ function buildOriginalFormBody(title, d){
    <p>६.2 क्षेत्रफळ ---------------------------------------- चौ. मी. (अ)</p>
    <p>७. अनुदान परिगणना</p>
    <p>अ. मापदंडानुसार — क्षेत्रफळ ---------------------------------------- चौ. मी. आकारमानासाठी उच्चतम शिफारस केलेला प्रति चौ. मी. दर = ------------ (अ)</p>
-   </div>
-   <div class="official exact-form"><h2>प्रपत्र – ८ ब <small>(पुढे)</small></h2>
    <p>ब. देयकानुसार</p>
    <table><tr><th>Sr. No.</th><th>Particulars</th><th>Cost Norm (per Sq. mtr)</th><th>Bill no and Date</th><th>Invoicee Name</th><th>Amount as per Bill</th><th>Amount as per Cost Norms (Cost Norm X area Sq. mtr)</th><th>Recommended Amount (whichever less)</th></tr>
    <tr><td>1.</td><td>Control Head for Irrigation / Fogger / Pad Circulation Systems</td><td>As per Table No 22</td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -1653,6 +1659,8 @@ function buildOriginalFormBody(title, d){
    </table>
 
    <p>उपरोक्त प्रमाणे अनुदानाकरिता ठिबक सिंचन हा घटक अनुदानाकरिता ग्राह्य धरण्यात यावा. तसेच माझ्या प्रक्षेत्रावरील गट नं./ सर्वे नं. <b>${E(d.gat)}</b> मध्ये हरितगृह / शेडनेटगृहाकरिता ठिबक सिंचन /मायक्रो /मिनी /इन्वर्टेड स्प्रिंकलर, फॉगिंग यंत्रणा व कंट्रोल हेड या घटकाची उभारणी /जोडणी तांत्रिक निकषानुसार केलेली आहे.</p>
+   </div>
+   <div class="official exact-form form-extra-margin"><h2>प्रपत्र – 3 (अ) <small>(पुढे)</small></h2>
    <p>ठिबक सिंचन /मायक्रो / मिनी / इन्वर्टेड स्प्रिंकलर, फॉगिंग यंत्रणा व वैकल्पिक साहित्य या साहित्याचा उपयोग फलोत्पादन पिकाकरिता करणार आहे. तसेच या घटकाचा अनुदानाचा लाभ घेतल्यानंतर भविष्यात सदर साहित्य इतर ठिकाणी स्थलांतरित करणार नाही व त्याची परस्पर विल्हेवाट / विक्री करणार नाही. तसे कृत्य मी केल्यास / निदर्शनास आल्यास दिलेल्या अनुदानाची रक्कम व्याजासह वसुलीस माझी हरकत राहणार नाही. याची मला जाणीव आहे. तसेच वसुलीची रक्कम दिलेल्या मुदतीत शासनास न भरल्यास सदर रकमेचा बोजा ७/१2 वर लावण्याची कार्यवाही महसूल विभागाच्या कार्यपद्धतीनुसार करण्यात येईल. मी कृषी विभागाच्या सर्व योजनांचा लाभ ५ वर्षाकरिता घेण्यास पात्र राहणार नाही याची मला जाणीव आहे.</p>
 
    <p style="margin-top:28px"><b>शेतकऱ्याचे नाव व पत्ता-</b> ${E(d.name)}</p>
@@ -1817,6 +1825,7 @@ function downloadPDF(){
     .pdfclone.compact-single-page table{font-size:14px!important;margin:3px 0!important;}
     .pdfclone.compact-single-page th,.pdfclone.compact-single-page td{padding:2px 3px!important;}
     .pdfclone h2{margin-top:0!important;}.pdfclone p{margin:8px 0!important;}
+    .pdfclone.p8b-compact p{margin:5px 0!important;}.pdfclone.p8b-compact table{margin:6px 0!important;}.pdfclone.p8b-compact th,.pdfclone.p8b-compact td{padding:4px!important;}
     /* PDF download: Prapatra 11 Page 2 signature and firm-stamp areas
        must match the double-height space used in Print. */
     .pdfclone.stamp-page-2 .p11-signature-area{margin-top:10px!important;}
@@ -2586,8 +2595,10 @@ function afterLogin(){
 
 /* ---------- Employee Live Location (फक्त EMP2-5 साठी; Admin ला फक्त पाहण्याचा अधिकार) ----------
    हे फक्त App/Tab उघडे (किंवा तात्पुरते background मध्ये) असतानाच काम करते — Chrome/App पूर्णपणे
-   बंद असताना नाही (ती मर्यादा आधीच स्पष्ट केलेली आहे). दर ५ मिनिटांनी तपासतो, सर्व्हर स्वतः ठरवतो
-   की १ किमी अंतराची अट पूर्ण झाली आहे का (तरच प्रत्यक्ष Update होते). */
+   बंद असताना नाही (ती मर्यादा आधीच स्पष्ट केलेली आहे). दर ३ मिनिटांनी तपासतो, सर्व्हर स्वतः ठरवतो
+   की १ किमी अंतराची अट पूर्ण झाली आहे का (तरच प्रत्यक्ष Update होते). Permission अजून न दिलेल्या
+   Employee साठी हाच ३ मिनिटांचा प्रयत्न Browser चा Location Popup पुन्हा-पुन्हा दाखवतो —
+   Permission मिळाल्यावर Browser आपोआप Popup दाखवणे थांबवतो (वेगळे काही करावे लागत नाही). */
 let locationTrackingTimer=null;
 // हे बटण थेट Employee च्या Click वर चालते (कुठलाही await मध्ये नाही) — त्यामुळे ब्राउझर हा
 // "User चा थेट Action" समजून खात्रीने Location Permission चा Popup दाखवतो (आपोआप, पानावर
@@ -2625,7 +2636,12 @@ function startLocationTracking(){
   }, ()=>{ /* Employee ने नंतर Location बंद केली असल्यास शांतपणे थांबते, अ‍ॅप अडत नाही */ }, {timeout:15000});
  };
  sendOnce();
- locationTrackingTimer = setInterval(sendOnce, 5*60*1000);
+ // दर ३ मिनिटांनी प्रयत्न — ज्या Employee ने अजून Permission दिलेली नाही, त्याला Browser
+ // प्रत्येक प्रयत्नात Popup दाखवत राहील (जोपर्यंत Permanently "Block" केलेले नाही). एकदा
+ // Employee ने "Allow" दिल्यावर — Browser त्यानंतर कधीही हा Popup पुन्हा दाखवत नाही
+ // (आपोआप शांतपणे Location मिळत राहते) — त्यामुळे "परत Popup न येणे" हे इथे वेगळे काही न
+ // करताही आपोआप साध्य होते.
+ locationTrackingTimer = setInterval(sendOnce, 3*60*1000);
  // Internet पुन्हा आल्यावर ५ मिनिटांची वाट न बघता लगेच एकदा पाठवतो.
  window.addEventListener('online', sendOnce);
 }
