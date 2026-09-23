@@ -1768,11 +1768,13 @@ async function uploadProposalPdfToDrive(pdf, title){
   const dataUri = pdf.output('datauristring');
   const base64Data = dataUri.split(',')[1] || '';
   const d = findRecordAnyYear(currentId);
+  const fileSizeMB = base64Data.length / 1024 / 1024;
+  const uploadTimeoutMs = Math.min(180000, Math.max(30000, 30000 + fileSizeMB*3000));
   await callApi('uploadFile', {
    employeeId: session.employeeId, farmerId: currentId, farmerName: d?d.name:'',
    fileName: title.replace(/[\/:*?"<>|]/g,'_')+'.pdf', mimeType: 'application/pdf', base64Data,
    folderType: 'FARMER_DOCUMENTS'
-  });
+  }, 0, false, uploadTimeoutMs);
  }catch(e){ /* Offline किंवा अयशस्वी — स्थानिक Download तरी झालेला आहे, पुढच्या वेळी पुन्हा प्रयत्न होईल */ }
 }
 // महत्त्वाचे: Print आणि PDF-Download हे आधी दोन वेगळे मार्ग होते — Print थेट Browser च्या
@@ -2081,11 +2083,18 @@ async function uploadDocToDrive(item, farmerId, syncIdParam){
  const farmerName = farmerRec ? farmerRec.name : '';
  try{
   const base64Data = item.data.split(',')[1] || '';
+  // महत्त्वाचे: मोठ्या फाईल्स (उदा. 11 MB) Upload करताना, Internet वेगवान (30 Mbps) असूनही
+  // अयशस्वी व्हायच्या — कारण खरा अडथळा Network Speed नसून, Google Server ला एवढा मोठा
+  // Base64-डेटा उलगडून (Decode) Drive वर लिहायला लागणारा वेळ होता — आणि Client आधी फक्त
+  // २० सेकंदातच वाट बघून सोडून द्यायचा. आता फाईलच्या आकारानुसार वेळ-मर्यादा वाढवतो — प्रत्येक
+  // MB मागे अतिरिक्त ३ सेकंद (किमान ३० सेकंद, कमाल १८० सेकंद).
+  const fileSizeMB = base64Data.length / 1024 / 1024;
+  const uploadTimeoutMs = Math.min(180000, Math.max(30000, 30000 + fileSizeMB*3000));
   const res = await callApi('uploadFile', {
     employeeId: session.employeeId, farmerId, farmerName,
     fileName: item.name, mimeType: item.type, base64Data,
     folderType: 'FARMER_DOCUMENTS'
-  });
+  }, 0, false, uploadTimeoutMs);
   if(res && res.ok){
     let docs=await idbGetDocs(String(farmerId));
     const idx=docs.findIndex(x=>x.id===item.id);
