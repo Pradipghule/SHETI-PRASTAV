@@ -89,8 +89,8 @@ input,select{width:100%;box-sizing:border-box;padding:10px;margin-top:5px;border
      इथे फक्त परिच्छेद व टेबलमधील थोडी (जेमतेम, वाचनीयतेवर परिणाम न होणारी) मोकळी जागा
      कमी करून, नेमकी तेवढीच जागा वाचवली — जेणेकरून Download मध्येही योग्य २ पानेच येतील. */
   .p8b-compact p{margin:5px 0!important;}
-  .p8b-compact table{margin:6px 0!important;}
-  .p8b-compact th,.p8b-compact td{padding:4px!important;}
+  .p8b-compact table{margin:6px 0!important;font-size:11.2px!important;}
+  .p8b-compact th,.p8b-compact td{padding:3px!important;}
 }
 
 .record{border:1px solid #d7e0df;border-radius:9px;padding:14px;margin:10px 0;background:#fff}
@@ -353,6 +353,7 @@ function updateFarmName(){const n=localStorage.getItem("farmName")||"Sahyadri Gr
 <button id="bForms" onclick="show('forms')">📑 प्रपत्रे</button>
 <button id="bAdminEdit" class="hidden" onclick="show('adminEditFolder')">📁 Admin Edit</button>
 <button id="bBackup" class="hidden" onclick="backup()">💾 Backup</button>
+<style>@keyframes locPulse{0%,100%{box-shadow:0 0 0 0 rgba(211,47,47,0.6);transform:scale(1);}50%{box-shadow:0 0 0 8px rgba(211,47,47,0);transform:scale(1.05);}}</style>
 <button id="bLocationPermission" class="hidden" onclick="requestLocationPermissionNow()">📍 Location Permission Allow करा</button>
 <span id="backupStatusText" class="small"></span>
 </nav>
@@ -943,7 +944,7 @@ async function renderBodyHtmlToPdfBlob(bodyHtml){
    .pdfclone.compact-single-page table{font-size:14px!important;margin:3px 0!important;}
    .pdfclone.compact-single-page th,.pdfclone.compact-single-page td{padding:2px 3px!important;}
    .pdfclone h2{margin-top:0!important;}.pdfclone p{margin:8px 0!important;}
-   .pdfclone.p8b-compact p{margin:5px 0!important;}.pdfclone.p8b-compact table{margin:6px 0!important;}.pdfclone.p8b-compact th,.pdfclone.p8b-compact td{padding:4px!important;}
+   .pdfclone.p8b-compact p{margin:5px 0!important;}.pdfclone.p8b-compact table{margin:6px 0!important;font-size:11.2px!important;}.pdfclone.p8b-compact th,.pdfclone.p8b-compact td{padding:3px!important;}
    .pdfclone.stamp-page-2 .p11-signature-area{margin-top:10px!important;}
    .pdfclone.stamp-page-2 .p11-sign-line,
    .pdfclone.stamp-page-2 .p11-stamp-line{min-height:18mm!important;display:flex!important;align-items:flex-start!important;gap:4px!important;margin:8px 0 4px!important;}
@@ -1455,7 +1456,7 @@ function buildOriginalFormBody(title, d){
    <tr><td>3</td><td>42.4</td><td></td><td>2.6</td><td></td><td>2.55</td><td></td></tr>
    <tr><td>4</td><td>33.7</td><td></td><td>2.6</td><td></td><td>1.99</td><td></td></tr></table>
    </div>
-   <div class="official exact-form"><h2>प्रपत्र - ४ ब <small>(पुढे)</small></h2>
+   <div class="official exact-form"><h2>प्रपत्र - ४ ब</h2>
    <h3 style="text-align:center">ब. शेडनेट गृहासाठी टेपनेट मोनोनेट</h3>
    <table><tr><th style="width:6%">अ.क्र.</th><th style="width:82%">तांत्रिक निकष</th><th style="width:12%">होय / नाही</th></tr>
    <tr><td>क</td><td>शेडनेटगृहासाठी टेपनेट (ISI 6008: 2016) Part I आणि मोनोनेट (ISI 6008: 2016) Part II</td><td>शेरा प्रमाणित / अप्रमाणित</td></tr>
@@ -1474,7 +1475,7 @@ function buildOriginalFormBody(title, d){
    <tr><th>अपेक्षित वजन (ग्रॅम प्रति मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती मी.)</th><th>अपेक्षित वजन (ग्रॅम प्रति मी.)</th><th>प्रत्यक्ष वजन (ग्रॅम प्रती मी.)</th></tr>
    <tr><td>120</td><td></td><td>190</td><td></td></tr></table>
    </div>
-   <div class="official exact-form"><h2>प्रपत्र - ४ ब <small>(पुढे)</small></h2>
+   <div class="official exact-form"><h2>प्रपत्र - ४ ब</h2>
    <table><tr><td style="width:6%">फ.</td><td>इतर साहित्य मार्गदर्शन सूचनेतील तांत्रिक निकषाप्रमाणे आहे काय?</td><td style="width:15%">होय / नाही</td></tr>
    <tr><td></td><td>शेडनेटगृहाची उभारणीची जागा व दिशा विचारात घेऊन मार्गदर्शक सूचनेतील आराखड्याप्रमाणे उभारणी नियोजन (आरेखन) आहे काय?</td><td>होय / नाही.</td></tr>
    <tr><td>ग.</td><td>शेडनेटगृहाच्या पायासाठी घेण्यात येणारे खड्ड्याची मापे योग्य आकारमानाचे आहेत काय? पाया पक्का होण्यासाठी योग्य व्यासाचा फाउंडेशन पाईप होल्ड फास्ट चार (8 मीमी. जाडीचा) योग्य प्रमाणाचे काँक्रीट मिश्रणाने भरणे या बाबीकडे लाभार्थी शेतकऱ्यांनी विशेष लक्ष देणे बाबत तसेच शेडनेटगृहाचे आयुष्यमान व पक्क्या उभारणी करिता पाया मजबूत असणे आवश्यक असल्याबाबत लाभार्थ्यास मार्गदर्शन करावे.</td><td>होय / नाही.</td></tr>
@@ -1515,7 +1516,7 @@ function buildOriginalFormBody(title, d){
    <tr><td>8</td><td>By pass assembly</td><td></td><td></td><td></td><td></td></tr></table>
    <p>कंट्रोल हेडच्या विविध घटकांचे मॉडेलनिहाय तांत्रिक निकष मार्गदर्शक सूचनेप्रमाणे नमूद केल्याप्रमाणे आहेत काय? होय / नाही</p>
    </div>
-   <div class="official exact-form"><h2>प्रपत्र – ५ क <small>(पुढे)</small></h2>
+   <div class="official exact-form"><h2>प्रपत्र – ५ क</h2>
    <p>१०. ड्रीप सिस्टमचे विविध घटकांचे तांत्रिक निकष परिमाण</p>
    <table><tr><th>Sr. No.</th><th>Technical Specification</th><th>Yes / No</th></tr>
    <tr><td>1</td><td>Power supply arrangement should be available at site</td><td></td></tr>
@@ -1550,7 +1551,7 @@ function buildOriginalFormBody(title, d){
    <tr><td colspan="2"><b>Total</b></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
    <p>८. उपरोक्त परिशिष्टाप्रमाणे वापरण्यात आलेल्या साहित्याची एकूण किंमत (प्रत्यक्ष खर्च) रु.---------------------------------------------------- (ब)</p>
    </div>
-   <div class="official exact-form"><h2>प्रपत्र – ८ ब <small>(पुढे)</small></h2>
+   <div class="official exact-form"><h2>प्रपत्र – ८ ब</h2>
    <p>९. प्रत्यक्ष खर्चाप्रमाणे (ब) व क्षेत्रफळानुसार येणारा प्रति चौ. मी. दर = (ब÷क्षेत्रफळ) = रु. -----------------------------------------------------(क)</p>
    <p>१०. मार्गदर्शक सूचनेत उपरोक्त आकारमानासाठी शिफारस केलेला उच्चतम प्रति चौ. मी. दर रु.------------------- (ड)</p>
    <p>११. उपरोक्त 'क' व 'ड' पैकी कमी असलेला प्रति चौ. मी. दर रु.- ----------------------- (इ)</p>
@@ -1660,7 +1661,7 @@ function buildOriginalFormBody(title, d){
 
    <p>उपरोक्त प्रमाणे अनुदानाकरिता ठिबक सिंचन हा घटक अनुदानाकरिता ग्राह्य धरण्यात यावा. तसेच माझ्या प्रक्षेत्रावरील गट नं./ सर्वे नं. <b>${E(d.gat)}</b> मध्ये हरितगृह / शेडनेटगृहाकरिता ठिबक सिंचन /मायक्रो /मिनी /इन्वर्टेड स्प्रिंकलर, फॉगिंग यंत्रणा व कंट्रोल हेड या घटकाची उभारणी /जोडणी तांत्रिक निकषानुसार केलेली आहे.</p>
    </div>
-   <div class="official exact-form form-extra-margin"><h2>प्रपत्र – 3 (अ) <small>(पुढे)</small></h2>
+   <div class="official exact-form form-extra-margin"><h2>प्रपत्र – 3 (अ)</h2>
    <p>ठिबक सिंचन /मायक्रो / मिनी / इन्वर्टेड स्प्रिंकलर, फॉगिंग यंत्रणा व वैकल्पिक साहित्य या साहित्याचा उपयोग फलोत्पादन पिकाकरिता करणार आहे. तसेच या घटकाचा अनुदानाचा लाभ घेतल्यानंतर भविष्यात सदर साहित्य इतर ठिकाणी स्थलांतरित करणार नाही व त्याची परस्पर विल्हेवाट / विक्री करणार नाही. तसे कृत्य मी केल्यास / निदर्शनास आल्यास दिलेल्या अनुदानाची रक्कम व्याजासह वसुलीस माझी हरकत राहणार नाही. याची मला जाणीव आहे. तसेच वसुलीची रक्कम दिलेल्या मुदतीत शासनास न भरल्यास सदर रकमेचा बोजा ७/१2 वर लावण्याची कार्यवाही महसूल विभागाच्या कार्यपद्धतीनुसार करण्यात येईल. मी कृषी विभागाच्या सर्व योजनांचा लाभ ५ वर्षाकरिता घेण्यास पात्र राहणार नाही याची मला जाणीव आहे.</p>
 
    <p style="margin-top:28px"><b>शेतकऱ्याचे नाव व पत्ता-</b> ${E(d.name)}</p>
@@ -1756,7 +1757,8 @@ function openForm(title){
  show('preview');
 }
 
-function printProposal(){window.print()}
+// printProposal() ची व्याख्या खाली buildProposalPdf सोबत आहे (जुनी window.print()-आधारित
+// व्याख्या इथून काढली — आता Print आणि PDF-Download एकाच सामायिक मार्गाने जातात).
 
 // भरलेला प्रस्ताव (PDF) — त्याच शेतकऱ्याच्या Drive Folder मध्ये (वेगळ्या "PDF Proposals"
 // उप-Folder मध्ये) आपोआप Upload करतो — जेणेकरून डिव्हाइस हरवले/बदलले तरी तो सुरक्षित राहील.
@@ -1773,15 +1775,18 @@ async function uploadProposalPdfToDrive(pdf, title){
   });
  }catch(e){ /* Offline किंवा अयशस्वी — स्थानिक Download तरी झालेला आहे, पुढच्या वेळी पुन्हा प्रयत्न होईल */ }
 }
-function downloadPDF(){
+// महत्त्वाचे: Print आणि PDF-Download हे आधी दोन वेगळे मार्ग होते — Print थेट Browser च्या
+// CSS वर (window.print()), आणि Download वेगळ्या html2canvas-आधारित पद्धतीने. यामुळे अनेकदा
+// दोन्हींत किरकोळ फरक (मुद्दे कमी-जास्त वर-खाली होणे) पडायचा. आता — दोन्ही याच एका सामायिक
+// Function (buildProposalPdf) मधूनच PDF तयार करतात — त्यामुळे Print आणि Download आता
+// तंतोतंत सारखेच येतील. (तडजोड: यामुळे आता Print साठीही Internet आवश्यक आहे — आधी ते
+// Offline सुद्धा चालायचे.)
+async function buildProposalPdf(){
   if(!window.html2canvas || !window.jspdf){
-    alert('PDF engine load होत आहे. Internet चालू ठेवा आणि पुन्हा PDF Download दाबा.');
-    return;
+    throw new Error('PDF engine load होत आहे. Internet चालू ठेवा आणि पुन्हा प्रयत्न करा.');
   }
   const pages=[...document.querySelectorAll('#formBody .form-page, #formBody .stamp-page, #formBody .official')];
-  if(!pages.length){ alert('PDF साठी प्रपत्र उघडा.'); return; }
-  const oldScroll=window.scrollY;
-  const title=(document.getElementById('formTitle')?.textContent||'Prastav').trim();
+  if(!pages.length){ throw new Error('PDF साठी प्रपत्र उघडा.'); }
   const {jsPDF}=window.jspdf;
   const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4',compress:true});
   const stage=document.createElement('div');
@@ -1800,23 +1805,19 @@ function downloadPDF(){
     .pdfclone.p1-page1 .control-list li{font-size:14px!important;}
     .pdfclone.p1-page1{min-height:277mm!important;height:auto!important;display:flex!important;flex-direction:column!important;}
     .pdfclone.p1-page1 .p1-content-wrap{margin-top:auto!important;padding-bottom:18mm!important;}
-    /* PDF download: pages 1 and 3 content 20% higher than the previous PDF position */
     .pdfclone.stamp-page-1{display:flex!important;flex-direction:column!important;}
     .pdfclone.stamp-page-1 .p11-content-wrap{margin-top:auto!important;padding-bottom:18mm!important;}
     .pdfclone.stamp-page-3 > *:not(.stamp-top-space){transform:translateY(12mm)!important;}
-    /* PDF download: Page 1 and 3 complete text must be dark/bold, not yellow-highlighted */
     .pdfclone.stamp-page-1 > *:not(.stamp-top-space),
     .pdfclone.stamp-page-3 > *:not(.stamp-top-space),
     .pdfclone.stamp-page-1 p,.pdfclone.stamp-page-1 h2,.pdfclone.stamp-page-1 h3,
     .pdfclone.stamp-page-1 b,.pdfclone.stamp-page-1 strong,
     .pdfclone.stamp-page-3 p,.pdfclone.stamp-page-3 h2,.pdfclone.stamp-page-3 h3,
     .pdfclone.stamp-page-3 b,.pdfclone.stamp-page-3 strong{font-weight:700!important;color:#111!important;}
-    /* PDF: Prapatra 11 Page 1 and 3 ALL printed matter dark/bold */
     .pdfclone.stamp-page-1, .pdfclone.stamp-page-3,
     .pdfclone.stamp-page-1 *, .pdfclone.stamp-page-3 *{font-weight:700!important;color:#111!important;}
     .pdfclone.stamp-page-1 h2.p11-highlight,.pdfclone.stamp-page-3 h2.p11-highlight{display:block!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;font-weight:800!important;color:#111!important;}
     .pdfclone h2,.pdfclone h3,.pdfclone p{font-size:14px!important;line-height:1.3!important;}
-    /* Never show the software form name at the top of PDF pages */
     #formTitle{display:none!important;}
     .pdfclone.form-extra-margin{padding:0!important;box-sizing:border-box!important;}
     .pdfclone.compact-single-page h2{font-size:17px!important;margin:2px 0!important;}
@@ -1825,9 +1826,7 @@ function downloadPDF(){
     .pdfclone.compact-single-page table{font-size:14px!important;margin:3px 0!important;}
     .pdfclone.compact-single-page th,.pdfclone.compact-single-page td{padding:2px 3px!important;}
     .pdfclone h2{margin-top:0!important;}.pdfclone p{margin:8px 0!important;}
-    .pdfclone.p8b-compact p{margin:5px 0!important;}.pdfclone.p8b-compact table{margin:6px 0!important;}.pdfclone.p8b-compact th,.pdfclone.p8b-compact td{padding:4px!important;}
-    /* PDF download: Prapatra 11 Page 2 signature and firm-stamp areas
-       must match the double-height space used in Print. */
+    .pdfclone.p8b-compact p{margin:5px 0!important;}.pdfclone.p8b-compact table{margin:6px 0!important;font-size:11.2px!important;}.pdfclone.p8b-compact th,.pdfclone.p8b-compact td{padding:3px!important;}
     .pdfclone.stamp-page-2 .p11-signature-area{margin-top:10px!important;}
     .pdfclone.stamp-page-2 .p11-sign-line,
     .pdfclone.stamp-page-2 .p11-stamp-line{
@@ -1842,35 +1841,40 @@ function downloadPDF(){
     .pdfclone .tepnet-subtable th,.pdfclone .tepnet-subtable td{padding:2px!important;line-height:1.15!important;}
   `;
   stage.appendChild(style);
+  try{
+    for(let i=0;i<pages.length;i++){
+      const clone=pages[i].cloneNode(true);
+      clone.classList.add('pdfclone');
+      clone.querySelectorAll('.no-print,.actions,button').forEach(e=>e.remove());
+      stage.appendChild(clone);
+      await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+      const canvas=await html2canvas(clone,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false,windowWidth:794});
+      const img=canvas.toDataURL('image/jpeg',0.96);
+      if(i>0) pdf.addPage('a4','portrait');
+      const hasReservedStampSpace = !!clone.querySelector('.stamp-top-space, .p1-top-space');
+      const isStampPaperPage = clone.classList.contains('prapatra1-page');
+      let imgH;
+      if(hasReservedStampSpace){
+        imgH = isStampPaperPage ? 277 : 257;
+      } else {
+        const naturalH = canvas.height / canvas.width * 170;
+        imgH = Math.min(naturalH, isStampPaperPage ? 277 : 257);
+      }
+      pdf.addImage(img,'JPEG',20,20,170,imgH,undefined,'FAST');
+      stage.removeChild(clone);
+    }
+    return pdf;
+  } finally {
+    stage.remove();
+  }
+}
+
+function downloadPDF(){
+  const oldScroll=window.scrollY;
+  const title=(document.getElementById('formTitle')?.textContent||'Prastav').trim();
   (async()=>{
     try{
-      for(let i=0;i<pages.length;i++){
-        const clone=pages[i].cloneNode(true);
-        clone.classList.add('pdfclone');
-        clone.querySelectorAll('.no-print,.actions,button').forEach(e=>e.remove());
-        stage.appendChild(clone);
-        await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
-        const canvas=await html2canvas(clone,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false,windowWidth:794});
-        const img=canvas.toDataURL('image/jpeg',0.96);
-        if(i>0) pdf.addPage('a4','portrait');
-        /* नानासाहेब प्रपत्र १ (स्टॅम्प पेपर पान) व प्रपत्र ४ ब (स्टॅम्प पेपर पान) यांना जाणीवपूर्वक राखीव ठेवलेली
-           मोठी रिकामी जागा (स्टॅम्पसाठी) असते — ती "अनावश्यक" नाही, त्यामुळे अशा पानांची उंची बदलत नाही.
-           बाकी सर्व सामान्य पानांसाठी मात्र — प्रत्यक्ष मजकुराच्या खऱ्या उंचीनुसारच (जास्तीत जास्त 257mm पर्यंत)
-           PDF मध्ये बसवतो, जेणेकरून कमी मजकूर असलेल्या पानाखाली उगाच मोठी रिकामी जागा तयार होणार नाही. */
-        const hasReservedStampSpace = !!clone.querySelector('.stamp-top-space, .p1-top-space');
-        const isStampPaperPage = clone.classList.contains('prapatra1-page');
-        let imgH;
-        if(hasReservedStampSpace){
-          imgH = isStampPaperPage ? 277 : 257;
-        } else {
-          const naturalH = canvas.height / canvas.width * 170;
-          imgH = Math.min(naturalH, isStampPaperPage ? 277 : 257);
-        }
-        /* Match browser Print A4 exactly: @page margin is 20mm, so the printable content area is 170 x 257mm
-           (किंवा स्टॅम्प पेपर पानासाठी 170 x 277mm, फक्त वरचा मार्जिन राखून). */
-        pdf.addImage(img,'JPEG',20,20,170,imgH,undefined,'FAST');
-        stage.removeChild(clone);
-      }
+      const pdf = await buildProposalPdf();
       pdf.save(title.replace(/[\/:*?"<>|]/g,'_')+'.pdf');
       // हेच भरलेले प्रस्ताव (PDF) आत्तापर्यंत फक्त डिव्हाइसवर Download व्हायचे, Google Drive वर
       // कधीच जायचे नाहीत — त्यामुळे "Drive मध्ये प्रस्तावच दिसत नाही" असे व्हायचे. आता Download
@@ -1878,9 +1882,42 @@ function downloadPDF(){
       uploadProposalPdfToDrive(pdf, title);
     }catch(err){
       console.error(err);
-      alert('PDF तयार करताना अडचण आली. Print Preview प्रमाणेच पुन्हा प्रयत्न करा.');
+      alert(err.message || 'PDF तयार करताना अडचण आली. पुन्हा प्रयत्न करा.');
     }finally{
-      stage.remove();
+      window.scrollTo(0,oldScroll);
+    }
+  })();
+}
+
+// Print आता थेट Browser Print (window.print) वापरत नाही — त्याऐवजी तीच PDF-निर्मिती वापरून,
+// तयार झालेला PDF एका लपलेल्या iframe मध्ये उघडून त्यावरच Print Dialog आणतो — त्यामुळे Print
+// आणि Download आता तंतोतंत सारखेच दिसतील (दोन्ही वेगळे राहिले नाहीत).
+function printProposal(){
+  const oldScroll=window.scrollY;
+  const btn = document.querySelector('.actions button.primary[onclick="printProposal()"]');
+  if(btn) btn.disabled = true;
+  (async()=>{
+    try{
+      const pdf = await buildProposalPdf();
+      const blobUrl = pdf.output('bloburl');
+      const iframe = document.createElement('iframe');
+      iframe.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0;';
+      iframe.src = blobUrl;
+      document.body.appendChild(iframe);
+      iframe.onload = ()=>{
+        setTimeout(()=>{
+          try{ iframe.contentWindow.focus(); iframe.contentWindow.print(); }catch(e){
+            // काही Browsers मध्ये iframe मधून थेट Print चालत नाही — त्यावेळी PDF नवीन Tab मध्ये
+            // उघडतो, तिथून Employee स्वतः Print दाबू शकतो.
+            window.open(blobUrl, '_blank');
+          }
+        }, 300);
+      };
+    }catch(err){
+      console.error(err);
+      alert(err.message || 'Print साठी PDF तयार करताना अडचण आली. पुन्हा प्रयत्न करा.');
+    }finally{
+      if(btn) btn.disabled = false;
       window.scrollTo(0,oldScroll);
     }
   })();
@@ -2019,6 +2056,12 @@ async function saveDocuments(){
  }
  renderDocuments();
  updatePendingCount();
+ // महत्त्वाचे: Save झाल्यावर, ज्या Fields मधील फाईल्स आत्ताच यशस्वीपणे साठवल्या, त्या Fields
+ // आता रिकामी (Clear) करतो. आधी हे होत नव्हते — त्यामुळे परत कधीही "Save Documents" दाबले
+ // (चुकून, किंवा फक्त एखादे नवीन/वेगळे कागदपत्र जोडायला), तर ह्याच जुन्या (आधीच Save झालेल्या)
+ // फाईल्स पुन्हा वाचल्या जाऊन, पुन्हा नव्याने साठवल्या/Drive वर Upload व्हायच्या — त्यामुळे
+ // तेच कागदपत्र Drive वर २/४ वेळा (डुप्लिकेट) दिसायचे.
+ types.forEach(([id])=>{ const el=document.getElementById(id); if(el) el.value=''; });
  if(!anyError){
    alert('कागदपत्रे या डिव्हाइसवर लगेच सेव्ह झाली आहेत (प्रति फाईल कमाल '+MAX_DOC_SIZE_MB+' MB, सर्व मिळून कमाल '+MAX_TOTAL_MB+' MB) — यासाठी Internet ची गरज नाही. Internet उपलब्ध असल्यास ती आपोआप, वेगळ्या पद्धतीने, Drive वर (सर्व कर्मचारी/Admin यांना दिसेल अशी) बॅकअप म्हणून पाठवली जातील.');
  }
@@ -2600,6 +2643,7 @@ function afterLogin(){
    Employee साठी हाच ३ मिनिटांचा प्रयत्न Browser चा Location Popup पुन्हा-पुन्हा दाखवतो —
    Permission मिळाल्यावर Browser आपोआप Popup दाखवणे थांबवतो (वेगळे काही करावे लागत नाही). */
 let locationTrackingTimer=null;
+let locationReminderTimer=null;
 // हे बटण थेट Employee च्या Click वर चालते (कुठलाही await मध्ये नाही) — त्यामुळे ब्राउझर हा
 // "User चा थेट Action" समजून खात्रीने Location Permission चा Popup दाखवतो (आपोआप, पानावर
 // आल्याआल्या विचारल्यास बरेच ब्राउझर्स — विशेषतः मोबाईल — तो Popup दाखवतच नाहीत).
@@ -2612,6 +2656,8 @@ function requestLocationPermissionNow(){
     lat:pos.coords.latitude, lng:pos.coords.longitude
    });
    alert('✅ Location Permission मिळाली — यापुढे आपोआप Update होत राहील.');
+   if(locationReminderTimer){ clearInterval(locationReminderTimer); locationReminderTimer=null; }
+   document.getElementById('bLocationPermission')?.classList.add('hidden');
    if(!locationTrackingTimer) startLocationTracking();
   },
   err=>{
@@ -2623,27 +2669,42 @@ function requestLocationPermissionNow(){
 }
 function startLocationTracking(){
  if(locationTrackingTimer) return; // आधीच सुरू असल्यास पुन्हा सुरू करू नये
+ let permissionGranted = false;
  const sendOnce=()=>{
   if(!navigator.geolocation || !navigator.onLine) return;
   navigator.geolocation.getCurrentPosition(async pos=>{
+   permissionGranted = true;
    const res = await callApi('updateLocation', {
     employeeId:session.employeeId, deviceId:getDeviceId(), deviceLabel:getDeviceLabel(),
     lat:pos.coords.latitude, lng:pos.coords.longitude
    });
    if(res && res.ok && res.trackingEnabled===false){
     clearInterval(locationTrackingTimer); locationTrackingTimer=null;
+    clearInterval(locationReminderTimer); locationReminderTimer=null;
    }
   }, ()=>{ /* Employee ने नंतर Location बंद केली असल्यास शांतपणे थांबते, अ‍ॅप अडत नाही */ }, {timeout:15000});
  };
  sendOnce();
- // दर ३ मिनिटांनी प्रयत्न — ज्या Employee ने अजून Permission दिलेली नाही, त्याला Browser
- // प्रत्येक प्रयत्नात Popup दाखवत राहील (जोपर्यंत Permanently "Block" केलेले नाही). एकदा
- // Employee ने "Allow" दिल्यावर — Browser त्यानंतर कधीही हा Popup पुन्हा दाखवत नाही
- // (आपोआप शांतपणे Location मिळत राहते) — त्यामुळे "परत Popup न येणे" हे इथे वेगळे काही न
- // करताही आपोआप साध्य होते.
  locationTrackingTimer = setInterval(sendOnce, 3*60*1000);
- // Internet पुन्हा आल्यावर ५ मिनिटांची वाट न बघता लगेच एकदा पाठवतो.
  window.addEventListener('online', sendOnce);
+ // महत्त्वाचे: वरील setInterval मधून चालणारा getCurrentPosition — बरेच Browsers त्याला
+ // "खरा Click नाही" असे समजून, Permission-Popup न दाखवताच शांतपणे नाकारतात (ही Browser
+ // ची मर्यादा आहे — Timer वरून विचारलेले Location Permission बरेचदा दिसतच नाही). त्यामुळे
+ // — Permission अजून मिळालेली नसेल, तर दर ३ मिनिटांनी एक **दिसणारी, ठळक आठवण (Reminder)**
+ // दाखवतो, जी Employee ला स्वतः बटण दाबायला सांगते (खरा Click केल्यावरच Browser हमखास
+ // Popup दाखवतो). एकदा Permission मिळाली, की ही आठवण कायमची थांबते.
+ const showReminderIfNeeded = ()=>{
+  if(permissionGranted) { clearInterval(locationReminderTimer); locationReminderTimer=null; return; }
+  const btn = document.getElementById('bLocationPermission');
+  if(btn){
+   btn.classList.remove('hidden');
+   btn.style.animation='none'; void btn.offsetWidth; btn.style.animation='locPulse 1.5s ease-in-out 3';
+  }
+  const el = document.getElementById('syncStatusText');
+  if(el) el.textContent = '📍 कृपया वरील "Location Permission Allow करा" बटण दाबा — अजून Permission मिळालेली नाही.';
+ };
+ showReminderIfNeeded();
+ locationReminderTimer = setInterval(showReminderIfNeeded, 3*60*1000);
 }
 // ---- Admin साठी Employee Location पाहणे/व्यवस्थापन ----
 async function renderEmpLocations(){
