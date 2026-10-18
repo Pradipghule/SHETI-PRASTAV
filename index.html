@@ -113,7 +113,7 @@
     </button>
   </div>
   <div class="userline" id="userLine"><span id="userName"></span> <button type="button" id="bioBtn" hidden>🔐 Face / Fingerprint</button> <button type="button" id="logoutBtn">Logout</button></div>
-  <div class="credit">Developed by Mr. Pradip Ghule Patil.</div>
+  <div class="credit">Developed by Mr. Pradip Ghule Patil. <span style="opacity:.6">· v18.10-3</span></div>
 </main>
 
 <div id="locGate" role="dialog" aria-modal="true" aria-labelledby="locTitle" hidden>
@@ -274,6 +274,7 @@
     if(!w.bioIsAdmin()){ alert("हे फक्त Admin (EMP1) साठी आहे."); return; }
     if(!(window.PublicKeyCredential && navigator.credentials && window.isSecureContext)){ alert("या Browser / डिव्हाइसवर Face / Fingerprint Login चालत नाही.\n(Software https link — GitHub — वरून उघडा. Downloads मधील file मधून हे चालत नाही.)"); return; }
     if(w.bioEnabled() && !confirm("या डिव्हाइसवर Face / Fingerprint Login आधीच चालू आहे. पुन्हा नोंद करायची?")) return;
+    try{ const ae = document.activeElement; if(ae && ae.tagName === "IFRAME") ae.blur(); $("bioBtn").focus(); window.focus(); }catch(e){}   // iPhone: Focus या पानावर हवा
     const rnd = n => { const a = new Uint8Array(n); crypto.getRandomValues(a); return a; };
     let dev = "dev"; try{ dev = w.getDeviceId(); }catch(e){}
     navigator.credentials.create({ publicKey:{ challenge:rnd(32), rp:{ name:"Prastav Software" },
