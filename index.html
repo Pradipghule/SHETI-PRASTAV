@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="mr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <script>/* Win7 emoji fallback: old Windows cannot draw emoji and shows empty boxes; swap them for simple symbols */
@@ -41,30 +41,38 @@
 })();</script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Prastav &amp; Quotation</title>
+<title>Proposals &amp; Quotations</title>
 <style>
   :root{--g:#154a25;--g2:#1f6b35;--gold:#f2c14e;--bg:#eef2eb}
   *{box-sizing:border-box}
   html,body{margin:0;height:100%;-webkit-text-size-adjust:100%}
   body{font-family:"Segoe UI","Nirmala UI","Noto Sans Devanagari",Roboto,system-ui,sans-serif;background:var(--bg);color:#1a1a1a}
-  #home{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 18px calc(24px + env(safe-area-inset-bottom,0px))}
-  #home h1{margin:0 0 6px;font-size:26px;color:var(--g);text-align:center}
-  #home p.sub{margin:0 0 26px;color:#55624f;font-size:14.5px;text-align:center}
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%;max-width:760px}
-  .card{border:0;border-radius:16px;padding:28px 18px 24px;cursor:pointer;text-align:center;color:#fff;
-        background:linear-gradient(160deg,var(--g2),var(--g));box-shadow:0 6px 20px rgba(21,74,37,.25);transition:transform .12s}
-  .card:hover{transform:translateY(-2px)}
+  #home{min-height:100%;display:flex;flex-direction:column;align-items:center;padding:0 0 calc(24px + env(safe-area-inset-bottom,0px))}
+  .hero{width:100%;background:var(--g);color:#fff;padding:calc(28px + env(safe-area-inset-top,0px)) 0 64px;border-radius:0 0 28px 28px;display:flex;justify-content:center}
+  .hero-in{width:100%;max-width:760px;padding:0 22px;display:flex;flex-direction:column;gap:12px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo{width:40px;height:40px;border-radius:12px;background:#fff;color:var(--g);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex:none}
+  .brand-t{display:flex;flex-direction:column;line-height:1.3}
+  .brand-t b{font-size:12px;letter-spacing:1.4px;color:#cfe3d5}
+  .brand-t span{font-size:13px;color:#cfe3d5}
+  #home h1{margin:4px 0 0;font-size:28px;line-height:1.15;font-weight:800;color:#fff}
+  #home p.sub{margin:0;color:#ddebe1;font-size:15px}
+  .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;width:100%;max-width:760px;padding:0 18px;margin-top:-40px}
+  .card{border:0;border-radius:20px;padding:18px 16px;cursor:pointer;text-align:left;color:#17221b;background:#fff;font:inherit;
+        display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-height:170px;box-shadow:0 4px 14px rgba(23,34,27,.08);transition:transform .12s,box-shadow .12s}
+  .card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(23,34,27,.12)}
   .card:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
-  .card .ic{width:58px;height:58px;margin:0 auto 14px;border-radius:14px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center}
-  .card b{display:block;font-size:22px;margin-bottom:4px}
-  .card span{font-size:14px;opacity:.85}
-  .card.q{background:linear-gradient(160deg,#c9971f,#8a5a12)}
-  .card.o{background:linear-gradient(160deg,#2b6c9e,#16446b)}
-  .card.m{background:linear-gradient(160deg,#8e3b2f,#5c2018)}
-  .card.d{background:linear-gradient(160deg,#6a4c9c,#3f2a66);grid-column:1/-1}
-  .card.i{background:linear-gradient(160deg,#b7791f,#7a4e0e)}
-  .credit{margin-top:34px;font-size:12.5px;color:#6a7765}
-  @media (max-width:520px){ .cards{grid-template-columns:1fr} .card{padding:22px 16px} }
+  .card .ic{width:50px;height:50px;border-radius:14px;background:#1e5e36;display:flex;align-items:center;justify-content:center;flex:none}
+  .card b{display:block;font-size:18px;line-height:1.25;margin-top:2px}
+  .card span{font-size:13px;line-height:1.35;color:#5a665e}
+  .card.d .ic{background:#5b3f8c}
+  .card.m .ic{background:#8a3a2e}
+  .card.q .ic{background:#8a5d0f}
+  .card.i .ic{background:#a0621a}
+  .card.o .ic{background:#245f8c}
+  .credit{margin-top:22px;font-size:12px;color:#6a7765}
+  @media (min-width:700px){ .cards{grid-template-columns:repeat(3,minmax(0,1fr))} }
+  @media (max-width:340px){ .cards{grid-template-columns:1fr} }
 
   #bar{display:none;height:42px;padding:0 10px;padding-top:env(safe-area-inset-top,0px);box-sizing:content-box;background:var(--g);color:#fff;align-items:center;gap:10px}
   #bar button{font:inherit;font-size:14px;background:rgba(255,255,255,.14);color:#fff;border:0;border-radius:8px;padding:7px 12px;cursor:pointer}
@@ -77,8 +85,8 @@
   @supports (height:100dvh){ #frames iframe{height:calc(100dvh - 42px - env(safe-area-inset-top,0px))} }
   #loading{display:none;position:fixed;inset:0;background:rgba(238,242,235,.9);align-items:center;justify-content:center;font-size:16px;color:var(--g)}
   body.inapp #home{display:none} body.inapp #bar{display:flex} body.inapp #frames{display:block}
-  .userline{margin-top:22px;font-size:14px;color:#33402f;display:flex;align-items:center;gap:10px}
-  .userline button{font:inherit;font-size:13px;border:1px solid #b9c4b5;background:#fff;border-radius:7px;padding:5px 12px;cursor:pointer}
+  .userline{margin-top:26px;font-size:14px;color:#33402f;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;padding:0 18px}
+  .userline button{font:inherit;font-size:13px;border:1px solid #c9d2c5;background:#fff;border-radius:10px;padding:8px 14px;min-height:40px;cursor:pointer}
   body.login #home, body.login #bar{display:none !important}
   body.login #frames{display:block}
   body.login #frames iframe{height:100vh;height:100dvh}
@@ -96,36 +104,39 @@
 </head>
 <body>
 <main id="home">
-  <h1>प्रस्ताव &amp; Quotation</h1>
-  <p class="sub">काय उघडायचे ते निवडा / Choose what to open</p>
+  <header class="hero"><div class="hero-in">
+    <div class="brand"><div class="logo" aria-hidden="true">SP</div><div class="brand-t"><b>SHETI-PRASTAV</b><span>Developed by Mr. Pradip Ghule Patil.</span></div></div>
+    <h1>Proposals &amp; Quotations</h1>
+    <p class="sub">Choose what to open</p>
+  </div></header>
   <div class="cards">
     <button class="card d" data-app="daily">
       <div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/><path d="M8.5 15l2.2 2.2L15.5 13"/></svg></div>
-      <b>Daily Report</b><span>हजेरी · रोजचा रिपोर्ट · Site खर्च · Labour Payment</span>
+      <b>Daily Report</b><span>Attendance · Report · Site Expenses · Labour Payment</span>
     </button>
     <button class="card m" data-app="estimate">
       <div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4h6v3H9z"/><path d="M8 5.5H6a1.5 1.5 0 0 0-1.5 1.5v12A1.5 1.5 0 0 0 6 20.5h12a1.5 1.5 0 0 0 1.5-1.5V7A1.5 1.5 0 0 0 18 5.5h-2"/><path d="M8 11h8M8 14.5h8M8 18h5"/></svg></div>
-      <b>Material Estimate</b><span>नकाशा + Material Proforma</span>
+      <b>Material Estimate</b><span>Site Layout + Material Proforma</span>
     </button>
     <button class="card q" data-app="quotation">
       <div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
-      <b>Quotation</b><span>कोटेशन — Shade Net / Polyhouse</span>
+      <b>Quotation</b><span>Shade Net / Polyhouse Quotes</span>
     </button>
     <button class="card" data-app="prastav">
       <div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div>
-      <b>प्रस्ताव</b><span>Prapatra / Prastav</span>
+      <b>Proposal</b><span>Forms &amp; Proposal Files</span>
     </button>
     <button class="card i" data-app="invoice">
       <div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div>
-      <b>Tax Invoice</b><span>योजना बिल · Sahyadri / Kisan</span>
+      <b>Tax Invoice</b><span>Scheme Bills · Sahyadri / Kisan</span>
     </button>
     <button class="card o" data-app="offsize">
       <div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h9v5h7v11H4z"/><path d="M4 9h9M8.5 4v16M13 9v11M4 14.5h16"/></svg></div>
-      <b>Off Size Diagram</b><span>ऑफसाईज नकाशा</span>
+      <b>Off Size Diagram</b><span>Off-size Layout Drawing</span>
     </button>
   </div>
   <div class="userline" id="userLine"><span id="userName"></span> <button type="button" id="bioBtn" hidden>🔐 Face / Fingerprint</button> <button type="button" id="logoutBtn">Logout</button></div>
-  <div class="credit">Developed by Mr. Pradip Ghule Patil. <span style="opacity:.6">· v21.10-93</span></div>
+  <div class="credit">SHETI-PRASTAV <span style="opacity:.6">· v21.10-93</span></div>
 </main>
 
 <div id="locGate" role="dialog" aria-modal="true" aria-labelledby="locTitle" hidden>
@@ -171,7 +182,7 @@
 </script>
 <script>
 (function(){
-  const TITLES = { prastav:"प्रस्ताव", quotation:"Quotation", offsize:"Off Size Diagram", estimate:"Material Estimate", daily:"Daily Report", invoice:"Tax Invoice" };
+  const TITLES = { prastav:"Proposal", quotation:"Quotation", offsize:"Off Size Diagram", estimate:"Material Estimate", daily:"Daily Report", invoice:"Tax Invoice" };
   const frames = {};
   const $ = id => document.getElementById(id);
   const getSession = () => { try{ return JSON.parse(localStorage.getItem("session") || "null"); }catch(e){ return null; } };
@@ -230,7 +241,7 @@
   }
   function home(push){
     document.body.classList.remove("inapp");
-    document.title = "Prastav & Quotation";
+    document.title = "Proposals & Quotations";
     if(push) history.pushState({}, "", location.pathname + location.search);
     checkLocation();
   }
